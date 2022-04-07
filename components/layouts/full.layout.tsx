@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { styled, useTheme, Theme, CSSObject } from "@mui/material/styles";
 import {
   AppBar as MuiAppBar,
@@ -34,9 +34,15 @@ import {
 } from "@mui/icons-material";
 import Head from "next/head";
 import router from "next/router";
-import { UserProfile, useUser } from "@auth0/nextjs-auth0";
 
-import { DESIGNS_PATH, LOGIN_PATH, LOGOUT_PATH, STORE_PATH, TEAMS_PATH } from "../../constants/paths";
+import {
+  DESIGNS_PATH,
+  LOGIN_PATH,
+  LOGOUT_PATH,
+  STORE_PATH,
+  TEAMS_PATH,
+} from "../../constants/paths";
+import { useLoggedInUser } from "../../hooks";
 
 const drawerWidth = 240;
 
@@ -112,18 +118,7 @@ const Drawer = styled(MuiDrawer, {
 function Layout({ children }: any) {
   const theme = useTheme();
   const [open, setOpen] = useState(false);
-  const { user, error, isLoading } = useUser();
-  const [loggedInUser, setLoggedInUser] = useState<UserProfile | undefined>(
-    undefined
-  );
-
-  useEffect(() => {
-    if (!isLoading && !error) {
-      setLoggedInUser(user);
-    } else {
-      setLoggedInUser(undefined);
-    }
-  }, [user, error, isLoading]);
+  const loggedInUser = useLoggedInUser();
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -186,12 +181,14 @@ function Layout({ children }: any) {
     },
     {
       text: loggedInUser?.name ?? "Profile",
-      icon: (
+      icon: loggedInUser?.picture ? (
         <Avatar
           alt={loggedInUser?.name ?? ""}
-          src={loggedInUser?.picture ?? ""}
+          src={loggedInUser?.picture}
           sx={{ width: 20, height: 20 }}
         />
+      ) : (
+        <ProfileIcon />
       ),
       onClick: () => router.push("/profile"),
     },

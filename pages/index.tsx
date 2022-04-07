@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { DESIGNS_PATH, STORE_PATH, TEAMS_PATH } from "../constants/paths";
 import styles from "../styles/Home.module.css";
 
@@ -6,6 +7,17 @@ export default function Home() {
   return (
     <div className={styles.container}>
       <main className={styles.main}>
+        <div>
+          <span className={styles.logo}>
+            <Image
+              src="/favicon.png"
+              alt="Agnos Logo"
+              width={100}
+              height={100}
+            />
+          </span>
+        </div>
+
         <h1 className={styles.title}>Agnos Cloud</h1>
 
         <p className={styles.description}>
@@ -37,9 +49,7 @@ export default function Home() {
           <Link href={STORE_PATH}>
             <a className={styles.card}>
               <h2>Distribute &rarr;</h2>
-              <p>
-                Share your system designs and components with other users.
-              </p>
+              <p>Share your system designs and components with other users.</p>
             </a>
           </Link>
 
