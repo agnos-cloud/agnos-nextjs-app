@@ -2,8 +2,9 @@ import { useUser } from "@auth0/nextjs-auth0";
 import { useRouter } from "next/router";
 import router from "next/router";
 import { ReactFlowProvider } from "react-flow-renderer";
-import { Box, CircularProgress } from "@mui/material";
 import { LOGIN_PATH } from "../../constants/paths";
+import Loading from "../../components/Loading";
+import ErrorBox from "../../components/ErrorBox";
 
 const Designer = () => {
   const location = useRouter();
@@ -12,29 +13,22 @@ const Designer = () => {
   const { id } = location.query;
 
   if (isLoading) {
-    return (
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          minHeight: "100vh",
-        }}
-      >
-        <CircularProgress />
-      </Box>
-    );
+    return <Loading />;
   }
 
   if (error) {
-    return <div>{error.message}</div>;
+    return <ErrorBox error={error} />;
   }
 
   if (!user) {
     router.push(LOGIN_PATH);
   }
 
-  return (<ReactFlowProvider><p>Design: {id}</p></ReactFlowProvider>);
+  return (
+    <ReactFlowProvider>
+      <p>Design: {id}</p>
+    </ReactFlowProvider>
+  );
 };
 
 export default Designer;

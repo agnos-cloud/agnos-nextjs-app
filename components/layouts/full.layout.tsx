@@ -118,7 +118,7 @@ const Drawer = styled(MuiDrawer, {
 function Layout({ children }: any) {
   const theme = useTheme();
   const [open, setOpen] = useState(false);
-  const loggedInUser = useLoggedInUser();
+  const { loggedInUser } = useLoggedInUser();
 
   const handleDrawerOpen = () => {
     setOpen(true);

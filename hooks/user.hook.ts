@@ -16,29 +16,19 @@ export function useLoggedInUser() {
       setLoggedInUser(user);
 
       if (!user) return;
+      console.log(user);
 
       const session: any = user["session"];
-      if (!session) return; console.log(session)
+      if (!session) return;
+      console.log(session);
 
       tokensStorage.saveAccessToken(session.accessToken);
-      tokensStorage.saveIdToken(session.idToken);
+      // tokensStorage.saveIdToken(session.idToken);
       tokensStorage.saveRefreshToken(session.refreshToken);
-
-      // // create user in database if the email is unique
-      // axios
-      //   .post(`${process.env.API_URL}/users`, {
-      //     name: user.name,
-      //     email: user.email,
-      //     emailIsVerified: user.email_verified,
-      //     picture: user.picture,
-      //   })
-      //   .then((response) => console.log(response.data))
-      //   // .then((data) => console.log(data))
-      //   .catch((e) => console.log(e));
     } else {
       setLoggedInUser(undefined);
     }
   }, [user, error, isLoading]);
 
-  return loggedInUser;
+  return { isLoading, error, loggedInUser };
 }
