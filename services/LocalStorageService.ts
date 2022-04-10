@@ -20,6 +20,7 @@ export class LocalStorageService<T> {
   }
 }
 
+// NOTE: this service is not currently used as we no longer write session info to the local storage
 export class TokensLocalStorage extends LocalStorageService<string> {
   constructor() {
     super("tokens");

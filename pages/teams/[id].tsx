@@ -6,7 +6,7 @@ import { LOGIN_PATH } from "../../constants/paths";
 import Loading from "../../components/Loading";
 import ErrorBox from "../../components/ErrorBox";
 
-const Designer = () => {
+const Team = () => {
   const location = useRouter();
   const { user, error, isLoading } = useUser();
 
@@ -26,9 +26,9 @@ const Designer = () => {
 
   return (
     <ReactFlowProvider>
-      <p>Design: {id}</p>
+      <p>Team: {id}</p>
     </ReactFlowProvider>
   );
 };
 
-export default Designer;
+export default Team;
