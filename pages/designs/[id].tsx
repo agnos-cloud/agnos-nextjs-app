@@ -20,9 +20,9 @@ const Designer = () => {
     return <ErrorBox error={error} />;
   }
 
-  if (!user) {
-    router.push(LOGIN_PATH);
-  }
+  // if (!user) {
+  //   router.push(LOGIN_PATH);
+  // }
 
   return (
     <ReactFlowProvider>

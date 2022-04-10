@@ -16,25 +16,14 @@ const fabStyle = {
   bottom: 16,
   right: 16,
 };
-//setMemberships((prev) => [...prev, {...}])
-export default function Teams() {
+//TODO: add teams => setMemberships((prev) => [...prev, {...}])
+function Teams() {
   const theme = useTheme();
 
   const [memberships, setMemberships] = useState<Membership[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<Error | undefined>(undefined);
   const { user } = useUser();
-
-  const transitionDuration = {
-    enter: theme.transitions.duration.enteringScreen,
-    exit: theme.transitions.duration.leavingScreen,
-  };
-  const fab = {
-    color: "primary" as "primary",
-    sx: fabStyle as SxProps,
-    icon: <AddIcon />,
-    label: "Add",
-  };
 
   useEffect(() => {
     if (user) {
@@ -56,6 +45,17 @@ export default function Teams() {
         });
     }
   }, [user]);
+
+  const transitionDuration = {
+    enter: theme.transitions.duration.enteringScreen,
+    exit: theme.transitions.duration.leavingScreen,
+  };
+  const fab = {
+    color: "primary" as "primary",
+    sx: fabStyle as SxProps,
+    icon: <AddIcon />,
+    label: "Add",
+  };
 
   if (error) {
     return <ErrorBox error={error} />;
@@ -97,3 +97,5 @@ export default function Teams() {
     </Grid>
   );
 }
+
+export default Teams;
