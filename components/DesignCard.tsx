@@ -17,17 +17,17 @@ import {
   Visibility as ReadIcon,
 } from "@mui/icons-material";
 import router from "next/router";
-import type { Membership } from "../models/Membership";
-
-export interface MembershipCardProps {
-  membership: Membership;
+import type { TeamDesignShare } from "../models/TeamDesignShare";
+// TODO: a way to show that teamDesignShare.design?.team._id === teamDesignShare.team?._id
+export interface DesignCardProps {
+  teamDesignShare: TeamDesignShare;
 }
 
-const MembershipCard = (props: MembershipCardProps) => {
-  const { membership } = props;
+const DesignCard = (props: DesignCardProps) => {
+  const { teamDesignShare } = props;
 
   const handleCardClick = () => {
-    router.push(`/teams/${membership.team?._id}`);
+    router.push(`/designs/${teamDesignShare.design?._id}`);
   };
 
   const handleOptionsClick = (e: React.SyntheticEvent) => {
@@ -44,11 +44,6 @@ const MembershipCard = (props: MembershipCardProps) => {
     <Card sx={{ display: "flex" }} onClick={handleCardClick}>
       <CardActionArea>
         <CardHeader
-          // avatar={
-          //   <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-          //     R
-          //   </Avatar>
-          // }
           action={
             <IconButton aria-label="settings" onClick={handleOptionsClick}>
               <MoreVertIcon />
@@ -56,20 +51,25 @@ const MembershipCard = (props: MembershipCardProps) => {
           }
           title={
             <Typography gutterBottom variant="h5" component="div">
-              {membership.team?.name}{" "}
-              {membership.team?.private && <PrivateIcon fontSize="small" />}
+              {teamDesignShare.design?.name}{" "}
+              {teamDesignShare.design?.private && (
+                <PrivateIcon fontSize="small" />
+              )}
             </Typography>
           }
           subheader={
             <Typography variant="subtitle2" color="text.secondary">
-              Joined {new Date(membership.createdAt).toDateString()}{" "}
-              {membership.permission?.name === "ADMIN" && (
+              Created{" "}
+              {new Date(
+                teamDesignShare.design?.createdAt || teamDesignShare.createdAt
+              ).toDateString()}{" "}
+              {teamDesignShare.permission?.name === "ADMIN" && (
                 <AdminIcon fontSize="small" />
               )}
-              {membership.permission?.name === "WRITE" && (
+              {teamDesignShare.permission?.name === "WRITE" && (
                 <WriteIcon fontSize="small" />
               )}
-              {membership.permission?.name === "READ" && (
+              {teamDesignShare.permission?.name === "READ" && (
                 <ReadIcon fontSize="small" />
               )}
             </Typography>
@@ -77,12 +77,12 @@ const MembershipCard = (props: MembershipCardProps) => {
         />
         <CardMedia
           component="img"
-          image={membership.team?.picture}
-          alt={membership.team?.name}
+          image={teamDesignShare.design?.picture}
+          alt={teamDesignShare.design?.name}
         />
         <CardContent>
           <Typography variant="subtitle1" color="text.secondary">
-            {membership.team?.description}
+            {teamDesignShare.design?.description}
           </Typography>
         </CardContent>
         <CardActions disableSpacing>
@@ -95,4 +95,4 @@ const MembershipCard = (props: MembershipCardProps) => {
   );
 };
 
-export default MembershipCard;
+export default DesignCard;
