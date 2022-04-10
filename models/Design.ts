@@ -1,17 +1,18 @@
-import type { Membership } from "./Membership";
 import type { Model } from "./Model";
+import type { Team } from "./Team";
 import type { TeamDesignShare } from "./TeamDesignShare";
 import type { User } from "./User";
+import type { UserDesignShare } from "./UserDesignShare";
 
-export interface Team extends Model {
+export interface Design extends Model {
   name: string;
-  autoCreated?: boolean;
   description?: string;
-  email?: string;
-  memberships?: Array<Membership>;
+  flow?: object;
   private?: boolean;
   picture?: string;
   secrets?: object;
-  user?: User;
+  team?: Team;
   teamDesignShares?: Array<TeamDesignShare>;
+  user?: User;
+  userDesignShares?: Array<UserDesignShare>;
 }

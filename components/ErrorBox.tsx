@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Grid } from "@mui/material";
 
 export interface ErrorProps {
   error: Error | undefined;
@@ -6,16 +6,9 @@ export interface ErrorProps {
 
 const ErrorBox = ({ error }: ErrorProps) => {
   return (
-    <Box
-      sx={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        // minHeight: "100vh",
-      }}
-    >
-      {error?.message}
-    </Box>
+    <Grid container spacing={0} direction="column" alignItems="center" justifyContent="center">
+      <Grid item xs={3}>{error?.message}</Grid>
+    </Grid>
   );
 };
 

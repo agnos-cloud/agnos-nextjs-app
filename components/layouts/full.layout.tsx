@@ -42,7 +42,7 @@ import {
   STORE_PATH,
   TEAMS_PATH,
 } from "../../constants/paths";
-import { useLoggedInUser } from "../../hooks";
+import { useUser } from "@auth0/nextjs-auth0";
 
 const drawerWidth = 240;
 
@@ -118,7 +118,7 @@ const Drawer = styled(MuiDrawer, {
 function Layout({ children }: any) {
   const theme = useTheme();
   const [open, setOpen] = useState(false);
-  const { loggedInUser } = useLoggedInUser();
+  const { user } = useUser();
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -180,11 +180,11 @@ function Layout({ children }: any) {
       onClick: () => router.push("/settings"),
     },
     {
-      text: loggedInUser?.name ?? "Profile",
-      icon: loggedInUser?.picture ? (
+      text: user?.name ?? "Profile",
+      icon: user?.picture ? (
         <Avatar
-          alt={loggedInUser?.name ?? ""}
-          src={loggedInUser?.picture}
+          alt={user?.name ?? ""}
+          src={user?.picture}
           sx={{ width: 20, height: 20 }}
         />
       ) : (
@@ -277,7 +277,7 @@ function Layout({ children }: any) {
               />
             </ListItemButton>
           ))}
-          {loggedInUser &&
+          {user &&
             mainMenus.map((menu) => (
               <ListItemButton
                 key={menu.text}
@@ -305,7 +305,7 @@ function Layout({ children }: any) {
             ))}
         </List>
         <Divider />
-        {loggedInUser && (
+        {user && (
           <List>
             {settingsMenus.map((menu) => (
               <ListItemButton
@@ -334,7 +334,7 @@ function Layout({ children }: any) {
             ))}
           </List>
         )}
-        {!loggedInUser && (
+        {!user && (
           <List>
             {loginMenus.map((menu) => (
               <ListItemButton
