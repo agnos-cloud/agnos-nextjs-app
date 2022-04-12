@@ -1,15 +1,13 @@
 import { Fab, Grid, SxProps, useTheme, Zoom } from "@mui/material";
 import { Add as AddIcon } from "@mui/icons-material";
 import { useEffect, useState } from "react";
-import axios from "axios";
-import Link from "next/link";
 import ErrorBox from "../../components/ErrorBox";
 import Loading from "../../components/Loading";
 import type { Membership } from "../../models/Membership";
 import { useUser } from "@auth0/nextjs-auth0";
 import MembershipCard from "../../components/MembershipCard";
-import { LOGIN_PATH } from "../../constants/paths";
-import AppBackdrop from "../../components/AppBackdrop";
+import LoginBackdrop from "../../components/LoginBackdrop";
+import MembershipService from "../../services/MembershipService";
 
 const fabStyle = {
   position: "absolute",
@@ -27,16 +25,11 @@ function Teams() {
 
   useEffect(() => {
     if (user) {
-      const session: any = user["session"];
-      const accessToken = session.accessToken;
       setIsLoading(true);
-      axios({
-        method: "GET",
-        url: `${process.env.API_URL}/me/memberships`,
-        headers: { authorization: `Bearer ${accessToken}` },
-      })
+      new MembershipService(user)
+        .getMyMemberships()
         .then((response) => {
-          setMemberships(response.data["memberships"]);
+          setMemberships(response);
           setIsLoading(false);
         })
         .catch((error) => {
@@ -66,11 +59,7 @@ function Teams() {
   }
 
   if (!user) {
-    return (
-      <AppBackdrop>
-        <Link href={LOGIN_PATH}>You may need to log in</Link>
-      </AppBackdrop>
-    );
+    return <LoginBackdrop />;
   }
 
   return (

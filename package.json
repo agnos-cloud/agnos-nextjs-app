@@ -17,6 +17,7 @@
     "@mui/material": "^5.5.3",
     "axios": "^0.26.1",
     "localforage": "^1.10.0",
+    "nanoid": "^3.3.2",
     "next": "12.1.4",
     "react": "18.0.0",
     "react-dom": "18.0.0",

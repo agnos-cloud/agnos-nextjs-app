@@ -1,14 +1,10 @@
-import { useUser } from "@auth0/nextjs-auth0";
 import React, { useState } from "react";
 import { useRouter } from "next/router";
-import router from "next/router";
-import { ReactFlowProvider } from "react-flow-renderer";
-import { LOGIN_PATH } from "../../constants/paths";
-import Loading from "../../components/Loading";
-import ErrorBox from "../../components/ErrorBox";
 import { Box, Tab, Tabs } from "@mui/material";
 import TabPanel from "../../components/TabPanel";
 import Designs from "../../components/Designs";
+import { useUser } from "@auth0/nextjs-auth0";
+import LoginBackdrop from "../../components/LoginBackdrop";
 
 function a11yProps(index: number) {
   return {
@@ -19,7 +15,7 @@ function a11yProps(index: number) {
 
 const Team = () => {
   const location = useRouter();
-  // const { user, error, isLoading } = useUser();
+  const { user } = useUser();
 
   const { id } = location.query;
 
@@ -28,6 +24,12 @@ const Team = () => {
   const handleChange = (_event: React.SyntheticEvent, newValue: number) => {
     setTabValue(newValue);
   };
+
+  if (!user) {
+    return (
+      <LoginBackdrop />
+    );
+  }
 
   // TODO: ensure user has permission to interact with this team
 
