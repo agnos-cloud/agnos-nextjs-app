@@ -8,12 +8,12 @@ export default class TeamDesignShareService extends ApiService {
     super(user);
   }
 
-  getTeamDesignSharesForTeam: (
+  getMyTeamDesignShares: (
     teamId: string | undefined
   ) => Promise<TeamDesignShare[]> = async (teamId: string | undefined) => {
     return axios({
       method: "GET",
-      url: `${this.apiUrl}/share/team-designs/for-team/${teamId ? teamId : ""}`,
+      url: `${this.apiUrl}/me/team-designs${teamId ? `?team=${teamId}` : ""}`,
       headers: { authorization: `Bearer ${this.accessToken}` },
     })
       .then((response) => {

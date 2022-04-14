@@ -1,10 +1,15 @@
 import React, { useState } from "react";
 import { useRouter } from "next/router";
 import { Box, Tab, Tabs } from "@mui/material";
+import {
+  Description as DesignsIcon,
+  Power as PluginsIcon,
+} from "@mui/icons-material";
 import TabPanel from "../../components/TabPanel";
 import Designs from "../../components/Designs";
 import { useUser } from "@auth0/nextjs-auth0";
 import LoginBackdrop from "../../components/LoginBackdrop";
+import Plugins from "../../components/Plugins";
 
 function a11yProps(index: number) {
   return {
@@ -26,9 +31,7 @@ const Team = () => {
   };
 
   if (!user) {
-    return (
-      <LoginBackdrop />
-    );
+    return <LoginBackdrop />;
   }
 
   // TODO: ensure user has permission to interact with this team
@@ -41,19 +44,25 @@ const Team = () => {
           onChange={handleChange}
           aria-label="basic tabs example"
         >
-          <Tab label="Designs" {...a11yProps(0)} />
-          <Tab label="Item Two" {...a11yProps(1)} />
-          <Tab label="Item Three" {...a11yProps(2)} />
+          <Tab
+            label="Designs"
+            icon={<DesignsIcon fontSize="small" />}
+            iconPosition="start"
+            {...a11yProps(0)}
+          />
+          <Tab
+            label="Plugins"
+            icon={<PluginsIcon fontSize="small" />}
+            iconPosition="start"
+            {...a11yProps(1)}
+          />
         </Tabs>
       </Box>
       <TabPanel value={tabValue} index={0}>
         <Designs teamId={id as string} />
       </TabPanel>
       <TabPanel value={tabValue} index={1}>
-        Item Two
-      </TabPanel>
-      <TabPanel value={tabValue} index={2}>
-        Item Three
+        <Plugins teamId={id as string} />
       </TabPanel>
     </Box>
   );

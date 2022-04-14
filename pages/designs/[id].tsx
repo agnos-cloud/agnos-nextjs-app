@@ -48,7 +48,7 @@ const Designer = () => {
 
   return (
     <ReactFlowProvider>
-      <Canvas design={design} />
+      <Canvas design={design} user={user} />
     </ReactFlowProvider>
   );
 };

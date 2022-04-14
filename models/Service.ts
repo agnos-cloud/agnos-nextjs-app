@@ -1,4 +1,4 @@
-export type Provider = {
+export type Service = {
   id: string;
   title: string;
   handler: string;

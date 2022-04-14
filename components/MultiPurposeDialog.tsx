@@ -29,8 +29,8 @@ const MultiPurposeDialog = (props: MultiPurposeDialogProps) => {
       <DialogTitle>{title || "Dialog"}</DialogTitle>
       <DialogContent>{children}</DialogContent>
       <DialogActions>
-        {actions.map((action) => (
-          <Button onClick={action.onClick}>{action.text}</Button>
+        {actions.map((action, index) => (
+          <Button key={index} onClick={action.onClick}>{action.text}</Button>
         ))}
       </DialogActions>
     </Dialog>

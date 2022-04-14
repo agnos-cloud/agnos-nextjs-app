@@ -1,39 +1,36 @@
-import { useEffect, useState } from "react";
-import { Grid } from "@mui/material";
-import DesignCard from "./DesignCard";
-import type { TeamDesignShare } from "../models/TeamDesignShare";
-import MultiPurposeDialog from "./MultiPurposeDialog";
 import { useUser } from "@auth0/nextjs-auth0";
+import { Grid } from "@mui/material";
 import router from "next/router";
+import { useEffect, useState } from "react";
+import { useCreatePluginForm } from "../hooks/plugin.hooks";
+import type { Plugin } from "../models/Plugin";
+import PluginService from "../services/PluginService";
 import ErrorBox from "./ErrorBox";
-import Loading from "./Loading";
-import TeamDesignShareService from "../services/TeamDesignShareService";
-import DesignService from "../services/DesignService";
-import { useCreateDesignForm } from "../hooks/design.hooks";
 import Fab from "./Fab";
+import Loading from "./Loading";
+import MultiPurposeDialog from "./MultiPurposeDialog";
+import PluginCard from "./PluginCard";
 
-export interface DesignsProps {
+export interface PluginsProps {
   teamId?: string;
 }
 
-function Designs(props: DesignsProps) {
+function Plugins(props: PluginsProps) {
   const { teamId } = props;
   const { user } = useUser();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<Error | undefined>(undefined);
   const [openDialog, setOpenDialog] = useState(false);
-  const [teamDesignShares, setTeamDesignShares] = useState<TeamDesignShare[]>(
-    []
-  );
-  const { name, description, private: isPrivate, form } = useCreateDesignForm();
+  const [plugins, setPlugins] = useState<Plugin[]>([]);
+  const { name, description, private: isPrivate, form } = useCreatePluginForm();
 
   useEffect(() => {
     if (user) {
       setIsLoading(true);
-      new TeamDesignShareService(user)
-        .getMyTeamDesignShares(teamId)
+      new PluginService(user)
+        .getMyPlugins(teamId)
         .then((response) => {
-          setTeamDesignShares(response);
+          setPlugins(response);
           setIsLoading(false);
         })
         .catch((error) => {
@@ -43,24 +40,24 @@ function Designs(props: DesignsProps) {
     }
   }, [user]);
 
-  const handleNewDesignClick = () => {
+  const handleNewPluginClick = () => {
     setOpenDialog(true);
   };
 
-  const handleSubmitNewDesignClick = () => {
+  const handleSubmitNewPluginClick = () => {
     setOpenDialog(false);
     if (user) {
       setIsLoading(true);
-      new DesignService(user)
+      new PluginService(user)
         .create({
           name,
           description,
           private: isPrivate,
           team: teamId,
         })
-        .then((design) => {
+        .then((plugin) => {
           setIsLoading(false);
-          router.push(`/designs/${design._id}`);
+          router.push(`/plugins/${plugin._id}`);
         })
         .catch((error) => {
           setError(new Error(error));
@@ -81,23 +78,15 @@ function Designs(props: DesignsProps) {
 
   return (
     <Grid container spacing={1}>
-      {teamDesignShares.map((teamDesignShare) => (
-        <Grid
-          key={teamDesignShare._id}
-          item
-          xs={12}
-          sm={6}
-          md={4}
-          lg={3}
-          xl={2}
-        >
-          <DesignCard teamDesignShare={teamDesignShare} />
+      {plugins.map((plugin) => (
+        <Grid key={plugin._id} item xs={12} sm={6} md={4} lg={3} xl={2}>
+          <PluginCard plugin={plugin} />
         </Grid>
       ))}
 
       <MultiPurposeDialog
         open={openDialog}
-        title="Create New Design"
+        title="Create New Plugin"
         onClose={() => setOpenDialog(false)}
         actions={[
           {
@@ -106,16 +95,16 @@ function Designs(props: DesignsProps) {
           },
           {
             text: "Submit",
-            onClick: handleSubmitNewDesignClick,
+            onClick: handleSubmitNewPluginClick,
           },
         ]}
       >
         {form}
       </MultiPurposeDialog>
 
-      <Fab onClick={handleNewDesignClick} />
+      <Fab onClick={handleNewPluginClick} />
     </Grid>
   );
 }
 
-export default Designs;
+export default Plugins;

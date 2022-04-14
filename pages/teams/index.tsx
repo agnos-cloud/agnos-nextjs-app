@@ -1,5 +1,4 @@
-import { Fab, Grid, SxProps, useTheme, Zoom } from "@mui/material";
-import { Add as AddIcon } from "@mui/icons-material";
+import { Grid } from "@mui/material";
 import { useEffect, useState } from "react";
 import ErrorBox from "../../components/ErrorBox";
 import Loading from "../../components/Loading";
@@ -8,20 +7,15 @@ import { useUser } from "@auth0/nextjs-auth0";
 import MembershipCard from "../../components/MembershipCard";
 import LoginBackdrop from "../../components/LoginBackdrop";
 import MembershipService from "../../services/MembershipService";
+import Fab from "../../components/Fab";
 
-const fabStyle = {
-  position: "absolute",
-  bottom: 16,
-  right: 16,
-};
 //TODO: add teams => setMemberships((prev) => [...prev, {...}])
 function Teams() {
-  const theme = useTheme();
-
+  const { user } = useUser();
   const [memberships, setMemberships] = useState<Membership[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<Error | undefined>(undefined);
-  const { user } = useUser();
+  const [openDialog, setOpenDialog] = useState(false);
 
   useEffect(() => {
     if (user) {
@@ -39,15 +33,8 @@ function Teams() {
     }
   }, [user]);
 
-  const transitionDuration = {
-    enter: theme.transitions.duration.enteringScreen,
-    exit: theme.transitions.duration.leavingScreen,
-  };
-  const fab = {
-    color: "primary" as "primary",
-    sx: fabStyle as SxProps,
-    icon: <AddIcon />,
-    label: "Add",
+  const handleNewTeamClick = () => {
+    setOpenDialog(true);
   };
 
   if (error) {
@@ -70,19 +57,7 @@ function Teams() {
         </Grid>
       ))}
 
-      <Zoom
-        key={fab.color}
-        in={true}
-        timeout={transitionDuration}
-        style={{
-          transitionDelay: `${transitionDuration.exit}ms`,
-        }}
-        unmountOnExit
-      >
-        <Fab sx={fab.sx} aria-label={fab.label} color={fab.color}>
-          {fab.icon}
-        </Fab>
-      </Zoom>
+      <Fab onClick={handleNewTeamClick} />
     </Grid>
   );
 }
