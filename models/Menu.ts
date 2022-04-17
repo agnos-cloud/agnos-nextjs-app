@@ -2,13 +2,13 @@ import type { Form } from "./Form";
 
 export interface Menu {
   id: string;
-  title?: string;
-  items?: Array<MenuItem>;
+  title: string;
+  items: Array<MenuItem>;
 }
 
 export interface MenuItem {
   id: string;
-  title?: string;
+  title: string;
   image?: { src: string };
   isDivider?: boolean;
   paths?: Array<SvgPath>;

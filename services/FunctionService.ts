@@ -1,54 +1,54 @@
 import type { UserProfile } from "@auth0/nextjs-auth0";
 import axios from "axios";
-import type { Plugin, PluginInput } from "../models/Plugin";
+import type { Function, FunctionInput } from "../models/Function";
 import ApiService from "./ApiService";
 
-export default class PluginService extends ApiService {
+export default class FunctionService extends ApiService {
   constructor(user: UserProfile | undefined) {
     super(user);
   }
 
-  create: (plugin: PluginInput) => Promise<Plugin> = async (
-    plugin: PluginInput
+  create: (func: FunctionInput) => Promise<Function> = async (
+    func: FunctionInput
   ) => {
     return axios({
       method: "POST",
-      url: `${this.apiUrl}/plugins`,
+      url: `${this.apiUrl}/functions`,
       headers: { authorization: `Bearer ${this.accessToken}` },
-      data: plugin,
+      data: func,
     })
       .then((response) => {
-        return response.data["plugin"] as Plugin;
+        return response.data["function"] as Function;
       })
       .catch((error) => {
         throw error;
       });
   };
 
-  get: (id: string) => Promise<Plugin> = async (id: string) => {
+  get: (id: string) => Promise<Function> = async (id: string) => {
     return axios({
       method: "GET",
-      url: `${this.apiUrl}/plugins/${id}`,
+      url: `${this.apiUrl}/functions/${id}`,
       headers: { authorization: `Bearer ${this.accessToken}` },
     })
       .then((response) => {
-        return response.data["plugin"] as Plugin;
+        return response.data["function"] as Function;
       })
       .catch((error) => {
         throw error;
       });
   };
 
-  getMyPlugins: (teamId: string | undefined) => Promise<Plugin[]> = async (
+  getMyFunctions: (teamId: string | undefined) => Promise<Function[]> = async (
     teamId: string | undefined
   ) => {
     return axios({
       method: "GET",
-      url: `${this.apiUrl}/me/plugins${teamId ? `?team=${teamId}` : ""}`,
+      url: `${this.apiUrl}/me/functions${teamId ? `?team=${teamId}` : ""}`,
       headers: { authorization: `Bearer ${this.accessToken}` },
     })
       .then((response) => {
-        return response.data["plugins"] as Plugin[];
+        return response.data["functions"] as Function[];
       })
       .catch((error) => {
         throw error;

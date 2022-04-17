@@ -688,6 +688,21 @@
     "@jridgewell/resolve-uri" "^3.0.3"
     "@jridgewell/sourcemap-codec" "^1.4.10"
 
+"@monaco-editor/loader@^1.3.0":
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/@monaco-editor/loader/-/loader-1.3.0.tgz#659fbaf1d612ea67b2a0519a18612d1c4813e444"
+  integrity sha512-N3mGq1ktC3zh7WUx3NGO+PSDdNq9Vspk/41rEmRdrCqV9vNbBTRzAOplmUpNQsi+hmTs++ERMBobMERb8Kb+3g==
+  dependencies:
+    state-local "^1.0.6"
+
+"@monaco-editor/react@^4.4.2":
+  version "4.4.2"
+  resolved "https://registry.yarnpkg.com/@monaco-editor/react/-/react-4.4.2.tgz#e2848643e4b713138ae1a92a8d2671a13aa69661"
+  integrity sha512-QwQKkP5zXK8oA6uMpZcyQqYKQbMFUIE1Z9gPhYajk4qXdt/kGCu3RvO9SGKGlS9MSciCyd3WjEksVMDoyxQk4w==
+  dependencies:
+    "@monaco-editor/loader" "^1.3.0"
+    prop-types "^15.7.2"
+
 "@mui/base@5.0.0-alpha.74":
   version "5.0.0-alpha.74"
   resolved "https://registry.yarnpkg.com/@mui/base/-/base-5.0.0-alpha.74.tgz#15509242e7911446d5957375b1b18cbb72b3a750"
@@ -774,6 +789,27 @@
     "@types/react-is" "^16.7.1 || ^17.0.0"
     prop-types "^15.7.2"
     react-is "^17.0.2"
+
+"@mui/utils@^5.6.0":
+  version "5.6.1"
+  resolved "https://registry.yarnpkg.com/@mui/utils/-/utils-5.6.1.tgz#4ab79a21bd481555d9a588f4b18061b3c28ea5db"
+  integrity sha512-CPrzrkiBusCZBLWu0Sg5MJvR3fKJyK3gKecLVX012LULyqg2U64Oz04BKhfkbtBrPBbSQxM+DWW9B1c9hmV9nQ==
+  dependencies:
+    "@babel/runtime" "^7.17.2"
+    "@types/prop-types" "^15.7.4"
+    "@types/react-is" "^16.7.1 || ^17.0.0"
+    prop-types "^15.7.2"
+    react-is "^17.0.2"
+
+"@mui/x-data-grid@^5.9.0":
+  version "5.9.0"
+  resolved "https://registry.yarnpkg.com/@mui/x-data-grid/-/x-data-grid-5.9.0.tgz#2f9801dcc662d40ef66ae5b1cc1fe24b48242fc8"
+  integrity sha512-RTRGtj5N/Y6Oe41mhcdQM93PtDves2wwMPfabRlstvCSB3m6608JikepeP7txDMV50x7yEYDHgDVSY3cQul0xQ==
+  dependencies:
+    "@mui/utils" "^5.6.0"
+    clsx "^1.1.1"
+    prop-types "^15.8.1"
+    reselect "^4.1.5"
 
 "@next/env@12.1.4":
   version "12.1.4"
@@ -3989,6 +4025,11 @@ require-directory@^2.1.1:
   resolved "https://registry.yarnpkg.com/require-directory/-/require-directory-2.1.1.tgz#8c64ad5fd30dab1c976e2344ffe7f792a6a6df42"
   integrity sha1-jGStX9MNqxyXbiNE/+f3kqam30I=
 
+reselect@^4.1.5:
+  version "4.1.5"
+  resolved "https://registry.yarnpkg.com/reselect/-/reselect-4.1.5.tgz#852c361247198da6756d07d9296c2b51eddb79f6"
+  integrity sha512-uVdlz8J7OO+ASpBYoz1Zypgx0KasCY20H+N8JD13oUMtPvSHQuscrHop4KbXrbsBcdB9Ds7lVK7eRkBIfO43vQ==
+
 resolve-alpn@^1.0.0:
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/resolve-alpn/-/resolve-alpn-1.2.1.tgz#b7adbdac3546aaaec20b45e7d8265927072726f9"
@@ -4175,6 +4216,11 @@ stack-utils@^2.0.3:
   integrity sha512-xrQcmYhOsn/1kX+Vraq+7j4oE2j/6BFscZ0etmYg81xuM8Gq0022Pxb8+IqgOFUIaxHs0KaSb7T1+OegiNrNFA==
   dependencies:
     escape-string-regexp "^2.0.0"
+
+state-local@^1.0.6:
+  version "1.0.7"
+  resolved "https://registry.yarnpkg.com/state-local/-/state-local-1.0.7.tgz#da50211d07f05748d53009bee46307a37db386d5"
+  integrity sha512-HTEHMNieakEnoe33shBYcZ7NX83ACUjCu8c40iOGEZsngj9zRnkqS9j1pqQPXwobB0ZcVTk27REb7COQ0UR59w==
 
 "statuses@>= 1.5.0 < 2":
   version "1.5.0"

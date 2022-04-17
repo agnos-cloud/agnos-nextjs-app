@@ -3,24 +3,25 @@ import { Add as AddIcon } from "@mui/icons-material";
 import type { MouseEventHandler } from "react";
 
 export interface FabProps {
+  location?: Array<("bottom" | "left" | "right" | "top")>;
   onClick?: MouseEventHandler<HTMLButtonElement> | undefined;
 }
 
-const fabStyle = {
-  bottom: 16,
-  left: "auto",
-  margin: 0,
-  position: "fixed",
-  right: 16,
-  top: "auto",
-};
-
-const Fab = ({ onClick }: FabProps) => {
+const Fab = ({ location = ["bottom", "right"], onClick }: FabProps) => {
   const theme = useTheme();
 
   const transitionDuration = {
     enter: theme.transitions.duration.enteringScreen,
     exit: theme.transitions.duration.leavingScreen,
+  };
+
+  const fabStyle = {
+    bottom: location.includes("bottom") ? 16 : "auto",
+    left: location.includes("left") ? theme.spacing(8) + 16 : "auto",
+    margin: 0,
+    position: "fixed",
+    right: location.includes("right") ? 16 : "auto",
+    top: location.includes("top") ? theme.spacing(8) + 16 : "auto",
   };
 
   const fab = {

@@ -9,14 +9,15 @@ export interface Form {
 
 export interface FormAction {
   title: string;
-  run: () => void; // inside this func we will fetch field, component, env and design variables and make them available to the eval function
-  // the eval function should return an axios config object so we can make the request on its behalf
+  run: string;
+  transform: string; // this is a function that will determine the objects passed to the run function
 }
 
 export interface FormField {
   name: string;
   title: string;
   default?: any;
+  required?: boolean;
   type?: HTMLInputTypeAttribute;
 }
 

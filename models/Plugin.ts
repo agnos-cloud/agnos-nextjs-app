@@ -17,13 +17,19 @@ export interface PluginInput {
   team?: string;
 }
 
-export interface PluginVersion extends Model {
-  name: string;
-  config: string;
-  description?: string;
+export interface PluginVersion
+  extends Omit<PluginVersionInput, "plugin">,
+    Model {
   menus?: Array<Menu>;
-  published: boolean;
   plugin?: Plugin;
   team?: Team;
   user?: User;
+}
+
+export interface PluginVersionInput {
+  name: string;
+  config: string;
+  description?: string;
+  plugin: string;
+  published: boolean;
 }

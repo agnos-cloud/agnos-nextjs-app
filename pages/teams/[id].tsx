@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import { Box, Tab, Tabs } from "@mui/material";
 import {
   Description as DesignsIcon,
+  FlashOn as FunctionsIcon,
   Power as PluginsIcon,
 } from "@mui/icons-material";
 import TabPanel from "../../components/TabPanel";
@@ -10,6 +11,7 @@ import Designs from "../../components/Designs";
 import { useUser } from "@auth0/nextjs-auth0";
 import LoginBackdrop from "../../components/LoginBackdrop";
 import Plugins from "../../components/Plugins";
+import Functions from "../../components/Functions";
 
 function a11yProps(index: number) {
   return {
@@ -56,6 +58,12 @@ const Team = () => {
             iconPosition="start"
             {...a11yProps(1)}
           />
+          <Tab
+            label="Functions"
+            icon={<FunctionsIcon fontSize="small" />}
+            iconPosition="start"
+            {...a11yProps(1)}
+          />
         </Tabs>
       </Box>
       <TabPanel value={tabValue} index={0}>
@@ -63,6 +71,9 @@ const Team = () => {
       </TabPanel>
       <TabPanel value={tabValue} index={1}>
         <Plugins teamId={id as string} />
+      </TabPanel>
+      <TabPanel value={tabValue} index={2}>
+        <Functions teamId={id as string} />
       </TabPanel>
     </Box>
   );
