@@ -37,8 +37,10 @@ import router from "next/router";
 
 import {
   DESIGNS_PATH,
+  FUNCTIONS_PATH,
   LOGIN_PATH,
   LOGOUT_PATH,
+  PLUGINS_PATH,
   STORE_PATH,
   TEAMS_PATH,
 } from "../../constants/paths";
@@ -148,19 +150,19 @@ function FullLayout({ children }: any) {
       onClick: () => router.push(DESIGNS_PATH),
     },
     {
-      text: "Teams",
-      icon: <TeamsIcon />,
-      onClick: () => router.push(TEAMS_PATH),
-    },
-    {
       text: "Plugins",
       icon: <PluginsIcon />,
-      onClick: () => router.push("/plugins"),
+      onClick: () => router.push(PLUGINS_PATH),
     },
     {
       text: "Functions",
       icon: <FunctionsIcon />,
-      onClick: () => router.push("/functions"),
+      onClick: () => router.push(FUNCTIONS_PATH),
+    },
+    {
+      text: "Teams",
+      icon: <TeamsIcon />,
+      onClick: () => router.push(TEAMS_PATH),
     },
     {
       text: "Marketplace",
