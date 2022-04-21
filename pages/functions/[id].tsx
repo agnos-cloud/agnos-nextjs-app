@@ -1,76 +1,37 @@
 import { useEffect, useState } from "react";
-import { Box, Switch, Typography } from "@mui/material";
-import { DataGrid, GridColDef, GridValueGetterParams } from "@mui/x-data-grid";
+import { Box, Tab, Tabs, Typography } from "@mui/material";
+import {
+  MergeType as VersionsIcon,
+  FlashOn as FunctionsIcon,
+  Notes as LogsIcon,
+} from "@mui/icons-material";
 import { useRouter } from "next/router";
-import Fab from "../../components/Fab";
 import { useUser } from "@auth0/nextjs-auth0";
+import LoginBackdrop from "../../components/LoginBackdrop";
+import TabPanel from "../../components/TabPanel";
+import FunctionVersions from "../../components/FunctionVersions";
+import type { Function } from "../../models/Function";
+import FunctionService from "../../services/FunctionService";
 import Loading from "../../components/Loading";
 import ErrorBox from "../../components/ErrorBox";
-import LoginBackdrop from "../../components/LoginBackdrop";
-import MultiPurposeDialog from "../../components/MultiPurposeDialog";
-import { useFunctionVersionForm } from "../../hooks/functionVersion.hooks";
-import type { Function, FunctionVersion } from "../../models/Function";
-import FunctionService from "../../services/FunctionService";
-import FunctionVersionService from "../../services/FunctionVersionService";
 
-const columns: GridColDef[] = [
-  { field: "id", headerName: "ID", width: 300 },
-  {
-    field: "name",
-    headerName: "Name",
-    width: 150,
-    // editable: true,
-  },
-  {
-    field: "description",
-    headerName: "Description",
-    width: 400,
-    // editable: true,
-  },
-  {
-    field: "published",
-    headerName: "Published",
-    width: 150,
-    // editable: true,
-    renderCell: (params: GridValueGetterParams) => (
-      <Switch checked={params.value} readOnly />
-    ),
-  },
-  {
-    field: "createdAt",
-    headerName: "Date Created",
-    // description: "This column has a value getter and is not sortable.",
-    // sortable: false,
-    width: 150,
-    valueGetter: (params: GridValueGetterParams) =>
-      new Date(params.value).toDateString(),
-  },
-];
+function a11yProps(index: number) {
+  return {
+    id: `simple-tab-${index}`,
+    "aria-controls": `simple-tabpanel-${index}`,
+  };
+}
 
 const FunctionPage = () => {
   const location = useRouter();
   const { user } = useUser();
   const [func, setFunc] = useState<Function | undefined>(undefined);
-  const [functionVersions, setFunctionVersions] = useState<FunctionVersion[]>(
-    []
-  );
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<Error | undefined>(undefined);
-  const [openDialog, setOpenDialog] = useState(false);
-  const {
-    name,
-    code,
-    description,
-    published,
-    setName,
-    setCode,
-    setDescription,
-    setPublished,
-    form,
-    errors,
-  } = useFunctionVersionForm();
 
   const { id } = location.query;
+
+  const [tabValue, setTabValue] = useState(0);
 
   useEffect(() => {
     if (user && id) {
@@ -88,75 +49,8 @@ const FunctionPage = () => {
     }
   }, [user, id]);
 
-  useEffect(() => {
-    if (user && id) {
-      setIsLoading(true);
-      new FunctionVersionService(user)
-        .getMany(id as string)
-        .then((response) => {
-          setFunctionVersions(response);
-          setIsLoading(false);
-        })
-        .catch((error) => {
-          setError(new Error(error));
-          setIsLoading(false);
-        });
-    }
-  }, [user, id]);
-
-  useEffect(() => {
-    if (functionVersions && functionVersions.length) {
-      const funcVer = functionVersions[0];
-      setName(funcVer.name);
-      setCode(funcVer.code);
-      setDescription(funcVer.description);
-      setPublished(funcVer.published);
-    }
-  }, [functionVersions]);
-
-  const pageSize = 10;
-  const rowHeight = 52;
-
-  const handleNewVersionClick = () => {
-    setOpenDialog(true);
-  };
-
-  const handleSubmitNewVersionClick = () => {
-    setOpenDialog(false);
-    if (user && id) {
-      if (errors && errors.length) {
-        // TODO: show errors
-        alert(errors[0]);
-        return;
-      }
-      if (!code) {
-        // TODO: show error
-        alert("Enter code to be executed");
-        return;
-      }
-      setIsLoading(true);
-      new FunctionVersionService(user)
-        .create({
-          name,
-          description,
-          code,
-          published,
-          function: id as string,
-        })
-        .then((functionVersion) => {
-          setFunctionVersions((funcVersions) => [
-            functionVersion,
-            ...funcVersions,
-          ]);
-          setIsLoading(false);
-        })
-        .catch((error) => {
-          setError(new Error(error));
-          setIsLoading(false);
-        });
-    } else {
-      // TODO:
-    }
+  const handleChange = (_event: React.SyntheticEvent, newValue: number) => {
+    setTabValue(newValue);
   };
 
   if (isLoading || !func) {
@@ -171,48 +65,76 @@ const FunctionPage = () => {
     return <LoginBackdrop />;
   }
 
+  // TODO: ensure user has permission to interact with this function
+
   return (
     <Box sx={{ width: "100%" }}>
       <Typography variant="body1" color="text.secondary">
         {func?.name}
       </Typography>
       <Typography variant="caption" color="text.secondary">
-        {func.description}
+        {func?.description}
       </Typography>
       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-        <div style={{ height: rowHeight * (pageSize + 3) }}>
-          <DataGrid
-            rows={functionVersions.map((v) => ({ ...v, id: v._id }))}
-            columns={columns}
-            pageSize={pageSize}
-            rowsPerPageOptions={[5]}
-            // checkboxSelection
-            disableSelectionOnClick
+        <Tabs
+          value={tabValue}
+          onChange={handleChange}
+          aria-label="function tabs"
+        >
+          <Tab
+            label="Versions"
+            icon={<VersionsIcon fontSize="small" />}
+            iconPosition="start"
+            {...a11yProps(0)}
           />
-
-          <MultiPurposeDialog
-            open={openDialog}
-            title="Create New Version"
-            onClose={() => setOpenDialog(false)}
-            actions={[
-              {
-                text: "Cancel",
-                onClick: () => setOpenDialog(false),
-              },
-              {
-                text: "Submit",
-                onClick: handleSubmitNewVersionClick,
-              },
-            ]}
-          >
-            {form}
-          </MultiPurposeDialog>
-
-          <Fab onClick={handleNewVersionClick} location={["bottom", "left"]} />
-        </div>
+          <Tab
+            label="Invocations"
+            icon={<FunctionsIcon fontSize="small" />}
+            iconPosition="start"
+            {...a11yProps(1)}
+          />
+          <Tab
+            label="Console Logs"
+            icon={<LogsIcon fontSize="small" />}
+            iconPosition="start"
+            {...a11yProps(1)}
+          />
+        </Tabs>
       </Box>
+      <TabPanel value={tabValue} index={0}>
+        <FunctionVersions functionId={id as string} />
+      </TabPanel>
+      <TabPanel value={tabValue} index={1}>
+        invocations
+      </TabPanel>
+      <TabPanel value={tabValue} index={2}>
+        console logs
+      </TabPanel>
     </Box>
   );
 };
 
 export default FunctionPage;
+
+/**
+ * move what is currently on this page to <FunctionVersions />
+ *  when a row is clicked show multipurpose dialog to view version or allow editing of version (if it's not published)
+ *
+ * create <FunctionInvocations /> which will contain:
+ *  a small label showing total successful invocations and total failed invocations (ever)
+ *  filter to be able to filter by version, invocation result type (succeeded/failed), env (test/production), a time range to consider
+ *  a card showing total successful invocations and/or total failed invocations for the filtered versions, invocation types and time range
+ *  a card next to that showing a graph of invocations vs datetime, color-code according to type
+ *      clicking on a datetime on the graph should take you to that date time on the table below
+ *  a table below with columns: datetime | env | invocation type | version | summary of result or error
+ *      the rows of the table will be color-coded according to the invocation type
+ *      when a row is clicked show context/sandbox, result or error details
+ *
+ * create <FunctionConsole />
+ *  filter by version, log type (info/warning/error), env (test/production), a time range to consider
+ *  a card showing graph of logs vs datetime, color-coded according to type
+ *      clicking on a datetime on the graph should take you to that date time on the table below
+ *  a table below with columns: datetime | env | log type | version | summary of log data
+ *      the rows of the table will be color-coded according to the log type
+ *      when a row is clicked show log data details
+ */

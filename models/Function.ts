@@ -1,3 +1,4 @@
+import type { PermissionScope } from "../constants/permissions";
 import type { Model } from "./Model";
 import type { Team } from "./Team";
 import type { User } from "./User";
@@ -25,11 +26,23 @@ export interface FunctionVersion
   user?: User;
 }
 
+export interface FunctionVersionUpdate
+  extends Omit<
+    FunctionVersionInput,
+    "name" | "code" | "function" | "published"
+  > {
+  name?: string;
+  code?: string;
+  published?: boolean;
+}
+
 export interface FunctionVersionInput {
   name: string;
   code: string;
   description?: string;
   function: string;
   published: boolean;
+  scopes?: Array<PermissionScope>;
   secrets?: object;
+  testData?: string;
 }

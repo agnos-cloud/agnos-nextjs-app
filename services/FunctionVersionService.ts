@@ -1,6 +1,10 @@
 import type { UserProfile } from "@auth0/nextjs-auth0";
 import axios from "axios";
-import type { FunctionVersion, FunctionVersionInput } from "../models/Function";
+import type {
+  FunctionVersion,
+  FunctionVersionInput,
+  FunctionVersionUpdate,
+} from "../models/Function";
 import ApiService from "./ApiService";
 
 export default class FunctionVersionService extends ApiService {
@@ -54,4 +58,25 @@ export default class FunctionVersionService extends ApiService {
           throw error;
         });
     };
+
+  update: (
+    id: string,
+    functionVersion: FunctionVersionUpdate
+  ) => Promise<FunctionVersion> = async (
+    id: string,
+    functionVersion: FunctionVersionUpdate
+  ) => {
+    return axios({
+      method: "PATCH",
+      url: `${this.apiUrl}/function-versions/${id}`,
+      headers: { authorization: `Bearer ${this.accessToken}` },
+      data: functionVersion,
+    })
+      .then((response) => {
+        return response.data["functionVersion"] as FunctionVersion;
+      })
+      .catch((error) => {
+        throw error;
+      });
+  };
 }

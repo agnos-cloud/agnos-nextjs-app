@@ -5,17 +5,20 @@ import type { Plugin } from "./Plugin";
 import type { TeamDesignShare } from "./TeamDesignShare";
 import type { User } from "./User";
 
-export interface Team extends Model {
-  name: string;
+export interface Team extends TeamInput, Model {
   autoCreated?: boolean;
-  description?: string;
   designs?: Array<Design>;
-  email?: string;
   memberships?: Array<Membership>;
-  private?: boolean;
-  picture?: string;
   plugins?: Array<Plugin>;
-  secrets?: object;
   user?: User;
   teamDesignShares?: Array<TeamDesignShare>;
+}
+
+export interface TeamInput {
+  name: string;
+  description?: string;
+  email?: string;
+  picture?: string;
+  private?: boolean;
+  secrets?: object;
 }
