@@ -1,13 +1,25 @@
 import { ReactElement, useState } from "react";
 import {
+  Checkbox,
   FormControlLabel,
   FormGroup,
   FormLabel,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
   Switch,
   TextField,
 } from "@mui/material";
+import {
+  Description as DesignIcon,
+  Language as EnvIcon,
+  Person as UserIcon,
+} from "@mui/icons-material";
 import { nanoid } from "nanoid";
 import Editor from "../components/Editor";
+import { PermissionScope } from "../constants/permissions";
+import { testDataSchema } from "../schema/testDataSchema";
 
 // TODO: maybe we should allow a function to execute another function: run(functionId, context)
 // in that case we may want to fetch the IDs of executable functions so the editor can hint them to the developer
@@ -16,6 +28,8 @@ export function useFunctionVersionForm() {
   const [description, setDescription] = useState<string | undefined>(undefined);
   const [published, setPublished] = useState<boolean>(false);
   const [code, setCode] = useState<string | undefined>("");
+  const [scopes, setScopes] = useState<Array<string>>([]);
+  const [testData, setTestData] = useState<string | undefined>("");
   const [errors, setErrors] = useState<any[]>([]);
 
   const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -34,8 +48,25 @@ export function useFunctionVersionForm() {
     setPublished(event.target.checked);
   };
 
-  const handleConfigChange = (value: string | undefined) => {
+  const handleCodeChange = (value: string | undefined) => {
     setCode(value);
+  };
+
+  const handleScopeToggle = (value: string) => () => {
+    const currentIndex = scopes.indexOf(value);
+    const newScopes = [...scopes];
+
+    if (currentIndex === -1) {
+      newScopes.push(value);
+    } else {
+      newScopes.splice(currentIndex, 1);
+    }
+
+    setScopes(newScopes);
+  };
+
+  const handleTestDataChange = (value: string | undefined) => {
+    setTestData(value);
   };
 
   const handleValidationError = (errors: any[]) => {
@@ -80,7 +111,43 @@ export function useFunctionVersionForm() {
       <Editor
         value={code}
         language="javascript"
-        onChange={handleConfigChange}
+        onChange={handleCodeChange}
+        onValidationError={handleValidationError}
+      />
+      <List
+        sx={{ width: "100%", bgcolor: "background.paper" }}
+        subheader={<FormLabel>Permissions</FormLabel>}
+      >
+        {Object.keys(PermissionScope).map((scope) => {
+          const labelId = `checkbox-list-secondary-label-${scope}`;
+          return (
+            <ListItem
+              key={scope}
+              secondaryAction={
+                <Checkbox
+                  edge="end"
+                  onChange={handleScopeToggle(scope)}
+                  checked={scopes.indexOf(scope) !== -1}
+                  inputProps={{ "aria-labelledby": labelId }}
+                />
+              }
+              disablePadding
+            >
+              <ListItemIcon>
+                {scope === PermissionScope["READ:DESIGN"] && <DesignIcon />}
+                {scope === PermissionScope["READ:ENVIRONMENT"] && <EnvIcon />}
+                {scope === PermissionScope["READ:USER"] && <UserIcon />}
+              </ListItemIcon>
+              <ListItemText id="switch-list-label-wifi" primary={scope} />
+            </ListItem>
+          );
+        })}
+      </List>
+      <FormLabel>Test Data</FormLabel>
+      <Editor
+        value={testData}
+        schemas={[testDataSchema]}
+        onChange={handleTestDataChange}
         onValidationError={handleValidationError}
       />
     </>
@@ -91,10 +158,14 @@ export function useFunctionVersionForm() {
     description,
     code,
     published,
+    scopes,
+    testData,
     setName,
     setDescription,
     setCode,
     setPublished,
+    setScopes,
+    setTestData,
     form,
     errors,
   };

@@ -79,4 +79,29 @@ export default class FunctionVersionService extends ApiService {
         throw error;
       });
   };
+
+  run: (
+    id: string,
+    data: { form?: Record<string, any> },
+    options: { test?: boolean }
+  ) => Promise<unknown> = async (
+    id: string,
+    data: { form?: Record<string, any> },
+    options?: { test?: boolean }
+  ) => {
+    return axios({
+      method: "POST",
+      url: `${this.apiUrl}/function-versions/${id}${
+        options?.test ? "?test=true" : ""
+      }`,
+      headers: { authorization: `Bearer ${this.accessToken}` },
+      data,
+    })
+      .then((response) => {
+        return response.data["result"];
+      })
+      .catch((error) => {
+        throw error;
+      });
+  };
 }

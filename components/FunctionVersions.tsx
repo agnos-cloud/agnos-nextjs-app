@@ -63,9 +63,13 @@ function FunctionVersions(props: FunctionVersionsProps) {
     code,
     description,
     published,
+    scopes,
+    testData,
     setName,
     setCode,
     setDescription,
+    setScopes,
+    setTestData,
     form,
     errors,
   } = useFunctionVersionForm();
@@ -75,10 +79,14 @@ function FunctionVersions(props: FunctionVersionsProps) {
     code: codeUpdate,
     description: descriptionUpdate,
     published: publishedUpdate,
+    scopes: scopesUpdate,
+    testData: testDataUpdate,
     setName: setNameUpdate,
     setCode: setCodeUpdate,
     setDescription: setDescriptionUpdate,
     setPublished: setPublishedUpdate,
+    setScopes: setScopesUpdate,
+    setTestData: setTestDataUpdate,
     form: formUpdate,
     errors: errorsUpdate,
   } = useFunctionVersionForm();
@@ -105,6 +113,8 @@ function FunctionVersions(props: FunctionVersionsProps) {
       setName(funcVer.name);
       setCode(funcVer.code);
       setDescription(funcVer.description);
+      setScopes(funcVer.scopes || []);
+      setTestData(funcVer.testData || "");
     }
   }, [functionVersions]);
 
@@ -134,6 +144,8 @@ function FunctionVersions(props: FunctionVersionsProps) {
           description,
           code,
           published,
+          scopes,
+          testData,
           function: functionId as string,
         })
         .then((functionVersion) => {
@@ -152,16 +164,15 @@ function FunctionVersions(props: FunctionVersionsProps) {
     }
   };
 
-  const handleRowClick = (param: any, event: any) => {
-    console.log("Row:");
-    console.log(param);
-    console.log(event);
+  const handleRowClick = (param: any, _event: any) => {
     setOpenUpdateDialog(true);
     setIdUpdate(param.row._id);
     setNameUpdate(param.row.name);
     setCodeUpdate(param.row.code);
     setDescriptionUpdate(param.row.description);
     setPublishedUpdate(param.row.published);
+    setScopesUpdate(param.row.scopes || []);
+    setTestDataUpdate(param.row.testData || "");
   };
 
   const handleSubmitUpdateVersionClick = () => {
@@ -184,6 +195,8 @@ function FunctionVersions(props: FunctionVersionsProps) {
           description: descriptionUpdate,
           code: codeUpdate,
           published: publishedUpdate,
+          scopes: scopesUpdate,
+          testData: testDataUpdate,
         })
         .then((functionVersion) => {
           setFunctionVersions((funcVersions) =>
@@ -194,6 +207,43 @@ function FunctionVersions(props: FunctionVersionsProps) {
               return funcVer;
             })
           );
+          setIsLoading(false);
+        })
+        .catch((error) => {
+          setError(new Error(error));
+          setIsLoading(false);
+        });
+    } else {
+      // TODO:
+    }
+  };
+
+  const handleTestUpdateVersionClick = () => {
+    if (user && idUpdate) {
+      if (errorsUpdate && errorsUpdate.length) {
+        // TODO: show errorsUpdate
+        alert(errorsUpdate[0]);
+        return;
+      }
+      if (!codeUpdate) {
+        // TODO: show error
+        alert("Enter code to be executed");
+        return;
+      }
+      setIsLoading(true);
+      new FunctionVersionService(user)
+        .run(
+          idUpdate,
+          {
+            form: testDataUpdate
+              ? JSON.parse(testDataUpdate)["form"]
+              : undefined,
+          },
+          { test: true }
+        )
+        .then((response) => {
+          console.log(">>>>>>>>>>>>>>>>>>response from func");
+          console.log(response);
           setIsLoading(false);
         })
         .catch((error) => {
@@ -266,6 +316,10 @@ function FunctionVersions(props: FunctionVersionsProps) {
             {
               text: "Cancel",
               onClick: () => setOpenUpdateDialog(false),
+            },
+            {
+              text: "Test",
+              onClick: handleTestUpdateVersionClick,
             },
             {
               text: "Submit",

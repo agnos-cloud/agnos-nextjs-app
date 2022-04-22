@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Box, Tab, Tabs, Typography } from "@mui/material";
 import {
-  MergeType as VersionsIcon,
+  ForkRight as VersionsIcon,
   FlashOn as FunctionsIcon,
   Notes as LogsIcon,
 } from "@mui/icons-material";
@@ -117,9 +117,6 @@ const FunctionPage = () => {
 export default FunctionPage;
 
 /**
- * move what is currently on this page to <FunctionVersions />
- *  when a row is clicked show multipurpose dialog to view version or allow editing of version (if it's not published)
- *
  * create <FunctionInvocations /> which will contain:
  *  a small label showing total successful invocations and total failed invocations (ever)
  *  filter to be able to filter by version, invocation result type (succeeded/failed), env (test/production), a time range to consider

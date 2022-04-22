@@ -1,4 +1,4 @@
-import type { PermissionScope } from "../constants/permissions";
+import { PermissionScope } from "../constants/permissions";
 import type { Model } from "./Model";
 import type { Team } from "./Team";
 import type { User } from "./User";
@@ -36,13 +36,15 @@ export interface FunctionVersionUpdate
   published?: boolean;
 }
 
+const keys = Object.keys(PermissionScope);
+
 export interface FunctionVersionInput {
   name: string;
   code: string;
   description?: string;
   function: string;
   published: boolean;
-  scopes?: Array<PermissionScope>;
+  scopes?: typeof keys;
   secrets?: object;
   testData?: string;
 }
