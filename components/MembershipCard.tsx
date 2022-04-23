@@ -86,8 +86,8 @@ const MembershipCard = (props: MembershipCardProps) => {
           </Typography>
         </CardContent>
         <CardActions disableSpacing>
-          <IconButton aria-label="share">
-            <ShareIcon onClick={handleShareClick} />
+          <IconButton aria-label="share" onClick={handleShareClick}>
+            <ShareIcon />
           </IconButton>
         </CardActions>
       </CardActionArea>

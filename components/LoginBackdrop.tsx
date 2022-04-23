@@ -1,7 +1,9 @@
 import { Backdrop } from "@mui/material";
+import Link from "next/link";
 import { useState } from "react";
+import { LOGIN_PATH } from "../constants/paths";
 
-const AppBackdrop = ({children}: any) => {
+const LoginBackdrop = () => {
     const [open, setOpen] = useState(true);
     const handleClose = () => {
       setOpen(false);
@@ -14,10 +16,10 @@ const AppBackdrop = ({children}: any) => {
           open={open}
           onClick={handleClose}
         >
-          {children}
+          <Link href={LOGIN_PATH}>You may need to log in</Link>
         </Backdrop>
       </div>
     );
 };
 
-export default AppBackdrop;
+export default LoginBackdrop;

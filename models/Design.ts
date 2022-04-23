@@ -4,15 +4,19 @@ import type { TeamDesignShare } from "./TeamDesignShare";
 import type { User } from "./User";
 import type { UserDesignShare } from "./UserDesignShare";
 
-export interface Design extends Model {
-  name: string;
-  description?: string;
+export interface Design extends Omit<DesignInput, "team">, Model {
   flow?: object;
-  private?: boolean;
   picture?: string;
   secrets?: object;
   team?: Team;
   teamDesignShares?: Array<TeamDesignShare>;
   user?: User;
   userDesignShares?: Array<UserDesignShare>;
+}
+
+export interface DesignInput {
+  name: string;
+  description?: string;
+  private?: boolean;
+  team?: string;
 }

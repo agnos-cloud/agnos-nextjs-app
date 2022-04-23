@@ -1,5 +1,5 @@
 import { useUser } from "@auth0/nextjs-auth0";
-import DesignsComponent from "../../components/Designs";
+import PluginsComponent from "../../components/Plugins";
 import LoginBackdrop from "../../components/LoginBackdrop";
 
 export default function Designs() {
@@ -9,5 +9,5 @@ export default function Designs() {
     return <LoginBackdrop />;
   }
 
-  return <DesignsComponent />;
+  return <PluginsComponent />;
 }

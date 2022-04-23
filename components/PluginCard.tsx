@@ -9,25 +9,22 @@ import {
   Typography,
 } from "@mui/material";
 import {
-  AdminPanelSettings as AdminIcon,
-  Edit as WriteIcon,
   Lock as PrivateIcon,
   MoreVert as MoreVertIcon,
   Share as ShareIcon,
-  Visibility as ReadIcon,
 } from "@mui/icons-material";
 import router from "next/router";
-import type { TeamDesignShare } from "../models/TeamDesignShare";
-// TODO: a way to show that teamDesignShare.design?.team._id === teamDesignShare.team?._id
-export interface DesignCardProps {
-  teamDesignShare: TeamDesignShare;
+import type { Plugin } from "../models/Plugin";
+
+export interface PluginCardProps {
+  plugin: Plugin;
 }
 
-const DesignCard = (props: DesignCardProps) => {
-  const { teamDesignShare } = props;
+const PluginCard = (props: PluginCardProps) => {
+  const { plugin } = props;
 
   const handleCardClick = () => {
-    router.push(`/designs/${teamDesignShare.design?._id}`);
+    router.push(`/plugins/${plugin._id}`);
   };
 
   const handleOptionsClick = (e: React.SyntheticEvent) => {
@@ -51,38 +48,19 @@ const DesignCard = (props: DesignCardProps) => {
           }
           title={
             <Typography gutterBottom variant="h5" component="div">
-              {teamDesignShare.design?.name}{" "}
-              {teamDesignShare.design?.private && (
-                <PrivateIcon fontSize="small" />
-              )}
+              {plugin.name} {plugin.private && <PrivateIcon fontSize="small" />}
             </Typography>
           }
           subheader={
             <Typography variant="subtitle2" color="text.secondary">
-              Created{" "}
-              {new Date(
-                teamDesignShare.design?.createdAt || teamDesignShare.createdAt
-              ).toDateString()}{" "}
-              {teamDesignShare.permission?.name === "ADMIN" && (
-                <AdminIcon fontSize="small" />
-              )}
-              {teamDesignShare.permission?.name === "WRITE" && (
-                <WriteIcon fontSize="small" />
-              )}
-              {teamDesignShare.permission?.name === "READ" && (
-                <ReadIcon fontSize="small" />
-              )}
+              Created {new Date(plugin.createdAt).toDateString()}
             </Typography>
           }
         />
-        <CardMedia
-          component="img"
-          image={teamDesignShare.design?.picture}
-          alt={teamDesignShare.design?.name}
-        />
+        <CardMedia component="img" image={plugin.picture} alt={plugin.name} />
         <CardContent>
           <Typography variant="subtitle1" color="text.secondary">
-            {teamDesignShare.design?.description}
+            {plugin.description}
           </Typography>
         </CardContent>
         <CardActions disableSpacing>
@@ -95,4 +73,4 @@ const DesignCard = (props: DesignCardProps) => {
   );
 };
 
-export default DesignCard;
+export default PluginCard;

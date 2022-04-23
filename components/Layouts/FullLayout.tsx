@@ -23,7 +23,7 @@ import {
   Description as DesignsIcon,
   ExitToApp as LogoutIcon,
   Home as HomeIcon,
-  FlashOn as IntegrationsIcon,
+  FlashOn as FunctionsIcon,
   Menu as MenuIcon,
   Power as PluginsIcon,
   Person as ProfileIcon,
@@ -37,8 +37,10 @@ import router from "next/router";
 
 import {
   DESIGNS_PATH,
+  FUNCTIONS_PATH,
   LOGIN_PATH,
   LOGOUT_PATH,
+  PLUGINS_PATH,
   STORE_PATH,
   TEAMS_PATH,
 } from "../../constants/paths";
@@ -115,7 +117,7 @@ const Drawer = styled(MuiDrawer, {
   }),
 }));
 
-function Layout({ children }: any) {
+function FullLayout({ children }: any) {
   const theme = useTheme();
   const [open, setOpen] = useState(false);
   const { user } = useUser();
@@ -148,23 +150,19 @@ function Layout({ children }: any) {
       onClick: () => router.push(DESIGNS_PATH),
     },
     {
+      text: "Plugins",
+      icon: <PluginsIcon />,
+      onClick: () => router.push(PLUGINS_PATH),
+    },
+    {
+      text: "Functions",
+      icon: <FunctionsIcon />,
+      onClick: () => router.push(FUNCTIONS_PATH),
+    },
+    {
       text: "Teams",
       icon: <TeamsIcon />,
       onClick: () => router.push(TEAMS_PATH),
-    },
-    {
-      // plugins are menus (the building blocks of your designs)
-      text: "Plugins",
-      icon: <PluginsIcon />,
-      onClick: () => router.push("/plugins"),
-    },
-    {
-      // integrations are config file generators that accept a system design and produce an equivalent config for diff systems
-      // e.g. for serverless, terraform, aws cloud formation json, kubernetes etc.
-      // they are implemented as endpoints to which system design is sent as part of the request and the config is received in the response
-      text: "Integrations",
-      icon: <IntegrationsIcon />,
-      onClick: () => router.push("/integrations"),
     },
     {
       text: "Marketplace",
@@ -372,4 +370,4 @@ function Layout({ children }: any) {
   );
 }
 
-export default Layout;
+export default FullLayout;

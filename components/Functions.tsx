@@ -1,39 +1,41 @@
 import { useEffect, useState } from "react";
-import { Grid } from "@mui/material";
-import DesignCard from "./DesignCard";
-import type { TeamDesignShare } from "../models/TeamDesignShare";
-import MultiPurposeDialog from "./MultiPurposeDialog";
 import { useUser } from "@auth0/nextjs-auth0";
+import type { Function } from "../models/Function";
+import { useCreateFunctionForm } from "../hooks/function.hooks";
+import FunctionService from "../services/FunctionService";
 import router from "next/router";
 import ErrorBox from "./ErrorBox";
 import Loading from "./Loading";
-import TeamDesignShareService from "../services/TeamDesignShareService";
-import DesignService from "../services/DesignService";
-import { useCreateDesignForm } from "../hooks/design.hooks";
+import { Grid } from "@mui/material";
+import FunctionCard from "./FunctionCard";
+import MultiPurposeDialog from "./MultiPurposeDialog";
 import Fab from "./Fab";
 
-export interface DesignsProps {
+export interface FunctionsProps {
   teamId?: string;
 }
 
-function Designs(props: DesignsProps) {
+function Functions(props: FunctionsProps) {
   const { teamId } = props;
   const { user } = useUser();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<Error | undefined>(undefined);
   const [openDialog, setOpenDialog] = useState(false);
-  const [teamDesignShares, setTeamDesignShares] = useState<TeamDesignShare[]>(
-    []
-  );
-  const { name, description, private: isPrivate, form } = useCreateDesignForm();
+  const [functions, setFunctions] = useState<Function[]>([]);
+  const {
+    name,
+    description,
+    private: isPrivate,
+    form,
+  } = useCreateFunctionForm();
 
   useEffect(() => {
     if (user) {
       setIsLoading(true);
-      new TeamDesignShareService(user)
-        .getMyTeamDesignShares(teamId)
+      new FunctionService(user)
+        .getMyFunctions(teamId)
         .then((response) => {
-          setTeamDesignShares(response);
+          setFunctions(response);
           setIsLoading(false);
         })
         .catch((error) => {
@@ -43,24 +45,24 @@ function Designs(props: DesignsProps) {
     }
   }, [user]);
 
-  const handleNewDesignClick = () => {
+  const handleNewFunctionClick = () => {
     setOpenDialog(true);
   };
 
-  const handleSubmitNewDesignClick = () => {
+  const handleSubmitNewFunctionClick = () => {
     setOpenDialog(false);
     if (user) {
       setIsLoading(true);
-      new DesignService(user)
+      new FunctionService(user)
         .create({
           name,
           description,
           private: isPrivate,
           team: teamId,
         })
-        .then((design) => {
+        .then((func) => {
           setIsLoading(false);
-          router.push(`/designs/${design._id}`);
+          router.push(`/functions/${func._id}`);
         })
         .catch((error) => {
           setError(new Error(error));
@@ -81,23 +83,15 @@ function Designs(props: DesignsProps) {
 
   return (
     <Grid container spacing={1}>
-      {teamDesignShares.map((teamDesignShare) => (
-        <Grid
-          key={teamDesignShare._id}
-          item
-          xs={12}
-          sm={6}
-          md={4}
-          lg={3}
-          xl={2}
-        >
-          <DesignCard teamDesignShare={teamDesignShare} />
+      {functions.map((func) => (
+        <Grid key={func._id} item xs={12} sm={6} md={4} lg={3} xl={2}>
+          <FunctionCard function={func} />
         </Grid>
       ))}
 
       <MultiPurposeDialog
         open={openDialog}
-        title="Create New Design"
+        title="Create New Function"
         onClose={() => setOpenDialog(false)}
         actions={[
           {
@@ -106,16 +100,16 @@ function Designs(props: DesignsProps) {
           },
           {
             text: "Submit",
-            onClick: handleSubmitNewDesignClick,
+            onClick: handleSubmitNewFunctionClick,
           },
         ]}
       >
         {form}
       </MultiPurposeDialog>
 
-      <Fab onClick={handleNewDesignClick} />
+      <Fab onClick={handleNewFunctionClick} />
     </Grid>
   );
 }
 
-export default Designs;
+export default Functions;
