@@ -2,6 +2,8 @@ import { useEffect } from "react";
 import MonacoEditor, { useMonaco } from "@monaco-editor/react";
 import agnosTypeDef from "../constants/types/agnos";
 import axiosTypeDef from "../constants/types/axios";
+import requestTypeDef from "../constants/types/request";
+import requireFromUrlTypeDef from "../constants/types/require-from-url";
 
 export interface EditorProps {
   language?: string | undefined;
@@ -41,7 +43,12 @@ const Editor = ({
         });
 
         // extra libraries
-        var libSource = [agnosTypeDef, axiosTypeDef].join("\n");
+        var libSource = [
+          agnosTypeDef,
+          axiosTypeDef,
+          requestTypeDef,
+          requireFromUrlTypeDef,
+        ].join("\n");
         var libUri = "ts:filename/agnos.d.ts";
         monaco.languages.typescript.javascriptDefaults.addExtraLib(
           libSource,
