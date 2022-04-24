@@ -73,14 +73,15 @@ function FunctionVersions(props: FunctionVersionsProps) {
     form,
     errors,
   } = useFunctionVersionForm();
-  const [idUpdate, setIdUpdate] = useState<string | undefined>(undefined);
   const {
+    id: idUpdate,
     name: nameUpdate,
     code: codeUpdate,
     description: descriptionUpdate,
     published: publishedUpdate,
     scopes: scopesUpdate,
     testData: testDataUpdate,
+    setId: setIdUpdate,
     setName: setNameUpdate,
     setCode: setCodeUpdate,
     setDescription: setDescriptionUpdate,

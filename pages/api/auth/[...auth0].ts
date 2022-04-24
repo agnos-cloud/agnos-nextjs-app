@@ -24,8 +24,8 @@ const afterCallback = async (
         authorization: `Bearer ${accessToken}`
       }
     });
-    if (response.data.session?.userId) {
-      session.user._id = response.data.session.userId;
+    if (response.data.session?.user) {
+      session.user._id = response.data.session.user;
     }
   } catch (e) {
     console.log(e);
