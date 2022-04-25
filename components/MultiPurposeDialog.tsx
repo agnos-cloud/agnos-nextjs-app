@@ -5,11 +5,12 @@ import {
   DialogContent,
   DialogTitle,
 } from "@mui/material";
+import type { MouseEventHandler } from "react";
 
 export interface MultiPurposeDialogProps {
   actions: ({
     text: string;
-    onClick: () => void;
+    onClick: MouseEventHandler<HTMLButtonElement> | undefined;
   })[];
   children?: any;
   open: boolean;

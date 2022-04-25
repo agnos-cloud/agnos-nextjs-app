@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { MouseEventHandler, useEffect, useState } from "react";
 import { useUser } from "@auth0/nextjs-auth0";
 import { Box, Switch } from "@mui/material";
 import { DataGrid, GridColDef, GridValueGetterParams } from "@mui/x-data-grid";
@@ -219,7 +219,10 @@ function FunctionVersions(props: FunctionVersionsProps) {
     }
   };
 
-  const handleTestUpdateVersionClick = () => {
+  const handleTestUpdateVersionClick:
+    | MouseEventHandler<HTMLButtonElement>
+    | undefined = (e) => {
+    e.preventDefault();
     if (user && idUpdate) {
       if (errorsUpdate && errorsUpdate.length) {
         // TODO: show errorsUpdate

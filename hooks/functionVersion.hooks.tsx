@@ -17,11 +17,13 @@ import {
   Person as UserIcon,
 } from "@mui/icons-material";
 import { nanoid } from "nanoid";
+import { useUser } from "@auth0/nextjs-auth0";
 import Editor from "../components/Editor";
 import { PermissionScope } from "../constants/permissions";
 import { testDataSchema } from "../schema/testDataSchema";
 import socket from "../utils/socket";
-import { useUser } from "@auth0/nextjs-auth0";
+import { Env } from "../constants/env";
+import { DataType } from "../constants/log";
 
 // TODO: maybe we should allow a function to execute another function: run(functionId, context)
 // in that case we may want to fetch the IDs of executable functions so the editor can hint them to the developer
@@ -35,13 +37,20 @@ export function useFunctionVersionForm() {
   const [scopes, setScopes] = useState<Array<string>>([]);
   const [testData, setTestData] = useState<string | undefined>("");
   const [errors, setErrors] = useState<any[]>([]);
+  const [consoleTexts, setConsoleTexts] = useState<string[]>([]);
 
   useEffect(() => {
     if (id && user && user["_id"]) {
       const session: any = user["session"];
       const accessToken = session.accessToken;
-      socket.on(`${accessToken}@${id}`, (args) => {
-        console.log(args);
+      setConsoleTexts([]);
+      socket.on(`log:${accessToken}@${id}`, (log) => {
+        console.log(log);
+        const type = log["dataType"];
+        let data = log["data"];
+        let env = log["env"];
+        if (type === DataType.OBJECT) data = JSON.stringify(data);
+        if (env === Env.TEST) setConsoleTexts((texts) => [...texts, data]);
       });
     }
   }, [id, user]);
@@ -164,6 +173,25 @@ export function useFunctionVersionForm() {
         onChange={handleTestDataChange}
         onValidationError={handleValidationError}
       />
+      {id ? (
+        <TextField
+          autoFocus
+          margin="dense"
+          id="console"
+          label="Console"
+          type="text"
+          fullWidth
+          variant="standard"
+          multiline
+          rows={15}
+          value={consoleTexts.join("\n")}
+          inputProps={{
+            readOnly: true,
+          }}
+        />
+      ) : (
+        <></>
+      )}
     </>
   );
 
