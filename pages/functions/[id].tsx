@@ -14,6 +14,7 @@ import type { Function } from "../../models/Function";
 import FunctionService from "../../services/FunctionService";
 import Loading from "../../components/Loading";
 import ErrorBox from "../../components/ErrorBox";
+import FunctionLogs from "../../components/FunctionLogs";
 
 function a11yProps(index: number) {
   return {
@@ -108,7 +109,7 @@ const FunctionPage = () => {
         invocations
       </TabPanel>
       <TabPanel value={tabValue} index={2}>
-        console logs
+        <FunctionLogs functionId={id as string} />
       </TabPanel>
     </Box>
   );
