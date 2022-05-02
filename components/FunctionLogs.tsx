@@ -1,8 +1,12 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Box } from "@mui/material";
 import { DataGrid, GridColDef, GridValueGetterParams } from "@mui/x-data-grid";
 import type { Log } from "../models/Log";
 import { LogType } from "../constants/log";
+import { useUser } from "@auth0/nextjs-auth0";
+import Loading from "./Loading";
+import ErrorBox from "./ErrorBox";
+import LogService from "../services/LogService";
 
 const columns: GridColDef[] = [
   // { field: "id", headerName: "ID", width: 300 },
@@ -27,7 +31,8 @@ const columns: GridColDef[] = [
     field: "meta",
     headerName: "Version",
     width: 150,
-    valueGetter: (params: GridValueGetterParams) => params.value["versionName"],
+    valueGetter: (params: GridValueGetterParams) =>
+      params.value["versionName"] ?? params.value["version"],
   },
   {
     field: "data",
@@ -43,8 +48,36 @@ export interface FunctionLogsProps {
 
 function FunctionLogs(props: FunctionLogsProps) {
   const { functionId } = props;
+  const { user } = useUser();
   const [logs, setLogs] = useState<Log[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [error, setError] = useState<Error | undefined>(undefined);
   const pageSize = 10;
+
+  useEffect(() => {
+    if (user && functionId) {
+      setIsLoading(true);
+      new LogService(user)
+        .getMany(functionId as string)
+        .then((response) => {
+          setLogs(response);
+          setIsLoading(false);
+        })
+        .catch((error) => {
+          setError(new Error(error));
+          setIsLoading(false);
+        });
+    }
+  }, [user, functionId]);
+
+  if (isLoading) {
+    return <Loading />;
+  }
+
+  if (error) {
+    return <ErrorBox error={error} />;
+  }
+
   return (
     <Box sx={{ width: "100%" }}>
       <Box
@@ -55,7 +88,7 @@ function FunctionLogs(props: FunctionLogsProps) {
             bgcolor: "aliceblue",
           },
           "& .grid-row--error": {
-            bgcolor: "red",
+            color: "red",
           },
         }}
       >
