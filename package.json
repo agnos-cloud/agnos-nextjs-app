@@ -19,11 +19,13 @@
     "@mui/x-data-grid": "^5.9.0",
     "axios": "^0.26.1",
     "localforage": "^1.10.0",
+    "mui-plus": "^0.0.15",
     "nanoid": "^3.3.2",
     "next": "12.1.4",
     "react": "18.0.0",
     "react-dom": "18.0.0",
-    "react-flow-renderer": "^10.0.8"
+    "react-flow-renderer": "^10.0.8",
+    "socket.io-client": "^4.5.0"
   },
   "devDependencies": {
     "@types/jest": "^27.4.1",

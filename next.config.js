@@ -5,7 +5,11 @@ const nextConfig = {
     API_URL:
       process.env.NODE_ENV === "development"
         ? "http://localhost:3000"
-        : "http://localhost:3000",
+        : "http://agnos.cloud",
+    WS_URL:
+      process.env.NODE_ENV === "development"
+        ? "ws://localhost:3000"
+        : "wss://agnos.cloud",
   },
 };
 

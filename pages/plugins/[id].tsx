@@ -140,7 +140,7 @@ const Plugin = () => {
             {form}
           </MultiPurposeDialog>
 
-          <Fab onClick={handleNewVersionClick} location={["bottom", "left"]} />
+          <Fab onClick={handleNewVersionClick} position={["bottom", "left"]} />
         </div>
       </Box>
     </Box>

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { MouseEventHandler, useEffect, useState } from "react";
 import { useUser } from "@auth0/nextjs-auth0";
 import { Box, Switch } from "@mui/material";
 import { DataGrid, GridColDef, GridValueGetterParams } from "@mui/x-data-grid";
@@ -73,14 +73,15 @@ function FunctionVersions(props: FunctionVersionsProps) {
     form,
     errors,
   } = useFunctionVersionForm();
-  const [idUpdate, setIdUpdate] = useState<string | undefined>(undefined);
   const {
+    id: idUpdate,
     name: nameUpdate,
     code: codeUpdate,
     description: descriptionUpdate,
     published: publishedUpdate,
     scopes: scopesUpdate,
     testData: testDataUpdate,
+    setId: setIdUpdate,
     setName: setNameUpdate,
     setCode: setCodeUpdate,
     setDescription: setDescriptionUpdate,
@@ -218,7 +219,10 @@ function FunctionVersions(props: FunctionVersionsProps) {
     }
   };
 
-  const handleTestUpdateVersionClick = () => {
+  const handleTestUpdateVersionClick:
+    | MouseEventHandler<HTMLButtonElement>
+    | undefined = (e) => {
+    e.preventDefault();
     if (user && idUpdate) {
       if (errorsUpdate && errorsUpdate.length) {
         // TODO: show errorsUpdate
@@ -330,7 +334,7 @@ function FunctionVersions(props: FunctionVersionsProps) {
           {formUpdate}
         </MultiPurposeDialog>
 
-        <Fab onClick={handleNewVersionClick} location={["bottom", "left"]} />
+        <Fab onClick={handleNewVersionClick} position={["bottom", "left"]} />
       </Box>
     </Box>
   );

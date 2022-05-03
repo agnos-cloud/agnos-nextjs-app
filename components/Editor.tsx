@@ -2,6 +2,8 @@ import { useEffect } from "react";
 import MonacoEditor, { useMonaco } from "@monaco-editor/react";
 import agnosTypeDef from "../constants/types/agnos";
 import axiosTypeDef from "../constants/types/axios";
+import consoleTypeDef from "../constants/types/console";
+import processTypeDef from "../constants/types/process";
 import requestTypeDef from "../constants/types/request";
 import requireFromUrlTypeDef from "../constants/types/require-from-url";
 
@@ -46,6 +48,8 @@ const Editor = ({
         var libSource = [
           agnosTypeDef,
           axiosTypeDef,
+          consoleTypeDef,
+          processTypeDef,
           requestTypeDef,
           requireFromUrlTypeDef,
         ].join("\n");
