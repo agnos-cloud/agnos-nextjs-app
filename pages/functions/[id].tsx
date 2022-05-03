@@ -127,12 +127,4 @@ export default FunctionPage;
  *  a table below with columns: datetime | env | invocation type | version | summary of result or error
  *      the rows of the table will be color-coded according to the invocation type
  *      when a row is clicked show context/sandbox, result or error details
- *
- * create <FunctionConsole />
- *  filter by version, log type (info/warning/error), env (test/production), a time range to consider
- *  a card showing graph of logs vs datetime, color-coded according to type
- *      clicking on a datetime on the graph should take you to that date time on the table below
- *  a table below with columns: datetime | env | log type | version | summary of log data
- *      the rows of the table will be color-coded according to the log type
- *      when a row is clicked show log data details
  */

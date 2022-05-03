@@ -334,7 +334,7 @@ function FunctionVersions(props: FunctionVersionsProps) {
           {formUpdate}
         </MultiPurposeDialog>
 
-        <Fab onClick={handleNewVersionClick} location={["bottom", "left"]} />
+        <Fab onClick={handleNewVersionClick} position={["bottom", "left"]} />
       </Box>
     </Box>
   );

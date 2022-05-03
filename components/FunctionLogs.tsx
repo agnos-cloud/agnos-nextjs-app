@@ -2,11 +2,13 @@ import { useEffect, useState } from "react";
 import { Box } from "@mui/material";
 import { DataGrid, GridColDef, GridValueGetterParams } from "@mui/x-data-grid";
 import type { Log } from "../models/Log";
-import { LogType } from "../constants/log";
+import { DataType, LogType } from "../constants/log";
 import { useUser } from "@auth0/nextjs-auth0";
 import Loading from "./Loading";
 import ErrorBox from "./ErrorBox";
 import LogService from "../services/LogService";
+import socket from "../utils/socket";
+import Toast from "./Toast";
 
 const columns: GridColDef[] = [
   // { field: "id", headerName: "ID", width: 300 },
@@ -52,7 +54,16 @@ function FunctionLogs(props: FunctionLogsProps) {
   const [logs, setLogs] = useState<Log[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<Error | undefined>(undefined);
+  const [openToast, setOpenToast] = useState(false);
+  const [toastMessage, setToastMessage] = useState<string>("");
+  const [toastType, setToastType] = useState<LogType>(LogType.INFO);
   const pageSize = 10;
+
+  useEffect(() => {
+    socket.on(`log:${functionId}`, (log) => {
+      setLogs((logs) => [log, ...logs]);
+    });
+  }, []);
 
   useEffect(() => {
     if (user && functionId) {
@@ -69,6 +80,15 @@ function FunctionLogs(props: FunctionLogsProps) {
         });
     }
   }, [user, functionId]);
+
+  const handleRowClick = (param: any, _event: any) => {
+    const type = param.row["dataType"];
+    let data = param.row["data"];
+    if (type === DataType.OBJECT) data = JSON.stringify(data);
+    setOpenToast(true);
+    setToastMessage(data);
+    setToastType(param.row.type);
+  };
 
   if (isLoading) {
     return <Loading />;
@@ -90,6 +110,12 @@ function FunctionLogs(props: FunctionLogsProps) {
           "& .grid-row--error": {
             color: "red",
           },
+          "& .grid-row--success": {
+            color: "green",
+          },
+          "& .grid-row--warning": {
+            color: "orange",
+          },
         }}
       >
         <DataGrid
@@ -99,17 +125,28 @@ function FunctionLogs(props: FunctionLogsProps) {
           rowsPerPageOptions={[pageSize]}
           getRowClassName={(params) =>
             `grid-row--${
+              params.indexRelativeToCurrentPage % 2 === 0 ? "even" : "odd"
+            }` +
+            ` grid-row--${
               params.row["type"] === LogType.ERROR
                 ? "error"
-                : params.indexRelativeToCurrentPage % 2 === 0
-                ? "even"
-                : "odd"
+                : params.row["type"] === LogType.SUCCESS
+                ? "success"
+                : params.row["type"] === LogType.WARNING
+                ? "warning"
+                : "info"
             }`
           }
-          // onRowClick={handleRowClick}
+          onRowClick={handleRowClick}
           autoHeight
-          // checkboxSelection
           disableSelectionOnClick
+        />
+
+        <Toast
+          message={toastMessage}
+          open={openToast}
+          type={toastType}
+          onClose={() => setOpenToast(false)}
         />
       </Box>
     </Box>

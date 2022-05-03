@@ -45,7 +45,6 @@ export function useFunctionVersionForm() {
       const accessToken = session.accessToken;
       setConsoleTexts([]);
       socket.on(`log:${accessToken}@${id}`, (log) => {
-        console.log(log);
         const type = log["dataType"];
         let data = log["data"];
         let env = log["env"];
