@@ -1,11 +1,12 @@
 import { Alert, Snackbar } from "@mui/material";
+import type { InvocationType } from "../constants/invocation";
 import type { LogType } from "../constants/log";
 
 export interface ToastProps {
-  message: string;
+  message: string | string[];
   open: boolean;
   position?: Array<"bottom" | "center" | "left" | "right" | "top">;
-  type?: LogType;
+  type?: InvocationType | LogType;
   onClose: () => void;
 }
 
@@ -36,7 +37,11 @@ const Toast = ({
         severity={String(type || "info").toLowerCase()}
         sx={{ width: "100%" }}
       >
-        {message}
+        {typeof message === "object"
+          ? message.map((m, i) => <div key={i}>{m}</div>)
+          : typeof message === "undefined"
+          ? "undefined"
+          : message}
       </Alert>
     </Snackbar>
   );
