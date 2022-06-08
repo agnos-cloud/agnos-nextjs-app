@@ -15,6 +15,7 @@ import FunctionService from "../../services/FunctionService";
 import Loading from "../../components/Loading";
 import ErrorBox from "../../components/ErrorBox";
 import FunctionLogs from "../../components/FunctionLogs";
+import FunctionInvocations from "../../components/FunctionInvocations";
 
 function a11yProps(index: number) {
   return {
@@ -106,7 +107,7 @@ const FunctionPage = () => {
         <FunctionVersions functionId={id as string} />
       </TabPanel>
       <TabPanel value={tabValue} index={1}>
-        invocations
+        <FunctionInvocations functionId={id as string} />
       </TabPanel>
       <TabPanel value={tabValue} index={2}>
         <FunctionLogs functionId={id as string} />
@@ -116,15 +117,3 @@ const FunctionPage = () => {
 };
 
 export default FunctionPage;
-
-/**
- * create <FunctionInvocations /> which will contain:
- *  a small label showing total successful invocations and total failed invocations (ever)
- *  filter to be able to filter by version, invocation result type (succeeded/failed), env (test/production), a time range to consider
- *  a card showing total successful invocations and/or total failed invocations for the filtered versions, invocation types and time range
- *  a card next to that showing a graph of invocations vs datetime, color-code according to type
- *      clicking on a datetime on the graph should take you to that date time on the table below
- *  a table below with columns: datetime | env | invocation type | version | summary of result or error
- *      the rows of the table will be color-coded according to the invocation type
- *      when a row is clicked show context/sandbox, result or error details
- */
