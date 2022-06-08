@@ -117,15 +117,3 @@ const FunctionPage = () => {
 };
 
 export default FunctionPage;
-
-/**
- * create <FunctionInvocations /> which will contain:
- *  a small label showing total successful invocations and total failed invocations (ever)
- *  a card showing total successful invocations and/or total failed invocations for the filtered versions, invocation types and time range
- *  a card next to that showing a graph of invocations vs datetime, color-code according to type
- *      clicking on a datetime on the graph should take you to that date time on the table below
- *  a table below with columns: datetime | env | invocation type | version | summary of result or error
- *      the header of the date column should show tthat grph
- *      the rows of the table will be color-coded according to the invocation type
- *      when a row is clicked show context/sandbox, result or error details
- */
