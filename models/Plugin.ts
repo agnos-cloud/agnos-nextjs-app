@@ -33,3 +33,10 @@ export interface PluginVersionInput {
   plugin: string;
   published: boolean;
 }
+
+export interface PluginVersionUpdate
+  extends Omit<PluginVersionInput, "name" | "config" | "plugin" | "published"> {
+  name?: string;
+  config?: string;
+  published?: boolean;
+}

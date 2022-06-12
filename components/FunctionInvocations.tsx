@@ -39,7 +39,10 @@ const columns: GridColDef[] = [
     field: "output",
     headerName: "Output",
     width: 400,
-    valueGetter: (params: GridValueGetterParams) => String(params.value ?? ""),
+    valueGetter: (params: GridValueGetterParams) =>
+      String(
+        params.row.output || params.row.error?.message || params.row.error || ""
+      ),
   },
 ];
 

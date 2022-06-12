@@ -11,9 +11,10 @@ import Editor from "../components/Editor";
 import { pluginVersionSchema } from "../schema/pluginVersionConfigSchema";
 
 export function usePluginVersionForm() {
+  const [id, setId] = useState<string | undefined>(undefined);
   const [name, setName] = useState<string>(`Version ${nanoid()}`);
   const [description, setDescription] = useState<string | undefined>(undefined);
-  const [published, setIsPublished] = useState<boolean>(false);
+  const [published, setPublished] = useState<boolean>(false);
   const [config, setConfig] = useState<string | undefined>("");
   const [errors, setErrors] = useState<any[]>([]);
   const [functions, setFunctions] = useState<string[]>([
@@ -34,7 +35,7 @@ export function usePluginVersionForm() {
   const handleIsPrivareChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
-    setIsPublished(event.target.checked);
+    setPublished(event.target.checked);
   };
 
   const handleConfigChange = (value: string | undefined) => {
@@ -90,10 +91,16 @@ export function usePluginVersionForm() {
   );
 
   return {
+    id,
     name,
     description,
-    published,
     config,
+    published,
+    setId,
+    setName,
+    setDescription,
+    setConfig,
+    setPublished,
     form,
     errors,
   };
