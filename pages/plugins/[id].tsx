@@ -77,6 +77,7 @@ const Plugin = () => {
     setName: setNameUpdate,
     setConfig: setConfigUpdate,
     setDescription: setDescriptionUpdate,
+    setMenus: setMenusUpdate,
     setPublished: setPublishedUpdate,
     form: formUpdate,
     errors: errorsUpdate,
@@ -172,6 +173,7 @@ const Plugin = () => {
     setNameUpdate(param.row.name);
     setConfigUpdate(param.row.config);
     setDescriptionUpdate(param.row.description);
+    setMenusUpdate(param.row.menus);
     setPublishedUpdate(param.row.published);
   };
 
@@ -288,10 +290,6 @@ const Plugin = () => {
               text: "Cancel",
               onClick: () => setOpenUpdateDialog(false),
             },
-            // {
-            //   text: "Test",
-            //   onClick: handleTestUpdateVersionClick,
-            // },
             {
               text: "Submit",
               onClick: handleSubmitUpdateVersionClick,

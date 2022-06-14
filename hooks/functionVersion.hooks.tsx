@@ -172,6 +172,7 @@ export function useFunctionVersionForm() {
         onChange={handleTestDataChange}
         onValidationError={handleValidationError}
       />
+      {id ? <hr /> : <></>}
       {id ? (
         <TextField
           autoFocus

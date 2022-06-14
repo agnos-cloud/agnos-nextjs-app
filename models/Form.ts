@@ -10,7 +10,7 @@ export interface Form {
 export interface FormAction {
   title: string;
   run: string;
-  transform: string; // this is a function that will determine the objects passed to the run function
+  transform?: string; // this is a function that will determine the objects passed to the run function
 }
 
 export interface FormField {
