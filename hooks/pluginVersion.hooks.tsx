@@ -1,6 +1,7 @@
 import React, { ReactElement, useState } from "react";
 import {
   Collapse,
+  Divider,
   FormControlLabel,
   FormGroup,
   FormLabel,
@@ -136,30 +137,34 @@ export function usePluginVersionForm() {
               </ListItemButton>
               <Collapse in={isMenuOpen(menu.id)} timeout="auto" unmountOnExit>
                 <List component="div" disablePadding>
-                  {menu.items.map((item: MenuItem) => (
-                    <React.Fragment key={item.id}>
-                      <ListItem
-                        id={item.id}
-                        sx={{ pl: 4 }}
-                        onClick={handleMenuItemClick}
-                      >
-                        <ListItemIcon>
-                          <MenuItemIcon item={item} />
-                        </ListItemIcon>
-                        <ListItemText primary={item.title} />
-                        {isMenuItemOpen(item.id) ? (
-                          <ExpandLess />
-                        ) : (
-                          <ExpandMore />
-                        )}
-                      </ListItem>
-                      <Collapse
-                        in={isMenuItemOpen(item.id)}
-                        timeout="auto"
-                        unmountOnExit
-                      ></Collapse>
-                    </React.Fragment>
-                  ))}
+                  {menu.items.map((item: MenuItem) =>
+                    item.isDivider ? (
+                      <Divider key={item.id} />
+                    ) : (
+                      <React.Fragment key={item.id}>
+                        <ListItem
+                          id={item.id}
+                          sx={{ pl: 4 }}
+                          onClick={handleMenuItemClick}
+                        >
+                          <ListItemIcon>
+                            <MenuItemIcon item={item} />
+                          </ListItemIcon>
+                          <ListItemText primary={item.title} />
+                          {isMenuItemOpen(item.id) ? (
+                            <ExpandLess />
+                          ) : (
+                            <ExpandMore />
+                          )}
+                        </ListItem>
+                        <Collapse
+                          in={isMenuItemOpen(item.id)}
+                          timeout="auto"
+                          unmountOnExit
+                        ></Collapse>
+                      </React.Fragment>
+                    )
+                  )}
                 </List>
               </Collapse>
             </React.Fragment>
