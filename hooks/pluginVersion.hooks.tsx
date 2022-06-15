@@ -1,5 +1,6 @@
 import React, { ReactElement, useState } from "react";
 import {
+  Box,
   Collapse,
   Divider,
   FormControlLabel,
@@ -19,6 +20,7 @@ import { pluginVersionSchema } from "../schema/pluginVersionConfigSchema";
 import type { Menu, MenuItem } from "../models/Menu";
 import { ExpandLess, ExpandMore } from "@mui/icons-material";
 import MenuItemIcon from "../components/MenuItemIcon";
+import MenuItemForms from "../components/MenuItemForms";
 
 export function usePluginVersionForm() {
   const [id, setId] = useState<string | undefined>(undefined);
@@ -161,7 +163,18 @@ export function usePluginVersionForm() {
                           in={isMenuItemOpen(item.id)}
                           timeout="auto"
                           unmountOnExit
-                        ></Collapse>
+                        >
+                          <Box
+                            sx={{
+                              display: "flex",
+                              justifyContent: "center",
+                              alignItems: "center",
+                              // minHeight: "100vh",
+                            }}
+                          >
+                            <MenuItemForms item={item} />
+                          </Box>
+                        </Collapse>
                       </React.Fragment>
                     )
                   )}
