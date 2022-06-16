@@ -6,6 +6,7 @@ import {
   BottomNavigationAction,
   Box,
   Button,
+  Checkbox,
   FormControl,
   FormControlLabel,
   FormGroup,
@@ -118,9 +119,15 @@ const Field = (props: FieldProps) => {
       [event.target.name]: event.target.value,
     }));
 
+  const handleCheckBoxChange = (event: React.ChangeEvent<HTMLInputElement>) =>
+    setForm((previous) => ({
+      ...previous,
+      [event.target.name]: event.target.checked,
+    }));
+
   if ("fields" in field && field.fields && field.fields.length) {
     return (
-      <FormGroup sx={{ m: 1 }}>
+      <FormGroup sx={{ m: 1, p: 1, border: "1px solid black" }}>
         <FormLabel component="caption">{field.title}</FormLabel>
         {field.fields?.map((f, i) => (
           <Field key={i} field={f} form={form} setForm={setForm} />
@@ -128,11 +135,56 @@ const Field = (props: FieldProps) => {
       </FormGroup>
     );
   } else if ("name" in field && field.name) {
+    if (field.type === "button") {
+      return <></>;
+    }
+
     if (field.default && !form[field.name]) {
       setForm((previous) => ({
         ...previous,
         [field.name]: field.default,
       }));
+    }
+
+    if (field.type === "checkbox") {
+      return (
+        <FormControlLabel
+          label={field.title}
+          labelPlacement="start"
+          control={
+            <Checkbox
+              sx={{ ml: 2 }}
+              id={field.name}
+              name={field.name}
+              // defaultValue={field.default}
+              required={field.required}
+              checked={form[field.name] || field.default || false}
+              onChange={handleCheckBoxChange}
+              inputProps={{ "aria-label": "controlled" }}
+            />
+          }
+        />
+      );
+    }
+
+    if (field.type === "color") {
+      return (
+        <FormControlLabel
+          label={field.title}
+          labelPlacement="start"
+          control={
+            <Input
+              sx={{ ml: 2, width: 100 }}
+              id={field.name}
+              name={field.name}
+              type={field.type}
+              required={field.required}
+              value={form[field.name] || field.default || ""}
+              onChange={handleChange}
+            />
+          }
+        />
+      );
     }
 
     return (
@@ -173,10 +225,7 @@ const Actions = (props: ActionsProps) => {
   }
 
   return (
-    <Paper
-      // sx={{ position: "absolute", bottom: 50 }}
-      elevation={3}
-    >
+    <Paper sx={{ position: "absolute", bottom: 50, right: 0 }} elevation={3}>
       <BottomNavigation
         showLabels
         value={value}
