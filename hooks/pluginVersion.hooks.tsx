@@ -88,7 +88,7 @@ export function usePluginVersionForm() {
       <TextField
         autoFocus
         margin="dense"
-        id="name"
+        id="_name"
         label="Name"
         type="text"
         fullWidth
@@ -99,7 +99,7 @@ export function usePluginVersionForm() {
       <TextField
         autoFocus
         margin="dense"
-        id="description"
+        id="_description"
         label="Description"
         type="text"
         fullWidth

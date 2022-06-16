@@ -14,6 +14,8 @@ import {
   Input,
   MobileStepper,
   Paper,
+  Radio,
+  RadioGroup,
   Typography,
 } from "@mui/material";
 import { KeyboardArrowLeft, KeyboardArrowRight } from "@mui/icons-material";
@@ -126,6 +128,22 @@ const Field = (props: FieldProps) => {
     }));
 
   if ("fields" in field && field.fields && field.fields.length) {
+    if ("type" in field.fields[0] && field.fields[0].type === "radio") {
+      return (
+        <FormControl sx={{ m: 1, p: 1, border: "1px solid black" }}>
+          <FormLabel component="caption">{field.title}</FormLabel>
+          <RadioGroup
+            name={field.fields[0].name}
+            value={form[field.fields[0].name] || field.fields[0].default || ""}
+            onChange={handleChange}
+          >
+            {field.fields?.map((f, i) => (
+              <Field key={i} field={f} form={form} setForm={setForm} />
+            ))}
+          </RadioGroup>
+        </FormControl>
+      );
+    }
     return (
       <FormGroup sx={{ m: 1, p: 1, border: "1px solid black" }}>
         <FormLabel component="caption">{field.title}</FormLabel>
@@ -135,7 +153,11 @@ const Field = (props: FieldProps) => {
       </FormGroup>
     );
   } else if ("name" in field && field.name) {
-    if (field.type === "button") {
+    if (
+      field.type === "button" ||
+      field.type === "hidden" ||
+      field.type === "image"
+    ) {
       return <></>;
     }
 
@@ -181,6 +203,27 @@ const Field = (props: FieldProps) => {
               required={field.required}
               value={form[field.name] || field.default || ""}
               onChange={handleChange}
+            />
+          }
+        />
+      );
+    }
+
+    if (field.type === "radio") {
+      return (
+        <FormControlLabel
+          label={field.title}
+          labelPlacement="start"
+          value={field.default}
+          control={
+            <Radio
+              sx={{ ml: 2 }}
+              // id={field.name}
+              // name={field.name}
+              // defaultValue={field.default}
+              // required={field.required}
+              // checked={form[field.name] || field.default || false}
+              // onChange={handleCheckBoxChange}
             />
           }
         />
