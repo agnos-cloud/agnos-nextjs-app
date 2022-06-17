@@ -156,7 +156,9 @@ const Field = (props: FieldProps) => {
     if (
       field.type === "button" ||
       field.type === "hidden" ||
-      field.type === "image"
+      field.type === "image" ||
+      field.type === "reset" ||
+      field.type === "submit"
     ) {
       return <></>;
     }
