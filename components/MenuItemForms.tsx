@@ -16,6 +16,8 @@ import {
   Paper,
   Radio,
   RadioGroup,
+  Rating,
+  Switch,
   Typography,
 } from "@mui/material";
 import { KeyboardArrowLeft, KeyboardArrowRight } from "@mui/icons-material";
@@ -58,7 +60,7 @@ const MenuItemForms = (props: MenuItemFormsProps) => {
           <Typography>{forms[activeStep].title}</Typography>
         </Paper>
         <Box sx={{ height: 255, maxWidth: 400, width: "100%", p: 0 }}>
-          <FormControl component="fieldset" variant="standard">
+          <FormControl component="fieldset" variant="standard" sx={{ mb: 5 }}>
             {forms[activeStep].fields?.map((field) => (
               <Field field={field} form={form} setForm={setForm} />
             ))}
@@ -68,7 +70,8 @@ const MenuItemForms = (props: MenuItemFormsProps) => {
         <MobileStepper
           variant="text"
           steps={maxSteps}
-          position="static"
+          position="bottom"
+          // sx={{ position: "absolute", bottom: 0 }}
           activeStep={activeStep}
           nextButton={
             <Button
@@ -163,7 +166,10 @@ const Field = (props: FieldProps) => {
       return <></>;
     }
 
-    if (field.default && !form[field.name]) {
+    if (
+      field.default &&
+      (typeof form[field.name] === "undefined" || form[field.name] === null)
+    ) {
       setForm((previous) => ({
         ...previous,
         [field.name]: field.default,
@@ -182,7 +188,11 @@ const Field = (props: FieldProps) => {
               name={field.name}
               // defaultValue={field.default}
               required={field.required}
-              checked={form[field.name] || field.default || false}
+              checked={
+                typeof form[field.name] !== "undefined"
+                  ? form[field.name]
+                  : field.default || false
+              }
               onChange={handleCheckBoxChange}
               inputProps={{ "aria-label": "controlled" }}
             />
@@ -201,7 +211,7 @@ const Field = (props: FieldProps) => {
               sx={{ ml: 2, width: 100 }}
               id={field.name}
               name={field.name}
-              type={field.type}
+              type="color"
               required={field.required}
               value={form[field.name] || field.default || ""}
               onChange={handleChange}
@@ -217,15 +227,56 @@ const Field = (props: FieldProps) => {
           label={field.title}
           labelPlacement="start"
           value={field.default}
+          control={<Radio sx={{ ml: 2 }} />}
+        />
+      );
+    }
+
+    if (field.type === "rating") {
+      return (
+        <FormControlLabel
+          label={field.title}
+          labelPlacement="start"
           control={
-            <Radio
+            <Rating
               sx={{ ml: 2 }}
-              // id={field.name}
-              // name={field.name}
+              id={field.name}
+              name={field.name}
+              value={form[field.name] || field.default}
+              onChange={(
+                _event: React.SyntheticEvent<Element, Event>,
+                value: number | null
+              ) =>
+                setForm((previous) => ({
+                  ...previous,
+                  [field.name]: value,
+                }))
+              }
+            />
+          }
+        />
+      );
+    }
+
+    if (field.type === "switch") {
+      return (
+        <FormControlLabel
+          label={field.title}
+          labelPlacement="start"
+          control={
+            <Switch
+              sx={{ ml: 2 }}
+              id={field.name}
+              name={field.name}
               // defaultValue={field.default}
-              // required={field.required}
-              // checked={form[field.name] || field.default || false}
-              // onChange={handleCheckBoxChange}
+              required={field.required}
+              checked={
+                typeof form[field.name] !== "undefined"
+                  ? form[field.name]
+                  : field.default || false
+              }
+              onChange={handleCheckBoxChange}
+              inputProps={{ "aria-label": "controlled" }}
             />
           }
         />
@@ -270,7 +321,7 @@ const Actions = (props: ActionsProps) => {
   }
 
   return (
-    <Paper sx={{ position: "absolute", bottom: 50, right: 0 }} elevation={3}>
+    <Paper sx={{ position: "sticky", bottom: 0 }} elevation={3}>
       <BottomNavigation
         showLabels
         value={value}
