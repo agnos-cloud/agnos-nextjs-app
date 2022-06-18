@@ -171,7 +171,6 @@ const Field = (props: FieldProps) => {
             label={field.title}
             value={form[field.fields[0].name] || field.fields[0].default || ""}
             onChange={handleSelectChange}
-            displayEmpty
           >
             {field.fields.map((f, i) => (
               // <Field key={i} field={f} form={form} setForm={setForm} />
