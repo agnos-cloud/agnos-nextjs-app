@@ -16,6 +16,7 @@ const htmlInputTypes = [
   "rating",
   "reset",
   "search",
+  "select",
   "submit",
   "switch",
   "tel",

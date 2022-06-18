@@ -12,11 +12,15 @@ import {
   FormGroup,
   FormLabel,
   Input,
+  InputLabel,
+  MenuItem as MuiMenuItem,
   MobileStepper,
   Paper,
   Radio,
   RadioGroup,
   Rating,
+  Select,
+  SelectChangeEvent,
   Switch,
   Typography,
 } from "@mui/material";
@@ -130,6 +134,12 @@ const Field = (props: FieldProps) => {
       [event.target.name]: event.target.checked,
     }));
 
+  const handleSelectChange = (event: SelectChangeEvent<any>) =>
+    setForm((previous) => ({
+      ...previous,
+      [event.target.name]: event.target.value,
+    }));
+
   if ("fields" in field && field.fields && field.fields.length) {
     if ("type" in field.fields[0] && field.fields[0].type === "radio") {
       return (
@@ -147,6 +157,33 @@ const Field = (props: FieldProps) => {
         </FormControl>
       );
     }
+
+    if ("type" in field.fields[0] && field.fields[0].type === "select") {
+      return (
+        <FormControl variant="standard" sx={{ m: 1, p: 1 }}>
+          <InputLabel id={`${field.fields[0].name}-label`}>
+            {field.title}
+          </InputLabel>
+          <Select
+            labelId={`${field.fields[0].name}-label`}
+            id={field.fields[0].name}
+            name={field.fields[0].name}
+            label={field.title}
+            value={form[field.fields[0].name] || field.fields[0].default || ""}
+            onChange={handleSelectChange}
+            displayEmpty
+          >
+            {field.fields.map((f, i) => (
+              // <Field key={i} field={f} form={form} setForm={setForm} />
+              <MuiMenuItem key={i} value={(f as FormField).default}>
+                {f.title}
+              </MuiMenuItem>
+            ))}
+          </Select>
+        </FormControl>
+      );
+    }
+
     return (
       <FormGroup sx={{ m: 1, p: 1, border: "1px solid black" }}>
         <FormLabel component="caption">{field.title}</FormLabel>
@@ -256,6 +293,10 @@ const Field = (props: FieldProps) => {
           }
         />
       );
+    }
+
+    if (field.type === "select") {
+      return <MuiMenuItem value={field.default}>{field.title}</MuiMenuItem>;
     }
 
     if (field.type === "switch") {
