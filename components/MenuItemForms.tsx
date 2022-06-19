@@ -198,7 +198,7 @@ const Field = (props: FieldProps) => {
       return (
         <FormControl
           variant="standard"
-          sx={{ m: 1, p: 1, alignItems: "start" }}
+          sx={{ m: 1, p: 1, alignItems: "start", minWidth: 200 }}
         >
           <InputLabel id={`${field.fields[0].name}-label`}>
             {field.title}
@@ -214,6 +214,7 @@ const Field = (props: FieldProps) => {
             }
             onChange={handleSelectChange}
             multiple={field.fields[0].type === "multi-select"}
+            sx={{ minWidth: 200 }}
           >
             {field.fields.map((f, i) => (
               // <Field key={i} field={f} form={form} setForm={setForm} />
