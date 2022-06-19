@@ -158,7 +158,11 @@ const Field = (props: FieldProps) => {
       );
     }
 
-    if ("type" in field.fields[0] && field.fields[0].type === "select") {
+    if (
+      "type" in field.fields[0] &&
+      (field.fields[0].type === "select" ||
+        field.fields[0].type === "multi-select")
+    ) {
       return (
         <FormControl variant="standard" sx={{ m: 1, p: 1 }}>
           <InputLabel id={`${field.fields[0].name}-label`}>
@@ -169,8 +173,12 @@ const Field = (props: FieldProps) => {
             id={field.fields[0].name}
             name={field.fields[0].name}
             label={field.title}
-            value={form[field.fields[0].name] || field.fields[0].default || ""}
+            value={
+              form[field.fields[0].name] ||
+              (field.fields[0].type === "multi-select" ? [] : "")
+            }
             onChange={handleSelectChange}
+            multiple={field.fields[0].type === "multi-select"}
           >
             {field.fields.map((f, i) => (
               // <Field key={i} field={f} form={form} setForm={setForm} />
@@ -294,7 +302,7 @@ const Field = (props: FieldProps) => {
       );
     }
 
-    if (field.type === "select") {
+    if (field.type === "select" || field.type === "multi-select") {
       return <MuiMenuItem value={field.default}>{field.title}</MuiMenuItem>;
     }
 

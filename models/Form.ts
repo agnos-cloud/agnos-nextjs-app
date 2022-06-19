@@ -18,7 +18,12 @@ export interface FormField {
   title: string;
   default?: any;
   required?: boolean;
-  type?: HTMLInputTypeAttribute | "rating" | "select" | "switch";
+  type?:
+    | HTMLInputTypeAttribute
+    | "multi-select"
+    | "rating"
+    | "select"
+    | "switch";
 }
 
 export interface FormFieldGroup {

@@ -9,6 +9,7 @@ const htmlInputTypes = [
   "hidden",
   "image",
   "month",
+  "multi-select",
   "number",
   "password",
   "radio",
