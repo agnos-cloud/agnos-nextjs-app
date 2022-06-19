@@ -1,5 +1,5 @@
 import React from "react";
-import { useTheme } from "@mui/material/styles";
+import { SxProps, Theme, useTheme } from "@mui/material/styles";
 import type { MenuItem } from "../models/Menu";
 import {
   BottomNavigation,
@@ -25,7 +25,12 @@ import {
   Typography,
 } from "@mui/material";
 import { KeyboardArrowLeft, KeyboardArrowRight } from "@mui/icons-material";
-import type { FormAction, FormField, FormFieldGroup } from "../models/Form";
+import type {
+  Form as FormModel,
+  FormAction,
+  FormField,
+  FormFieldGroup,
+} from "../models/Form";
 
 export type MenuItemFormsProps = {
   item: MenuItem;
@@ -35,7 +40,6 @@ const MenuItemForms = (props: MenuItemFormsProps) => {
   const { item } = props;
   const theme = useTheme();
   const [activeStep, setActiveStep] = React.useState(0);
-  const [form, setForm] = React.useState<Record<string, any>>({});
   const forms = item.forms;
 
   const handleNext = () => {
@@ -50,31 +54,12 @@ const MenuItemForms = (props: MenuItemFormsProps) => {
     const maxSteps = forms.length;
     return (
       <Box sx={{ maxWidth: 400, flexGrow: 1 }}>
-        <Paper
-          square
-          elevation={0}
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            height: 50,
-            pl: 2,
-            bgcolor: "background.default",
-          }}
-        >
-          <Typography>{forms[activeStep].title}</Typography>
-        </Paper>
-        <Box sx={{ height: 255, maxWidth: 400, width: "100%", p: 0 }}>
-          <FormControl
-            component="fieldset"
-            variant="standard"
-            sx={{ mb: 5, alignItems: "start" }}
-          >
-            {forms[activeStep].fields?.map((field) => (
-              <Field field={field} form={form} setForm={setForm} />
-            ))}
-          </FormControl>
-          <Actions actions={forms[activeStep].actions} form={form} />
-        </Box>
+        {forms.map((form, index) => (
+          <Form
+            form={form}
+            sx={{ display: index === activeStep ? "block" : "none" }}
+          />
+        ))}
         <MobileStepper
           variant="text"
           steps={maxSteps}
@@ -115,6 +100,46 @@ const MenuItemForms = (props: MenuItemFormsProps) => {
   }
 
   return <></>;
+};
+
+type FormProps = {
+  form: FormModel;
+  sx?: SxProps<Theme>;
+};
+
+const Form = (props: FormProps) => {
+  const { form: formModel, sx } = props;
+  const [form, setForm] = React.useState<Record<string, any>>({});
+
+  return (
+    <Box sx={sx}>
+      <Paper
+        square
+        elevation={0}
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          height: 50,
+          pl: 2,
+          bgcolor: "background.default",
+        }}
+      >
+        <Typography>{formModel.title}</Typography>
+      </Paper>
+      <Box sx={{ height: 255, maxWidth: 400, width: "100%", p: 0 }}>
+        <FormControl
+          component="fieldset"
+          variant="standard"
+          sx={{ mb: 5, alignItems: "start" }}
+        >
+          {formModel.fields?.map((field) => (
+            <Field field={field} form={form} setForm={setForm} />
+          ))}
+        </FormControl>
+        <Actions actions={formModel.actions} form={form} />
+      </Box>
+    </Box>
+  );
 };
 
 type FieldProps = {
