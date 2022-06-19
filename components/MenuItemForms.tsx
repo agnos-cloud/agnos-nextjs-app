@@ -64,7 +64,11 @@ const MenuItemForms = (props: MenuItemFormsProps) => {
           <Typography>{forms[activeStep].title}</Typography>
         </Paper>
         <Box sx={{ height: 255, maxWidth: 400, width: "100%", p: 0 }}>
-          <FormControl component="fieldset" variant="standard" sx={{ mb: 5 }}>
+          <FormControl
+            component="fieldset"
+            variant="standard"
+            sx={{ mb: 5, alignItems: "start" }}
+          >
             {forms[activeStep].fields?.map((field) => (
               <Field field={field} form={form} setForm={setForm} />
             ))}
@@ -143,12 +147,15 @@ const Field = (props: FieldProps) => {
   if ("fields" in field && field.fields && field.fields.length) {
     if ("type" in field.fields[0] && field.fields[0].type === "radio") {
       return (
-        <FormControl sx={{ m: 1, p: 1, border: "1px solid black" }}>
+        <FormControl
+          sx={{ m: 1, p: 1, border: "1px solid black", alignItems: "start" }}
+        >
           <FormLabel component="caption">{field.title}</FormLabel>
           <RadioGroup
             name={field.fields[0].name}
             value={form[field.fields[0].name] || field.fields[0].default || ""}
             onChange={handleChange}
+            sx={{ alignItems: "start" }}
           >
             {field.fields?.map((f, i) => (
               <Field key={i} field={f} form={form} setForm={setForm} />
@@ -164,7 +171,10 @@ const Field = (props: FieldProps) => {
         field.fields[0].type === "multi-select")
     ) {
       return (
-        <FormControl variant="standard" sx={{ m: 1, p: 1 }}>
+        <FormControl
+          variant="standard"
+          sx={{ m: 1, p: 1, alignItems: "start" }}
+        >
           <InputLabel id={`${field.fields[0].name}-label`}>
             {field.title}
           </InputLabel>
@@ -192,7 +202,9 @@ const Field = (props: FieldProps) => {
     }
 
     return (
-      <FormGroup sx={{ m: 1, p: 1, border: "1px solid black" }}>
+      <FormGroup
+        sx={{ m: 1, p: 1, border: "1px solid black", alignItems: "start" }}
+      >
         <FormLabel component="caption">{field.title}</FormLabel>
         {field.fields?.map((f, i) => (
           <Field key={i} field={f} form={form} setForm={setForm} />
