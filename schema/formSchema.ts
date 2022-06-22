@@ -13,7 +13,7 @@ export const formSchema = (runFunctions: Array<string>) => ({
         properties: {
           title: { type: "string" },
           run: { type: "string", enum: runFunctions },
-          transform: { type: "string" },
+          transform: { type: "string", enum: runFunctions },
         },
         required: ["title", "run"],
       },

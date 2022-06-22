@@ -31,6 +31,10 @@ import type {
   FormField,
   FormFieldGroup,
 } from "../models/Form";
+import FunctionVersionService from "../services/FunctionVersionService";
+import { useUser } from "@auth0/nextjs-auth0";
+import Toast from "./Toast";
+import { InvocationType } from "../constants/invocation";
 
 export type MenuItemFormsProps = {
   item: MenuItem;
@@ -401,6 +405,12 @@ type ActionsProps = {
 const Actions = (props: ActionsProps) => {
   const { actions, form } = props;
   const [value, setValue] = React.useState(0);
+  const { user } = useUser();
+  const [openToast, setOpenToast] = React.useState(false);
+  const [toastMessage, setToastMessage] = React.useState<string>("");
+  const [toastType, setToastType] = React.useState<InvocationType>(
+    InvocationType.SUCCESS
+  );
 
   if (!actions || !actions.length) {
     return <></>;
@@ -418,10 +428,58 @@ const Actions = (props: ActionsProps) => {
         {actions?.map((action: FormAction) => (
           <BottomNavigationAction
             label={action.title}
-            onClick={() => alert(JSON.stringify(form))}
+            onClick={async () => {
+              try {
+                if (!user) {
+                  throw new Error("np user");
+                }
+
+                const funcVerService = new FunctionVersionService(user);
+
+                let formToUse = form;
+
+                if (action.transform) {
+                  const response = await funcVerService.run(
+                    action.transform,
+                    { form },
+                    { test: true }
+                  );
+
+                  if (response.error) {
+                    throw new Error(response.error.message);
+                  }
+
+                  formToUse = response.result;
+                }
+
+                const response = await funcVerService.run(
+                  action.run,
+                  { form: formToUse },
+                  { test: true }
+                );
+
+                if (response.error) {
+                  throw new Error(response.error.message);
+                }
+
+                setToastMessage(JSON.stringify(response.result));
+                setToastType(InvocationType.SUCCESS);
+                setOpenToast(true);
+              } catch (error) {
+                setToastMessage(String(error));
+                setToastType(InvocationType.ERROR);
+                setOpenToast(true);
+              }
+            }}
           />
         ))}
       </BottomNavigation>
+      <Toast
+        message={toastMessage}
+        open={openToast}
+        type={toastType}
+        onClose={() => setOpenToast(false)}
+      />
     </Paper>
   );
 };

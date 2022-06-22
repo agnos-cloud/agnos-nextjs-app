@@ -84,7 +84,7 @@ export default class FunctionVersionService extends ApiService {
     id: string,
     data: { form?: Record<string, any> },
     options: { test?: boolean }
-  ) => Promise<unknown> = async (
+  ) => Promise<any> = async (
     id: string,
     data: { form?: Record<string, any> },
     options?: { test?: boolean }
@@ -98,7 +98,7 @@ export default class FunctionVersionService extends ApiService {
       data,
     })
       .then((response) => {
-        return response.data["result"];
+        return response.data; // ["result"] || response.data["error"];
       })
       .catch((error) => {
         throw error;

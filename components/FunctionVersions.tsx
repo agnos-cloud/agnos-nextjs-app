@@ -245,9 +245,7 @@ function FunctionVersions(props: FunctionVersionsProps) {
           },
           { test: true }
         )
-        .then((response) => {
-          console.log(">>>>>>>>>>>>>>>>>>response from func");
-          console.log(response);
+        .then(() => {
           setIsLoading(false);
         })
         .catch((error) => {

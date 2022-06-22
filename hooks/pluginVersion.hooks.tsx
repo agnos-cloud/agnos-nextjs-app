@@ -33,6 +33,8 @@ export function usePluginVersionForm() {
   const [functions, setFunctions] = useState<string[]>([
     "deploy-function-to-aws-hsdhsdghds",
     "deploy-function-to-gcp-cbsdbndsjg",
+    "test-function-1-v008-1655640793941-udf9wp6cje3l2wbbvixjy",
+    "test-function-1-v009-1655660538768-1ygmbwgmwmew-nsooof-6",
   ]);
   const [menuAnchorElement, setMenuAnchorElement] =
     useState<null | HTMLElement>(null);
