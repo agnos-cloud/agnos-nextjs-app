@@ -13,13 +13,7 @@ const MenuItemIcon = (props: MenuItemIconProps) => {
   }
   if (item.paths && item.paths.length) {
     return (
-      <svg
-        version="1.1"
-        xmlns="http://www.w3.org/2000/svg"
-        width="18"
-        height="18"
-        viewBox="0 0 18 18"
-      >
+      <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18">
         <g transform="scale(0.18)">
           {item.paths.map((path, index) => (
             <path

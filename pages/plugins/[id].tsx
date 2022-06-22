@@ -32,9 +32,7 @@ const columns: GridColDef[] = [
     headerName: "Published",
     width: 150,
     // editable: true,
-    renderCell: (params: GridValueGetterParams) => (
-      <Switch checked={params.value} readOnly />
-    ),
+    renderCell: (params: GridValueGetterParams) => <Switch checked={params.value} readOnly />,
   },
   {
     field: "createdAt",
@@ -42,8 +40,7 @@ const columns: GridColDef[] = [
     // description: "This column has a value getter and is not sortable.",
     // sortable: false,
     width: 150,
-    valueGetter: (params: GridValueGetterParams) =>
-      new Date(params.value).toDateString(),
+    valueGetter: (params: GridValueGetterParams) => new Date(params.value).toDateString(),
   },
 ];
 
@@ -56,17 +53,8 @@ const Plugin = () => {
   const [error, setError] = useState<Error | undefined>(undefined);
   const [openDialog, setOpenDialog] = useState(false);
   const [openUpdateDialog, setOpenUpdateDialog] = useState(false);
-  const {
-    name,
-    config,
-    description,
-    published,
-    setName,
-    setConfig,
-    setDescription,
-    form,
-    errors,
-  } = usePluginVersionForm();
+  const { name, config, description, published, setName, setConfig, setDescription, form, errors } =
+    usePluginVersionForm();
   const {
     id: idUpdate,
     name: nameUpdate,
@@ -252,11 +240,7 @@ const Plugin = () => {
           columns={columns}
           pageSize={pageSize}
           rowsPerPageOptions={[pageSize]}
-          getRowClassName={(params) =>
-            `grid-row--${
-              params.indexRelativeToCurrentPage % 2 === 0 ? "even" : "odd"
-            }`
-          }
+          getRowClassName={(params) => `grid-row--${params.indexRelativeToCurrentPage % 2 === 0 ? "even" : "odd"}`}
           onRowClick={handleRowClick}
           autoHeight
           // checkboxSelection

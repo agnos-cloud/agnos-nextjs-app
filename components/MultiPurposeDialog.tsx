@@ -1,17 +1,11 @@
-import {
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-} from "@mui/material";
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle } from "@mui/material";
 import type { MouseEventHandler } from "react";
 
 export interface MultiPurposeDialogProps {
-  actions: ({
+  actions: {
     text: string;
     onClick: MouseEventHandler<HTMLButtonElement> | undefined;
-  })[];
+  }[];
   children?: any;
   open: boolean;
   title?: string;
@@ -31,7 +25,9 @@ const MultiPurposeDialog = (props: MultiPurposeDialogProps) => {
       <DialogContent>{children}</DialogContent>
       <DialogActions>
         {actions.map((action, index) => (
-          <Button key={index} onClick={action.onClick}>{action.text}</Button>
+          <Button key={index} onClick={action.onClick}>
+            {action.text}
+          </Button>
         ))}
       </DialogActions>
     </Dialog>

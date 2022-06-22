@@ -1,10 +1,6 @@
 import { useEffect, useState } from "react";
 import { Box, Tab, Tabs, Typography } from "@mui/material";
-import {
-  ForkRight as VersionsIcon,
-  FlashOn as FunctionsIcon,
-  Notes as LogsIcon,
-} from "@mui/icons-material";
+import { ForkRight as VersionsIcon, FlashOn as FunctionsIcon, Notes as LogsIcon } from "@mui/icons-material";
 import { useRouter } from "next/router";
 import { useUser } from "@auth0/nextjs-auth0";
 import LoginBackdrop from "../../components/LoginBackdrop";
@@ -78,29 +74,10 @@ const FunctionPage = () => {
         {func?.description}
       </Typography>
       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-        <Tabs
-          value={tabValue}
-          onChange={handleChange}
-          aria-label="function tabs"
-        >
-          <Tab
-            label="Versions"
-            icon={<VersionsIcon fontSize="small" />}
-            iconPosition="start"
-            {...a11yProps(0)}
-          />
-          <Tab
-            label="Invocations"
-            icon={<FunctionsIcon fontSize="small" />}
-            iconPosition="start"
-            {...a11yProps(1)}
-          />
-          <Tab
-            label="Console Logs"
-            icon={<LogsIcon fontSize="small" />}
-            iconPosition="start"
-            {...a11yProps(1)}
-          />
+        <Tabs value={tabValue} onChange={handleChange} aria-label="function tabs">
+          <Tab label="Versions" icon={<VersionsIcon fontSize="small" />} iconPosition="start" {...a11yProps(0)} />
+          <Tab label="Invocations" icon={<FunctionsIcon fontSize="small" />} iconPosition="start" {...a11yProps(1)} />
+          <Tab label="Console Logs" icon={<LogsIcon fontSize="small" />} iconPosition="start" {...a11yProps(1)} />
         </Tabs>
       </Box>
       <TabPanel value={tabValue} index={0}>

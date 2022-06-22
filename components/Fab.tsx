@@ -3,7 +3,7 @@ import { Add as AddIcon } from "@mui/icons-material";
 import type { MouseEventHandler } from "react";
 
 export interface FabProps {
-  position?: Array<("bottom" | "left" | "right" | "top")>;
+  position?: Array<"bottom" | "left" | "right" | "top">;
   onClick?: MouseEventHandler<HTMLButtonElement> | undefined;
 }
 
@@ -40,12 +40,7 @@ const Fab = ({ position = ["bottom", "right"], onClick }: FabProps) => {
       }}
       unmountOnExit
     >
-      <FabButton
-        sx={fab.sx}
-        aria-label={fab.label}
-        color={fab.color}
-        onClick={onClick}
-      >
+      <FabButton sx={fab.sx} aria-label={fab.label} color={fab.color} onClick={onClick}>
         {fab.icon}
       </FabButton>
     </Zoom>

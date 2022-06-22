@@ -80,30 +80,10 @@ const Team = () => {
       </Typography>
       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
         <Tabs value={tabValue} onChange={handleChange} aria-label="team tabs">
-          <Tab
-            label="Designs"
-            icon={<DesignsIcon fontSize="small" />}
-            iconPosition="start"
-            {...a11yProps(0)}
-          />
-          <Tab
-            label="Plugins"
-            icon={<PluginsIcon fontSize="small" />}
-            iconPosition="start"
-            {...a11yProps(1)}
-          />
-          <Tab
-            label="Functions"
-            icon={<FunctionsIcon fontSize="small" />}
-            iconPosition="start"
-            {...a11yProps(1)}
-          />
-          <Tab
-            label="Members"
-            icon={<MembersIcon fontSize="small" />}
-            iconPosition="start"
-            {...a11yProps(1)}
-          />
+          <Tab label="Designs" icon={<DesignsIcon fontSize="small" />} iconPosition="start" {...a11yProps(0)} />
+          <Tab label="Plugins" icon={<PluginsIcon fontSize="small" />} iconPosition="start" {...a11yProps(1)} />
+          <Tab label="Functions" icon={<FunctionsIcon fontSize="small" />} iconPosition="start" {...a11yProps(1)} />
+          <Tab label="Members" icon={<MembersIcon fontSize="small" />} iconPosition="start" {...a11yProps(1)} />
         </Tabs>
       </Box>
       <TabPanel value={tabValue} index={0}>

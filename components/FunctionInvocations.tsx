@@ -16,8 +16,7 @@ const columns: GridColDef[] = [
     field: "createdAt",
     headerName: "Date",
     width: 150,
-    valueGetter: (params: GridValueGetterParams) =>
-      new Date(params.value).toDateString(),
+    valueGetter: (params: GridValueGetterParams) => new Date(params.value).toDateString(),
   },
   {
     field: "env",
@@ -40,9 +39,7 @@ const columns: GridColDef[] = [
     headerName: "Output",
     width: 400,
     valueGetter: (params: GridValueGetterParams) =>
-      String(
-        params.row.output || params.row.error?.message || params.row.error || ""
-      ),
+      String(params.row.output || params.row.error?.message || params.row.error || ""),
   },
 ];
 
@@ -58,9 +55,7 @@ function FunctionInvocations(props: FunctionInvocationsProps) {
   const [error, setError] = useState<Error | undefined>(undefined);
   const [openToast, setOpenToast] = useState(false);
   const [toastMessage, setToastMessage] = useState<string[]>([]);
-  const [toastType, setToastType] = useState<InvocationType>(
-    InvocationType.SUCCESS
-  );
+  const [toastType, setToastType] = useState<InvocationType>(InvocationType.SUCCESS);
   const pageSize = 10;
 
   useEffect(() => {
@@ -153,9 +148,7 @@ function FunctionInvocations(props: FunctionInvocationsProps) {
           pageSize={pageSize}
           rowsPerPageOptions={[pageSize]}
           getRowClassName={(params) =>
-            `grid-row--${
-              params.indexRelativeToCurrentPage % 2 === 0 ? "even" : "odd"
-            }` +
+            `grid-row--${params.indexRelativeToCurrentPage % 2 === 0 ? "even" : "odd"}` +
             ` grid-row--${
               params.row["type"] === InvocationType.ERROR
                 ? "error"
@@ -169,12 +162,7 @@ function FunctionInvocations(props: FunctionInvocationsProps) {
           disableSelectionOnClick
         />
 
-        <Toast
-          message={toastMessage}
-          open={openToast}
-          type={toastType}
-          onClose={() => setOpenToast(false)}
-        />
+        <Toast message={toastMessage} open={openToast} type={toastType} onClose={() => setOpenToast(false)} />
       </Box>
     </Box>
   );

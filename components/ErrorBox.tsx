@@ -7,7 +7,9 @@ export interface ErrorProps {
 const ErrorBox = ({ error }: ErrorProps) => {
   return (
     <Grid container spacing={0} direction="column" alignItems="center" justifyContent="center">
-      <Grid item xs={3}>{error?.message}</Grid>
+      <Grid item xs={3}>
+        {error?.message}
+      </Grid>
     </Grid>
   );
 };

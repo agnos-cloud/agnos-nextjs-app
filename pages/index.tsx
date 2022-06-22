@@ -9,40 +9,26 @@ export default function Home() {
       <main className={styles.main}>
         <div>
           <span className={styles.logo}>
-            <Image
-              src="/favicon.png"
-              alt="Agnos Logo"
-              width={100}
-              height={100}
-            />
+            <Image src="/favicon.png" alt="Agnos Logo" width={100} height={100} />
           </span>
         </div>
 
         <h1 className={styles.title}>Agnos Cloud</h1>
 
-        <p className={styles.description}>
-          Create and provision system designs using a simple drag-and-drop
-          interface
-        </p>
+        <p className={styles.description}>Create and provision system designs using a simple drag-and-drop interface</p>
 
         <div className={styles.grid}>
           <Link href={DESIGNS_PATH}>
             <a className={styles.card}>
               <h2>Design &rarr;</h2>
-              <p>
-                Create system designs using an intuitive drag-and-drop
-                interface.
-              </p>
+              <p>Create system designs using an intuitive drag-and-drop interface.</p>
             </a>
           </Link>
 
           <Link href={TEAMS_PATH}>
             <a className={styles.card}>
               <h2>Develop &rarr;</h2>
-              <p>
-                Invite collaborators to your teams as you develop robust system
-                designs.
-              </p>
+              <p>Invite collaborators to your teams as you develop robust system designs.</p>
             </a>
           </Link>
 
@@ -56,9 +42,7 @@ export default function Home() {
           <Link href={`${DESIGNS_PATH}/new`}>
             <a className={styles.card}>
               <h2>Deploy &rarr;</h2>
-              <p>
-                Deploy your system design to any popular cloud service provider.
-              </p>
+              <p>Deploy your system design to any popular cloud service provider.</p>
             </a>
           </Link>
         </div>

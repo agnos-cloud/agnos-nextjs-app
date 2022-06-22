@@ -180,11 +180,7 @@ function FullLayout({ children }: any) {
     {
       text: user?.name ?? "Profile",
       icon: user?.picture ? (
-        <Avatar
-          alt={user?.name ?? ""}
-          src={user?.picture}
-          sx={{ width: 20, height: 20 }}
-        />
+        <Avatar alt={user?.name ?? ""} src={user?.picture} sx={{ width: 20, height: 20 }} />
       ) : (
         <ProfileIcon />
       ),
@@ -241,11 +237,7 @@ function FullLayout({ children }: any) {
       <Drawer variant="permanent" open={open}>
         <DrawerHeader>
           <IconButton onClick={handleDrawerClose}>
-            {theme.direction === "rtl" ? (
-              <ChevronRightIcon />
-            ) : (
-              <ChevronLeftIcon />
-            )}
+            {theme.direction === "rtl" ? <ChevronRightIcon /> : <ChevronLeftIcon />}
           </IconButton>
         </DrawerHeader>
         <Divider />
@@ -269,10 +261,7 @@ function FullLayout({ children }: any) {
               >
                 {menu.icon}
               </ListItemIcon>
-              <ListItemText
-                primary={menu.text}
-                sx={{ opacity: open ? 1 : 0 }}
-              />
+              <ListItemText primary={menu.text} sx={{ opacity: open ? 1 : 0 }} />
             </ListItemButton>
           ))}
           {user &&
@@ -295,10 +284,7 @@ function FullLayout({ children }: any) {
                 >
                   {menu.icon}
                 </ListItemIcon>
-                <ListItemText
-                  primary={menu.text}
-                  sx={{ opacity: open ? 1 : 0 }}
-                />
+                <ListItemText primary={menu.text} sx={{ opacity: open ? 1 : 0 }} />
               </ListItemButton>
             ))}
         </List>
@@ -324,10 +310,7 @@ function FullLayout({ children }: any) {
                 >
                   {menu.icon}
                 </ListItemIcon>
-                <ListItemText
-                  primary={menu.text}
-                  sx={{ opacity: open ? 1 : 0 }}
-                />
+                <ListItemText primary={menu.text} sx={{ opacity: open ? 1 : 0 }} />
               </ListItemButton>
             ))}
           </List>
@@ -353,10 +336,7 @@ function FullLayout({ children }: any) {
                 >
                   {menu.icon}
                 </ListItemIcon>
-                <ListItemText
-                  primary={menu.text}
-                  sx={{ opacity: open ? 1 : 0 }}
-                />
+                <ListItemText primary={menu.text} sx={{ opacity: open ? 1 : 0 }} />
               </ListItemButton>
             ))}
           </List>

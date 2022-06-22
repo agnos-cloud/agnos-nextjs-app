@@ -25,12 +25,7 @@ import {
   Typography,
 } from "@mui/material";
 import { KeyboardArrowLeft, KeyboardArrowRight } from "@mui/icons-material";
-import type {
-  Form as FormModel,
-  FormAction,
-  FormField,
-  FormFieldGroup,
-} from "../models/Form";
+import type { Form as FormModel, FormAction, FormField, FormFieldGroup } from "../models/Form";
 import FunctionVersionService from "../services/FunctionVersionService";
 import { useUser } from "@auth0/nextjs-auth0";
 import Toast from "./Toast";
@@ -59,10 +54,7 @@ const MenuItemForms = (props: MenuItemFormsProps) => {
     return (
       <Box sx={{ maxWidth: 400, flexGrow: 1 }}>
         {forms.map((form, index) => (
-          <Form
-            form={form}
-            sx={{ display: index === activeStep ? "block" : "none" }}
-          />
+          <Form form={form} sx={{ display: index === activeStep ? "block" : "none" }} />
         ))}
         <MobileStepper
           variant="text"
@@ -71,30 +63,14 @@ const MenuItemForms = (props: MenuItemFormsProps) => {
           // sx={{ position: "absolute", bottom: 0 }}
           activeStep={activeStep}
           nextButton={
-            <Button
-              size="small"
-              onClick={handleNext}
-              disabled={activeStep === maxSteps - 1}
-            >
+            <Button size="small" onClick={handleNext} disabled={activeStep === maxSteps - 1}>
               Next
-              {theme.direction === "rtl" ? (
-                <KeyboardArrowLeft />
-              ) : (
-                <KeyboardArrowRight />
-              )}
+              {theme.direction === "rtl" ? <KeyboardArrowLeft /> : <KeyboardArrowRight />}
             </Button>
           }
           backButton={
-            <Button
-              size="small"
-              onClick={handleBack}
-              disabled={activeStep === 0}
-            >
-              {theme.direction === "rtl" ? (
-                <KeyboardArrowRight />
-              ) : (
-                <KeyboardArrowLeft />
-              )}
+            <Button size="small" onClick={handleBack} disabled={activeStep === 0}>
+              {theme.direction === "rtl" ? <KeyboardArrowRight /> : <KeyboardArrowLeft />}
               Back
             </Button>
           }
@@ -131,11 +107,7 @@ const Form = (props: FormProps) => {
         <Typography>{formModel.title}</Typography>
       </Paper>
       <Box sx={{ height: 255, maxWidth: 400, width: "100%", p: 0 }}>
-        <FormControl
-          component="fieldset"
-          variant="standard"
-          sx={{ mb: 5, alignItems: "start" }}
-        >
+        <FormControl component="fieldset" variant="standard" sx={{ mb: 5, alignItems: "start" }}>
           {formModel.fields?.map((field) => (
             <Field field={field} form={form} setForm={setForm} />
           ))}
@@ -176,9 +148,7 @@ const Field = (props: FieldProps) => {
   if ("fields" in field && field.fields && field.fields.length) {
     if ("type" in field.fields[0] && field.fields[0].type === "radio") {
       return (
-        <FormControl
-          sx={{ m: 1, p: 1, border: "1px solid black", alignItems: "start" }}
-        >
+        <FormControl sx={{ m: 1, p: 1, border: "1px solid black", alignItems: "start" }}>
           <FormLabel component="caption">{field.title}</FormLabel>
           <RadioGroup
             name={field.fields[0].name}
@@ -194,28 +164,16 @@ const Field = (props: FieldProps) => {
       );
     }
 
-    if (
-      "type" in field.fields[0] &&
-      (field.fields[0].type === "select" ||
-        field.fields[0].type === "multi-select")
-    ) {
+    if ("type" in field.fields[0] && (field.fields[0].type === "select" || field.fields[0].type === "multi-select")) {
       return (
-        <FormControl
-          variant="standard"
-          sx={{ m: 1, p: 1, alignItems: "start", minWidth: 200 }}
-        >
-          <InputLabel id={`${field.fields[0].name}-label`}>
-            {field.title}
-          </InputLabel>
+        <FormControl variant="standard" sx={{ m: 1, p: 1, alignItems: "start", minWidth: 200 }}>
+          <InputLabel id={`${field.fields[0].name}-label`}>{field.title}</InputLabel>
           <Select
             labelId={`${field.fields[0].name}-label`}
             id={field.fields[0].name}
             name={field.fields[0].name}
             label={field.title}
-            value={
-              form[field.fields[0].name] ||
-              (field.fields[0].type === "multi-select" ? [] : "")
-            }
+            value={form[field.fields[0].name] || (field.fields[0].type === "multi-select" ? [] : "")}
             onChange={handleSelectChange}
             multiple={field.fields[0].type === "multi-select"}
             sx={{ minWidth: 200 }}
@@ -232,9 +190,7 @@ const Field = (props: FieldProps) => {
     }
 
     return (
-      <FormGroup
-        sx={{ m: 1, p: 1, border: "1px solid black", alignItems: "start" }}
-      >
+      <FormGroup sx={{ m: 1, p: 1, border: "1px solid black", alignItems: "start" }}>
         <FormLabel component="caption">{field.title}</FormLabel>
         {field.fields?.map((f, i) => (
           <Field key={i} field={f} form={form} setForm={setForm} />
@@ -252,10 +208,7 @@ const Field = (props: FieldProps) => {
       return <></>;
     }
 
-    if (
-      field.default &&
-      (typeof form[field.name] === "undefined" || form[field.name] === null)
-    ) {
+    if (field.default && (typeof form[field.name] === "undefined" || form[field.name] === null)) {
       setForm((previous) => ({
         ...previous,
         [field.name]: field.default,
@@ -274,11 +227,7 @@ const Field = (props: FieldProps) => {
               name={field.name}
               // defaultValue={field.default}
               required={field.required}
-              checked={
-                typeof form[field.name] !== "undefined"
-                  ? form[field.name]
-                  : field.default || false
-              }
+              checked={typeof form[field.name] !== "undefined" ? form[field.name] : field.default || false}
               onChange={handleCheckBoxChange}
               inputProps={{ "aria-label": "controlled" }}
             />
@@ -329,10 +278,7 @@ const Field = (props: FieldProps) => {
               id={field.name}
               name={field.name}
               value={form[field.name] || field.default}
-              onChange={(
-                _event: React.SyntheticEvent<Element, Event>,
-                value: number | null
-              ) =>
+              onChange={(_event: React.SyntheticEvent<Element, Event>, value: number | null) =>
                 setForm((previous) => ({
                   ...previous,
                   [field.name]: value,
@@ -360,11 +306,7 @@ const Field = (props: FieldProps) => {
               name={field.name}
               // defaultValue={field.default}
               required={field.required}
-              checked={
-                typeof form[field.name] !== "undefined"
-                  ? form[field.name]
-                  : field.default || false
-              }
+              checked={typeof form[field.name] !== "undefined" ? form[field.name] : field.default || false}
               onChange={handleCheckBoxChange}
               inputProps={{ "aria-label": "controlled" }}
             />
@@ -408,9 +350,7 @@ const Actions = (props: ActionsProps) => {
   const { user } = useUser();
   const [openToast, setOpenToast] = React.useState(false);
   const [toastMessage, setToastMessage] = React.useState<string>("");
-  const [toastType, setToastType] = React.useState<InvocationType>(
-    InvocationType.SUCCESS
-  );
+  const [toastType, setToastType] = React.useState<InvocationType>(InvocationType.SUCCESS);
 
   if (!actions || !actions.length) {
     return <></>;
@@ -439,11 +379,7 @@ const Actions = (props: ActionsProps) => {
                 let formToUse = form;
 
                 if (action.transform) {
-                  const response = await funcVerService.run(
-                    action.transform,
-                    { form },
-                    { test: true }
-                  );
+                  const response = await funcVerService.run(action.transform, { form }, { test: true });
 
                   if (response.error) {
                     throw new Error(response.error.message);
@@ -452,11 +388,7 @@ const Actions = (props: ActionsProps) => {
                   formToUse = response.result;
                 }
 
-                const response = await funcVerService.run(
-                  action.run,
-                  { form: formToUse },
-                  { test: true }
-                );
+                const response = await funcVerService.run(action.run, { form: formToUse }, { test: true });
 
                 if (response.error) {
                   throw new Error(response.error.message);
@@ -474,12 +406,7 @@ const Actions = (props: ActionsProps) => {
           />
         ))}
       </BottomNavigation>
-      <Toast
-        message={toastMessage}
-        open={openToast}
-        type={toastType}
-        onClose={() => setOpenToast(false)}
-      />
+      <Toast message={toastMessage} open={openToast} type={toastType} onClose={() => setOpenToast(false)} />
     </Paper>
   );
 };

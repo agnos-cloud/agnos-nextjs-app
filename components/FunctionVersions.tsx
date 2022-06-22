@@ -29,9 +29,7 @@ const columns: GridColDef[] = [
     headerName: "Published",
     width: 150,
     // editable: true,
-    renderCell: (params: GridValueGetterParams) => (
-      <Switch checked={params.value} readOnly />
-    ),
+    renderCell: (params: GridValueGetterParams) => <Switch checked={params.value} readOnly />,
   },
   {
     field: "createdAt",
@@ -39,8 +37,7 @@ const columns: GridColDef[] = [
     // description: "This column has a value getter and is not sortable.",
     // sortable: false,
     width: 150,
-    valueGetter: (params: GridValueGetterParams) =>
-      new Date(params.value).toDateString(),
+    valueGetter: (params: GridValueGetterParams) => new Date(params.value).toDateString(),
   },
 ];
 
@@ -51,9 +48,7 @@ export interface FunctionVersionsProps {
 function FunctionVersions(props: FunctionVersionsProps) {
   const { functionId } = props;
   const { user } = useUser();
-  const [functionVersions, setFunctionVersions] = useState<FunctionVersion[]>(
-    []
-  );
+  const [functionVersions, setFunctionVersions] = useState<FunctionVersion[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<Error | undefined>(undefined);
   const [openDialog, setOpenDialog] = useState(false);
@@ -150,10 +145,7 @@ function FunctionVersions(props: FunctionVersionsProps) {
           function: functionId as string,
         })
         .then((functionVersion) => {
-          setFunctionVersions((funcVersions) => [
-            functionVersion,
-            ...funcVersions,
-          ]);
+          setFunctionVersions((funcVersions) => [functionVersion, ...funcVersions]);
           setIsLoading(false);
         })
         .catch((error) => {
@@ -219,9 +211,7 @@ function FunctionVersions(props: FunctionVersionsProps) {
     }
   };
 
-  const handleTestUpdateVersionClick:
-    | MouseEventHandler<HTMLButtonElement>
-    | undefined = (e) => {
+  const handleTestUpdateVersionClick: MouseEventHandler<HTMLButtonElement> | undefined = (e) => {
     e.preventDefault();
     if (user && idUpdate) {
       if (errorsUpdate && errorsUpdate.length) {
@@ -239,9 +229,7 @@ function FunctionVersions(props: FunctionVersionsProps) {
         .run(
           idUpdate,
           {
-            form: testDataUpdate
-              ? JSON.parse(testDataUpdate)["form"]
-              : undefined,
+            form: testDataUpdate ? JSON.parse(testDataUpdate)["form"] : undefined,
           },
           { test: true }
         )
@@ -281,11 +269,7 @@ function FunctionVersions(props: FunctionVersionsProps) {
           columns={columns}
           pageSize={pageSize}
           rowsPerPageOptions={[pageSize]}
-          getRowClassName={(params) =>
-            `grid-row--${
-              params.indexRelativeToCurrentPage % 2 === 0 ? "even" : "odd"
-            }`
-          }
+          getRowClassName={(params) => `grid-row--${params.indexRelativeToCurrentPage % 2 === 0 ? "even" : "odd"}`}
           onRowClick={handleRowClick}
           autoHeight
           // checkboxSelection

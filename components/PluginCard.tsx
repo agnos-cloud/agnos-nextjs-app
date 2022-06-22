@@ -8,11 +8,7 @@ import {
   IconButton,
   Typography,
 } from "@mui/material";
-import {
-  Lock as PrivateIcon,
-  MoreVert as MoreVertIcon,
-  Share as ShareIcon,
-} from "@mui/icons-material";
+import { Lock as PrivateIcon, MoreVert as MoreVertIcon, Share as ShareIcon } from "@mui/icons-material";
 import router from "next/router";
 import type { Plugin } from "../models/Plugin";
 

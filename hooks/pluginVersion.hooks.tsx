@@ -36,28 +36,20 @@ export function usePluginVersionForm() {
     "test-function-1-v008-1655640793941-udf9wp6cje3l2wbbvixjy",
     "test-function-1-v009-1655660538768-1ygmbwgmwmew-nsooof-6",
   ]);
-  const [menuAnchorElement, setMenuAnchorElement] =
-    useState<null | HTMLElement>(null);
-  const [menuItemAnchorElement, setMenuItemAnchorElement] =
-    useState<null | HTMLElement>(null);
-  const isMenuOpen = (id: string) =>
-    menuAnchorElement ? menuAnchorElement.id === id : false;
-  const isMenuItemOpen = (id: string) =>
-    menuItemAnchorElement ? menuItemAnchorElement.id === id : false;
+  const [menuAnchorElement, setMenuAnchorElement] = useState<null | HTMLElement>(null);
+  const [menuItemAnchorElement, setMenuItemAnchorElement] = useState<null | HTMLElement>(null);
+  const isMenuOpen = (id: string) => (menuAnchorElement ? menuAnchorElement.id === id : false);
+  const isMenuItemOpen = (id: string) => (menuItemAnchorElement ? menuItemAnchorElement.id === id : false);
 
   const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setName(event.target.value);
   };
 
-  const handleDescriptionChange = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
+  const handleDescriptionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setDescription(event.target.value);
   };
 
-  const handleIsPrivareChange = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
+  const handleIsPrivareChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPublished(event.target.checked);
   };
 
@@ -112,12 +104,7 @@ export function usePluginVersionForm() {
         onChange={handleDescriptionChange}
       />
       <FormGroup>
-        <FormControlLabel
-          control={
-            <Switch checked={published} onChange={handleIsPrivareChange} />
-          }
-          label="Published"
-        />
+        <FormControlLabel control={<Switch checked={published} onChange={handleIsPrivareChange} />} label="Published" />
       </FormGroup>
       <FormLabel>Config</FormLabel>
       <Editor
@@ -146,26 +133,14 @@ export function usePluginVersionForm() {
                       <Divider key={item.id} />
                     ) : (
                       <React.Fragment key={item.id}>
-                        <ListItem
-                          id={item.id}
-                          sx={{ pl: 4 }}
-                          onClick={handleMenuItemClick}
-                        >
+                        <ListItem id={item.id} sx={{ pl: 4 }} onClick={handleMenuItemClick}>
                           <ListItemIcon>
                             <MenuItemIcon item={item} />
                           </ListItemIcon>
                           <ListItemText primary={item.title} />
-                          {isMenuItemOpen(item.id) ? (
-                            <ExpandLess />
-                          ) : (
-                            <ExpandMore />
-                          )}
+                          {isMenuItemOpen(item.id) ? <ExpandLess /> : <ExpandMore />}
                         </ListItem>
-                        <Collapse
-                          in={isMenuItemOpen(item.id)}
-                          timeout="auto"
-                          unmountOnExit
-                        >
+                        <Collapse in={isMenuItemOpen(item.id)} timeout="auto" unmountOnExit>
                           <Box
                             sx={{
                               display: "flex",

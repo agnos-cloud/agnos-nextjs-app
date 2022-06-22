@@ -22,9 +22,7 @@ function Designs(props: DesignsProps) {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<Error | undefined>(undefined);
   const [openDialog, setOpenDialog] = useState(false);
-  const [teamDesignShares, setTeamDesignShares] = useState<TeamDesignShare[]>(
-    []
-  );
+  const [teamDesignShares, setTeamDesignShares] = useState<TeamDesignShare[]>([]);
   const { name, description, private: isPrivate, form } = useCreateDesignForm();
 
   useEffect(() => {
@@ -82,15 +80,7 @@ function Designs(props: DesignsProps) {
   return (
     <Grid container spacing={1}>
       {teamDesignShares.map((teamDesignShare) => (
-        <Grid
-          key={teamDesignShare._id}
-          item
-          xs={12}
-          sm={6}
-          md={4}
-          lg={3}
-          xl={2}
-        >
+        <Grid key={teamDesignShare._id} item xs={12} sm={6} md={4} lg={3} xl={2}>
           <DesignCard teamDesignShare={teamDesignShare} />
         </Grid>
       ))}

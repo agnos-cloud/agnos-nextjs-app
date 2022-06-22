@@ -11,15 +11,11 @@ export function useCreateFunctionForm() {
     setName(event.target.value);
   };
 
-  const handleDescriptionChange = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
+  const handleDescriptionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setDescription(event.target.value);
   };
 
-  const handleIsPrivareChange = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
+  const handleIsPrivareChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setIsPrivate(event.target.checked);
   };
 
@@ -50,12 +46,7 @@ export function useCreateFunctionForm() {
         onChange={handleDescriptionChange}
       />
       <FormGroup>
-        <FormControlLabel
-          control={
-            <Switch checked={isPrivate} onChange={handleIsPrivareChange} />
-          }
-          label="Private"
-        />
+        <FormControlLabel control={<Switch checked={isPrivate} onChange={handleIsPrivareChange} />} label="Private" />
       </FormGroup>
     </>
   );

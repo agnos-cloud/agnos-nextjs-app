@@ -15,13 +15,7 @@ export interface EditorProps {
   onValidationError?: (errors: any[]) => void;
 }
 
-const Editor = ({
-  language = "json",
-  schemas,
-  value,
-  onChange,
-  onValidationError,
-}: EditorProps) => {
+const Editor = ({ language = "json", schemas, value, onChange, onValidationError }: EditorProps) => {
   const monaco = useMonaco();
   useEffect(() => {
     if (monaco) {
@@ -54,10 +48,7 @@ const Editor = ({
           requireFromUrlTypeDef,
         ].join("\n");
         var libUri = "ts:filename/agnos.d.ts";
-        monaco.languages.typescript.javascriptDefaults.addExtraLib(
-          libSource,
-          libUri
-        );
+        monaco.languages.typescript.javascriptDefaults.addExtraLib(libSource, libUri);
         // When resolving definitions and references, the editor will try to use created models.
         // Creating a model for the library allows "peek definition/references" commands to work with the library.
         // monaco.editor.createModel(
