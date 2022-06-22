@@ -8,9 +8,7 @@ export default class DesignService extends ApiService {
     super(user);
   }
 
-  create: (design: DesignInput) => Promise<Design> = async (
-    design: DesignInput
-  ) => {
+  create: (design: DesignInput) => Promise<Design> = async (design: DesignInput) => {
     return axios({
       method: "POST",
       url: `${this.apiUrl}/designs`,

@@ -1,10 +1,6 @@
 import type { UserProfile } from "@auth0/nextjs-auth0";
 import axios from "axios";
-import type {
-  PluginVersion,
-  PluginVersionInput,
-  PluginVersionUpdate,
-} from "../models/Plugin";
+import type { PluginVersion, PluginVersionInput, PluginVersionUpdate } from "../models/Plugin";
 import ApiService from "./ApiService";
 
 export default class PluginVersionService extends ApiService {
@@ -12,21 +8,20 @@ export default class PluginVersionService extends ApiService {
     super(user);
   }
 
-  create: (pluginVersion: PluginVersionInput) => Promise<PluginVersion> =
-    async (pluginVersion: PluginVersionInput) => {
-      return axios({
-        method: "POST",
-        url: `${this.apiUrl}/plugin-versions`,
-        headers: { authorization: `Bearer ${this.accessToken}` },
-        data: pluginVersion,
+  create: (pluginVersion: PluginVersionInput) => Promise<PluginVersion> = async (pluginVersion: PluginVersionInput) => {
+    return axios({
+      method: "POST",
+      url: `${this.apiUrl}/plugin-versions`,
+      headers: { authorization: `Bearer ${this.accessToken}` },
+      data: pluginVersion,
+    })
+      .then((response) => {
+        return response.data["pluginVersion"] as PluginVersion;
       })
-        .then((response) => {
-          return response.data["pluginVersion"] as PluginVersion;
-        })
-        .catch((error) => {
-          throw error;
-        });
-    };
+      .catch((error) => {
+        throw error;
+      });
+  };
 
   get: (id: string) => Promise<PluginVersion> = async (id: string) => {
     return axios({
@@ -42,14 +37,10 @@ export default class PluginVersionService extends ApiService {
       });
   };
 
-  getMany: (pluginId: string | undefined) => Promise<PluginVersion[]> = async (
-    pluginId: string | undefined
-  ) => {
+  getMany: (pluginId: string | undefined) => Promise<PluginVersion[]> = async (pluginId: string | undefined) => {
     return axios({
       method: "GET",
-      url: `${this.apiUrl}/plugin-versions${
-        pluginId ? `?plugin=${pluginId}` : ""
-      }`,
+      url: `${this.apiUrl}/plugin-versions${pluginId ? `?plugin=${pluginId}` : ""}`,
       headers: { authorization: `Bearer ${this.accessToken}` },
     })
       .then((response) => {
@@ -60,10 +51,7 @@ export default class PluginVersionService extends ApiService {
       });
   };
 
-  update: (
-    id: string,
-    pluginVersion: PluginVersionUpdate
-  ) => Promise<PluginVersion> = async (
+  update: (id: string, pluginVersion: PluginVersionUpdate) => Promise<PluginVersion> = async (
     id: string,
     pluginVersion: PluginVersionUpdate
   ) => {

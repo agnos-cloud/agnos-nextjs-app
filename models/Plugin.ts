@@ -17,9 +17,7 @@ export interface PluginInput {
   team?: string;
 }
 
-export interface PluginVersion
-  extends Omit<PluginVersionInput, "plugin">,
-    Model {
+export interface PluginVersion extends Omit<PluginVersionInput, "plugin">, Model {
   menus?: Array<Menu>;
   plugin?: Plugin;
   team?: Team;
@@ -34,8 +32,7 @@ export interface PluginVersionInput {
   published: boolean;
 }
 
-export interface PluginVersionUpdate
-  extends Omit<PluginVersionInput, "name" | "config" | "plugin" | "published"> {
+export interface PluginVersionUpdate extends Omit<PluginVersionInput, "name" | "config" | "plugin" | "published"> {
   name?: string;
   config?: string;
   published?: boolean;

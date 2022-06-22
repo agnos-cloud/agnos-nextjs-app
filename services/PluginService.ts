@@ -8,9 +8,7 @@ export default class PluginService extends ApiService {
     super(user);
   }
 
-  create: (plugin: PluginInput) => Promise<Plugin> = async (
-    plugin: PluginInput
-  ) => {
+  create: (plugin: PluginInput) => Promise<Plugin> = async (plugin: PluginInput) => {
     return axios({
       method: "POST",
       url: `${this.apiUrl}/plugins`,
@@ -39,9 +37,7 @@ export default class PluginService extends ApiService {
       });
   };
 
-  getMyPlugins: (teamId: string | undefined) => Promise<Plugin[]> = async (
-    teamId: string | undefined
-  ) => {
+  getMyPlugins: (teamId: string | undefined) => Promise<Plugin[]> = async (teamId: string | undefined) => {
     return axios({
       method: "GET",
       url: `${this.apiUrl}/me/plugins${teamId ? `?team=${teamId}` : ""}`,

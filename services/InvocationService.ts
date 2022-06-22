@@ -8,9 +8,7 @@ export default class InvocationService extends ApiService {
     super(user);
   }
 
-  getMany: (source: string | undefined) => Promise<Invocation[]> = async (
-    func: string | undefined
-  ) => {
+  getMany: (source: string | undefined) => Promise<Invocation[]> = async (func: string | undefined) => {
     return axios({
       method: "GET",
       url: `${this.apiUrl}/invocations${func ? `?function=${func}` : ""}`,
