@@ -54,7 +54,7 @@ const MenuItemForms = (props: MenuItemFormsProps) => {
     return (
       <Box sx={{ maxWidth: 400, flexGrow: 1 }}>
         {forms.map((form, index) => (
-          <Form form={form} sx={{ display: index === activeStep ? "block" : "none" }} />
+          <Form key={index} form={form} sx={{ display: index === activeStep ? "block" : "none" }} />
         ))}
         <MobileStepper
           variant="text"
@@ -108,8 +108,8 @@ const Form = (props: FormProps) => {
       </Paper>
       <Box sx={{ height: 255, maxWidth: 400, width: "100%", p: 0 }}>
         <FormControl component="fieldset" variant="standard" sx={{ mb: 5, alignItems: "start" }}>
-          {formModel.fields?.map((field) => (
-            <Field field={field} form={form} setForm={setForm} />
+          {formModel.fields?.map((field, index) => (
+            <Field key={index} field={field} form={form} setForm={setForm} />
           ))}
         </FormControl>
         <Actions actions={formModel.actions} form={form} />
@@ -365,8 +365,9 @@ const Actions = (props: ActionsProps) => {
           setValue(newValue);
         }}
       >
-        {actions?.map((action: FormAction) => (
+        {actions?.map((action: FormAction, index) => (
           <BottomNavigationAction
+            key={index}
             label={action.title}
             onClick={async () => {
               try {

@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "prettier-format": "prettier --write ./**/*.{ts,tsx}"
+    "prettier-format": "prettier --write ./**/*.{ts,tsx}",
+    "prepare": "husky install"
   },
   "dependencies": {
     "@auth0/nextjs-auth0": "^1.7.0",
@@ -38,6 +39,7 @@
     "eslint-config-next": "12.1.4",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.0.0",
+    "husky": "^8.0.0",
     "jest": "^27.5.1",
     "prettier": "^2.7.1",
     "typescript": "^4.6.3"
