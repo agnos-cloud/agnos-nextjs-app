@@ -8,9 +8,7 @@ export default class SettingsService extends ApiService {
     super(user);
   }
 
-  create: (settings: SettingsInput) => Promise<Settings> = async (
-    settings: SettingsInput
-  ) => {
+  create: (settings: SettingsInput) => Promise<Settings> = async (settings: SettingsInput) => {
     return axios({
       method: "POST",
       url: `${this.apiUrl}/settings`,

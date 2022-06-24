@@ -8,9 +8,7 @@ export default class LogService extends ApiService {
     super(user);
   }
 
-  getMany: (source: string | undefined) => Promise<Log[]> = async (
-    source: string | undefined
-  ) => {
+  getMany: (source: string | undefined) => Promise<Log[]> = async (source: string | undefined) => {
     return axios({
       method: "GET",
       url: `${this.apiUrl}/logs${source ? `?source=${source}` : ""}`,

@@ -16,8 +16,7 @@ const columns: GridColDef[] = [
     field: "createdAt",
     headerName: "Date",
     width: 150,
-    valueGetter: (params: GridValueGetterParams) =>
-      new Date(params.value).toDateString(),
+    valueGetter: (params: GridValueGetterParams) => new Date(params.value).toDateString(),
   },
   {
     field: "env",
@@ -33,8 +32,7 @@ const columns: GridColDef[] = [
     field: "meta",
     headerName: "Version",
     width: 150,
-    valueGetter: (params: GridValueGetterParams) =>
-      params.value["versionName"] ?? params.value["version"],
+    valueGetter: (params: GridValueGetterParams) => params.value["versionName"] ?? params.value["version"],
   },
   {
     field: "data",
@@ -124,9 +122,7 @@ function FunctionLogs(props: FunctionLogsProps) {
           pageSize={pageSize}
           rowsPerPageOptions={[pageSize]}
           getRowClassName={(params) =>
-            `grid-row--${
-              params.indexRelativeToCurrentPage % 2 === 0 ? "even" : "odd"
-            }` +
+            `grid-row--${params.indexRelativeToCurrentPage % 2 === 0 ? "even" : "odd"}` +
             ` grid-row--${
               params.row["type"] === LogType.ERROR
                 ? "error"
@@ -142,12 +138,7 @@ function FunctionLogs(props: FunctionLogsProps) {
           disableSelectionOnClick
         />
 
-        <Toast
-          message={toastMessage}
-          open={openToast}
-          type={toastType}
-          onClose={() => setOpenToast(false)}
-        />
+        <Toast message={toastMessage} open={openToast} type={toastType} onClose={() => setOpenToast(false)} />
       </Box>
     </Box>
   );

@@ -22,12 +22,7 @@ function Functions(props: FunctionsProps) {
   const [error, setError] = useState<Error | undefined>(undefined);
   const [openDialog, setOpenDialog] = useState(false);
   const [functions, setFunctions] = useState<Function[]>([]);
-  const {
-    name,
-    description,
-    private: isPrivate,
-    form,
-  } = useCreateFunctionForm();
+  const { name, description, private: isPrivate, form } = useCreateFunctionForm();
 
   useEffect(() => {
     if (user) {

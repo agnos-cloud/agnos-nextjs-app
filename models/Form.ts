@@ -3,14 +3,14 @@ import type { HTMLInputTypeAttribute } from "react";
 export interface Form {
   title: string;
   actions?: Array<FormAction>;
-  disableNavigation: boolean; // if true you can't navigate to the Next or Previous form
+  disableNavigation: boolean; // TODO: if true you can't navigate to the Next or Previous form
   fields?: Array<FormField | FormFieldGroup>;
 }
 
 export interface FormAction {
   title: string;
   run: string;
-  transform: string; // this is a function that will determine the objects passed to the run function
+  transform?: string; // this is a function that will determine the objects passed to the run function
 }
 
 export interface FormField {
@@ -18,7 +18,7 @@ export interface FormField {
   title: string;
   default?: any;
   required?: boolean;
-  type?: HTMLInputTypeAttribute;
+  type?: HTMLInputTypeAttribute | "multi-select" | "rating" | "select" | "switch";
 }
 
 export interface FormFieldGroup {

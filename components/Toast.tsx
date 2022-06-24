@@ -10,13 +10,7 @@ export interface ToastProps {
   onClose: () => void;
 }
 
-const Toast = ({
-  message,
-  open,
-  type,
-  position = ["top", "center"],
-  onClose,
-}: ToastProps) => {
+const Toast = ({ message, open, type, position = ["top", "center"], onClose }: ToastProps) => {
   return (
     <Snackbar
       autoHideDuration={5000}
@@ -24,11 +18,7 @@ const Toast = ({
       onClose={onClose}
       anchorOrigin={{
         vertical: position.includes("top") ? "top" : "bottom",
-        horizontal: position.includes("left")
-          ? "left"
-          : position.includes("right")
-          ? "right"
-          : "center",
+        horizontal: position.includes("left") ? "left" : position.includes("right") ? "right" : "center",
       }}
     >
       <Alert

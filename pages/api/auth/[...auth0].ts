@@ -2,12 +2,7 @@
 import { handleAuth, handleCallback } from "@auth0/nextjs-auth0";
 import axios from "axios";
 
-const afterCallback = async (
-  _req: any,
-  _res: any,
-  session: any,
-  _state: any
-) => {
+const afterCallback = async (_req: any, _res: any, session: any, _state: any) => {
   const { idToken, accessToken, refreshToken } = session;
   session.user.session = { /**idToken,**/ accessToken, refreshToken };
 
@@ -17,12 +12,12 @@ const afterCallback = async (
       url: `${process.env.API_URL}/sessions`,
       data: {
         email: session.user.email,
-      accessToken,
-      idToken,
+        accessToken,
+        idToken,
       },
       headers: {
-        authorization: `Bearer ${accessToken}`
-      }
+        authorization: `Bearer ${accessToken}`,
+      },
     });
     if (response.data.session?.user) {
       session.user._id = response.data.session.user;

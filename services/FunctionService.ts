@@ -8,9 +8,7 @@ export default class FunctionService extends ApiService {
     super(user);
   }
 
-  create: (func: FunctionInput) => Promise<Function> = async (
-    func: FunctionInput
-  ) => {
+  create: (func: FunctionInput) => Promise<Function> = async (func: FunctionInput) => {
     return axios({
       method: "POST",
       url: `${this.apiUrl}/functions`,
@@ -39,9 +37,7 @@ export default class FunctionService extends ApiService {
       });
   };
 
-  getMyFunctions: (teamId: string | undefined) => Promise<Function[]> = async (
-    teamId: string | undefined
-  ) => {
+  getMyFunctions: (teamId: string | undefined) => Promise<Function[]> = async (teamId: string | undefined) => {
     return axios({
       method: "GET",
       url: `${this.apiUrl}/me/functions${teamId ? `?team=${teamId}` : ""}`,

@@ -51,35 +51,19 @@ const DesignCard = (props: DesignCardProps) => {
           }
           title={
             <Typography gutterBottom variant="h5" component="div">
-              {teamDesignShare.design?.name}{" "}
-              {teamDesignShare.design?.private && (
-                <PrivateIcon fontSize="small" />
-              )}
+              {teamDesignShare.design?.name} {teamDesignShare.design?.private && <PrivateIcon fontSize="small" />}
             </Typography>
           }
           subheader={
             <Typography variant="subtitle2" color="text.secondary">
-              Created{" "}
-              {new Date(
-                teamDesignShare.design?.createdAt || teamDesignShare.createdAt
-              ).toDateString()}{" "}
-              {teamDesignShare.permission?.name === "ADMIN" && (
-                <AdminIcon fontSize="small" />
-              )}
-              {teamDesignShare.permission?.name === "WRITE" && (
-                <WriteIcon fontSize="small" />
-              )}
-              {teamDesignShare.permission?.name === "READ" && (
-                <ReadIcon fontSize="small" />
-              )}
+              Created {new Date(teamDesignShare.design?.createdAt || teamDesignShare.createdAt).toDateString()}{" "}
+              {teamDesignShare.permission?.name === "ADMIN" && <AdminIcon fontSize="small" />}
+              {teamDesignShare.permission?.name === "WRITE" && <WriteIcon fontSize="small" />}
+              {teamDesignShare.permission?.name === "READ" && <ReadIcon fontSize="small" />}
             </Typography>
           }
         />
-        <CardMedia
-          component="img"
-          image={teamDesignShare.design?.picture}
-          alt={teamDesignShare.design?.name}
-        />
+        <CardMedia component="img" image={teamDesignShare.design?.picture} alt={teamDesignShare.design?.name} />
         <CardContent>
           <Typography variant="subtitle1" color="text.secondary">
             {teamDesignShare.design?.description}

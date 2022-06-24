@@ -56,30 +56,19 @@ const MembershipCard = (props: MembershipCardProps) => {
           }
           title={
             <Typography gutterBottom variant="h5" component="div">
-              {membership.team?.name}{" "}
-              {membership.team?.private && <PrivateIcon fontSize="small" />}
+              {membership.team?.name} {membership.team?.private && <PrivateIcon fontSize="small" />}
             </Typography>
           }
           subheader={
             <Typography variant="subtitle2" color="text.secondary">
               Joined {new Date(membership.createdAt).toDateString()}{" "}
-              {membership.permission?.name === "ADMIN" && (
-                <AdminIcon fontSize="small" />
-              )}
-              {membership.permission?.name === "WRITE" && (
-                <WriteIcon fontSize="small" />
-              )}
-              {membership.permission?.name === "READ" && (
-                <ReadIcon fontSize="small" />
-              )}
+              {membership.permission?.name === "ADMIN" && <AdminIcon fontSize="small" />}
+              {membership.permission?.name === "WRITE" && <WriteIcon fontSize="small" />}
+              {membership.permission?.name === "READ" && <ReadIcon fontSize="small" />}
             </Typography>
           }
         />
-        <CardMedia
-          component="img"
-          image={membership.team?.picture}
-          alt={membership.team?.name}
-        />
+        <CardMedia component="img" image={membership.team?.picture} alt={membership.team?.name} />
         <CardContent>
           <Typography variant="subtitle1" color="text.secondary">
             {membership.team?.description}

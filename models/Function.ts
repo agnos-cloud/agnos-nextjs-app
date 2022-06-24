@@ -18,19 +18,13 @@ export interface FunctionInput {
   team?: string;
 }
 
-export interface FunctionVersion
-  extends Omit<FunctionVersionInput, "function">,
-    Model {
+export interface FunctionVersion extends Omit<FunctionVersionInput, "function">, Model {
   function?: Function;
   team?: Team;
   user?: User;
 }
 
-export interface FunctionVersionUpdate
-  extends Omit<
-    FunctionVersionInput,
-    "name" | "code" | "function" | "published"
-  > {
+export interface FunctionVersionUpdate extends Omit<FunctionVersionInput, "name" | "code" | "function" | "published"> {
   name?: string;
   code?: string;
   published?: boolean;

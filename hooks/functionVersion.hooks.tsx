@@ -11,11 +11,7 @@ import {
   Switch,
   TextField,
 } from "@mui/material";
-import {
-  Description as DesignIcon,
-  Language as EnvIcon,
-  Person as UserIcon,
-} from "@mui/icons-material";
+import { Description as DesignIcon, Language as EnvIcon, Person as UserIcon } from "@mui/icons-material";
 import { nanoid } from "nanoid";
 import { useUser } from "@auth0/nextjs-auth0";
 import Editor from "../components/Editor";
@@ -58,15 +54,11 @@ export function useFunctionVersionForm() {
     setName(event.target.value);
   };
 
-  const handleDescriptionChange = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
+  const handleDescriptionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setDescription(event.target.value);
   };
 
-  const handleIsPrivareChange = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
+  const handleIsPrivareChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPublished(event.target.checked);
   };
 
@@ -122,12 +114,7 @@ export function useFunctionVersionForm() {
         onChange={handleDescriptionChange}
       />
       <FormGroup>
-        <FormControlLabel
-          control={
-            <Switch checked={published} onChange={handleIsPrivareChange} />
-          }
-          label="Published"
-        />
+        <FormControlLabel control={<Switch checked={published} onChange={handleIsPrivareChange} />} label="Published" />
       </FormGroup>
       <FormLabel>Code</FormLabel>
       <Editor
@@ -136,10 +123,7 @@ export function useFunctionVersionForm() {
         onChange={handleCodeChange}
         onValidationError={handleValidationError}
       />
-      <List
-        sx={{ width: "100%", bgcolor: "background.paper" }}
-        subheader={<FormLabel>Permissions</FormLabel>}
-      >
+      <List sx={{ width: "100%", bgcolor: "background.paper" }} subheader={<FormLabel>Permissions</FormLabel>}>
         {Object.keys(PermissionScope).map((scope) => {
           const labelId = `checkbox-list-secondary-label-${scope}`;
           return (
@@ -172,6 +156,7 @@ export function useFunctionVersionForm() {
         onChange={handleTestDataChange}
         onValidationError={handleValidationError}
       />
+      {id ? <hr /> : <></>}
       {id ? (
         <TextField
           autoFocus
