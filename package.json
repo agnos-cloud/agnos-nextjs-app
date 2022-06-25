@@ -54,6 +54,7 @@
     "eslint-plugin-storybook": "^0.5.13",
     "husky": "^8.0.0",
     "jest": "^27.5.1",
+    "lint-staged": "^13.0.3",
     "prettier": "^2.7.1",
     "typescript": "^4.6.3"
   },
@@ -64,5 +65,8 @@
     "singleQuote": false,
     "tabWidth": 2,
     "trailingComma": "es5"
+  },
+  "lint-staged": {
+    "*.{ts,tsx}": ["next lint", "prettier --write"]
   }
 }
