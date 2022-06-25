@@ -1,6 +1,6 @@
 import { Alert, Snackbar } from "@mui/material";
-import type { InvocationType } from "../constants/invocation";
-import type { LogType } from "../constants/log";
+import type { InvocationType } from "../../constants/invocation";
+import type { LogType } from "../../constants/log";
 
 export interface ToastProps {
   message: string | string[];
