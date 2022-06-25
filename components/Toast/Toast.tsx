@@ -25,7 +25,7 @@ const Toast = ({ message, open, type, position = ["top", "center"], onClose }: T
         onClose={onClose}
         // @ts-ignore
         severity={String(type || "info").toLowerCase()}
-        sx={{ width: "100%" }}
+        sx={{ width: "90%" }}
       >
         {typeof message === "object"
           ? message.map((m, i) => <div key={i}>{m}</div>)
