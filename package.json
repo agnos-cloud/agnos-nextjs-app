@@ -11,7 +11,7 @@
     "prepare": "husky install",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
-    "chromatic": "npx chromatic --project-token=aad8be08c8ec"
+    "chromatic": "chromatic --exit-zero-on-changes"
   },
   "dependencies": {
     "@auth0/nextjs-auth0": "^1.7.0",
