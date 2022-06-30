@@ -10,7 +10,8 @@
     "prettier-format": "prettier --write ./**/*.{ts,tsx}",
     "prepare": "husky install",
     "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
+    "build-storybook": "build-storybook",
+    "chromatic": "chromatic --exit-zero-on-changes"
   },
   "dependencies": {
     "@auth0/nextjs-auth0": "^1.7.0",
@@ -47,6 +48,7 @@
     "@typescript-eslint/eslint-plugin": "^5.29.0",
     "@typescript-eslint/parser": "^5.29.0",
     "babel-loader": "^8.2.5",
+    "chromatic": "^6.6.3",
     "eslint": "^8.18.0",
     "eslint-config-next": "12.1.4",
     "eslint-config-prettier": "^8.5.0",
@@ -67,6 +69,10 @@
     "trailingComma": "es5"
   },
   "lint-staged": {
-    "*.{ts,tsx}": ["next lint", "prettier --write"]
-  }
+    "*.{ts,tsx}": [
+      "prettier --write"
+    ]
+  },
+  "readme": "ERROR: No README data found!",
+  "_id": "agnos-nextjs-app@0.1.0"
 }
