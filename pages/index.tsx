@@ -15,34 +15,37 @@ export default function Home() {
 
         <h1 className={styles.title}>Agnos Cloud</h1>
 
-        <p className={styles.description}>Create and provision system designs using a simple drag-and-drop interface</p>
+        <p className={styles.description}>
+          Using the power of artificial intelligence and automation, Agnos Cloud enables you to create and deploy your
+          applications in minutes without compromising on quality.
+        </p>
 
         <div className={styles.grid}>
           <Link href={DESIGNS_PATH}>
             <a className={styles.card}>
               <h2>Design &rarr;</h2>
-              <p>Create system designs using an intuitive drag-and-drop interface.</p>
+              <p>Create business domain models using an intuitive user interface.</p>
             </a>
           </Link>
 
           <Link href={TEAMS_PATH}>
             <a className={styles.card}>
               <h2>Develop &rarr;</h2>
-              <p>Invite collaborators to your teams as you develop robust system designs.</p>
+              <p>Build complete applications in minutes using any technology.</p>
             </a>
           </Link>
 
           <Link href={STORE_PATH}>
             <a className={styles.card}>
               <h2>Distribute &rarr;</h2>
-              <p>Share your system designs and components with other users.</p>
+              <p>Share your project templates and components with other users.</p>
             </a>
           </Link>
 
           <Link href={`${DESIGNS_PATH}/new`}>
             <a className={styles.card}>
               <h2>Deploy &rarr;</h2>
-              <p>Deploy your system design to any popular cloud service provider.</p>
+              <p>Deploy your applications to any popular cloud service provider.</p>
             </a>
           </Link>
         </div>

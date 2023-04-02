@@ -18,6 +18,8 @@ import {
   Typography,
 } from "@mui/material";
 import {
+  Brightness4 as DarkModeIcon,
+  Brightness7 as LightModeIcon,
   ChevronLeft as ChevronLeftIcon,
   ChevronRight as ChevronRightIcon,
   Description as DesignsIcon,
@@ -45,6 +47,7 @@ import {
   TEAMS_PATH,
 } from "../../constants/paths";
 import { useUser } from "@auth0/nextjs-auth0";
+import { useColorMode } from "../../providers/ColorModeProvider";
 
 const drawerWidth = 240;
 
@@ -119,6 +122,7 @@ const Drawer = styled(MuiDrawer, {
 
 function FullLayout({ children }: any) {
   const theme = useTheme();
+  const colorMode = useColorMode();
   const [open, setOpen] = useState(false);
   const { user } = useUser();
 
@@ -210,7 +214,7 @@ function FullLayout({ children }: any) {
       </Head>
       <CssBaseline />
       <AppBar position="fixed" open={open}>
-        <Toolbar>
+        <Toolbar sx={{ mr: 2 }}>
           <IconButton
             color="inherit"
             aria-label="open drawer"
@@ -229,9 +233,15 @@ function FullLayout({ children }: any) {
             component="div"
             onClick={() => router.push("/")}
             style={{ cursor: "pointer" }}
+            sx={{ flexGrow: 1 }}
           >
             Agnos Cloud
           </Typography>
+          <div>
+            <IconButton sx={{ ml: 1 }} onClick={colorMode.toggleColorMode} color="inherit">
+              {theme.palette.mode === "dark" ? <LightModeIcon /> : <DarkModeIcon />}
+            </IconButton>
+          </div>
         </Toolbar>
       </AppBar>
       <Drawer variant="permanent" open={open}>
