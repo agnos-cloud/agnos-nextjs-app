@@ -17,7 +17,7 @@ export default function Home() {
 
         <p className={styles.description}>
           Using the power of artificial intelligence and automation, Agnos Cloud enables you to create and deploy your
-          applications in minutes without compromising on quality.
+          applications in minutes without compromising quality.
         </p>
 
         <div className={styles.grid}>
