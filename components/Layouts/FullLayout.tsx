@@ -16,6 +16,8 @@ import {
   ListItemText,
   Toolbar,
   Typography,
+  Menu,
+  MenuItem,
 } from "@mui/material";
 import {
   Brightness4 as DarkModeIcon,
@@ -124,6 +126,7 @@ function FullLayout({ children }: any) {
   const theme = useTheme();
   const colorMode = useColorMode();
   const [open, setOpen] = useState(false);
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const { user } = useUser();
 
   const handleDrawerOpen = () => {
@@ -132,6 +135,19 @@ function FullLayout({ children }: any) {
 
   const handleDrawerClose = () => {
     setOpen(false);
+  };
+
+  const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleLogin = () => {
+    setAnchorEl(null);
+    router.push(LOGIN_PATH);
   };
 
   const homeMenus = [
@@ -197,14 +213,6 @@ function FullLayout({ children }: any) {
     },
   ];
 
-  const loginMenus = [
-    {
-      text: "Login",
-      icon: <ProfileIcon />,
-      onClick: () => router.push(LOGIN_PATH),
-    },
-  ];
-
   return (
     <Box sx={{ display: "flex" }}>
       <Head>
@@ -215,18 +223,20 @@ function FullLayout({ children }: any) {
       <CssBaseline />
       <AppBar position="fixed" open={open}>
         <Toolbar sx={{ mr: 2 }}>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            onClick={handleDrawerOpen}
-            edge="start"
-            sx={{
-              marginRight: 5,
-              ...(open && { display: "none" }),
-            }}
-          >
-            <MenuIcon />
-          </IconButton>
+          {user && (
+            <IconButton
+              color="inherit"
+              aria-label="open drawer"
+              onClick={handleDrawerOpen}
+              edge="start"
+              sx={{
+                marginRight: 5,
+                ...(open && { display: "none" }),
+              }}
+            >
+              <MenuIcon />
+            </IconButton>
+          )}
           <Typography
             variant="h6"
             noWrap
@@ -241,41 +251,56 @@ function FullLayout({ children }: any) {
             <IconButton sx={{ ml: 1 }} onClick={colorMode.toggleColorMode} color="inherit">
               {theme.palette.mode === "dark" ? <LightModeIcon /> : <DarkModeIcon />}
             </IconButton>
+            {!user && (
+              <IconButton sx={{ ml: 1 }} onClick={() => router.push(LOGIN_PATH)} color="inherit">
+                <ProfileIcon />
+              </IconButton>
+            )}
+            {!true && (
+              <>
+                <IconButton
+                  sx={{ ml: 1 }}
+                  aria-label="account of current user"
+                  aria-controls="menu-appbar"
+                  aria-haspopup="true"
+                  onClick={handleMenu}
+                  color="inherit"
+                >
+                  <ProfileIcon />
+                </IconButton>
+                <Menu
+                  id="menu-appbar"
+                  anchorEl={anchorEl}
+                  // anchorOrigin={{
+                  //   vertical: "top",
+                  //   horizontal: "right",
+                  // }}
+                  keepMounted
+                  // transformOrigin={{
+                  //   vertical: "top",
+                  //   horizontal: "right",
+                  // }}
+                  open={Boolean(anchorEl)}
+                  onClose={handleMenuClose}
+                >
+                  <MenuItem onClick={handleLogin}>Log Out</MenuItem>
+                  <MenuItem onClick={handleLogin}>Log Out</MenuItem>
+                </Menu>
+              </>
+            )}
           </div>
         </Toolbar>
       </AppBar>
-      <Drawer variant="permanent" open={open}>
-        <DrawerHeader>
-          <IconButton onClick={handleDrawerClose}>
-            {theme.direction === "rtl" ? <ChevronRightIcon /> : <ChevronLeftIcon />}
-          </IconButton>
-        </DrawerHeader>
-        <Divider />
-        <List>
-          {homeMenus.map((menu) => (
-            <ListItemButton
-              key={menu.text}
-              sx={{
-                minHeight: 48,
-                justifyContent: open ? "initial" : "center",
-                px: 2.5,
-              }}
-              onClick={menu.onClick}
-            >
-              <ListItemIcon
-                sx={{
-                  minWidth: 0,
-                  mr: open ? 3 : "auto",
-                  justifyContent: "center",
-                }}
-              >
-                {menu.icon}
-              </ListItemIcon>
-              <ListItemText primary={menu.text} sx={{ opacity: open ? 1 : 0 }} />
-            </ListItemButton>
-          ))}
-          {user &&
-            mainMenus.map((menu) => (
+      {user && (
+        <Drawer variant="permanent" open={open}>
+          <DrawerHeader>
+            <IconButton onClick={handleDrawerClose}>
+              {theme.direction === "rtl" ? <ChevronRightIcon /> : <ChevronLeftIcon />}
+            </IconButton>
+          </DrawerHeader>
+          <Divider />
+          <List>
+            {homeMenus.map((menu) => (
               <ListItemButton
                 key={menu.text}
                 sx={{
@@ -297,9 +322,30 @@ function FullLayout({ children }: any) {
                 <ListItemText primary={menu.text} sx={{ opacity: open ? 1 : 0 }} />
               </ListItemButton>
             ))}
-        </List>
-        <Divider />
-        {user && (
+            {mainMenus.map((menu) => (
+              <ListItemButton
+                key={menu.text}
+                sx={{
+                  minHeight: 48,
+                  justifyContent: open ? "initial" : "center",
+                  px: 2.5,
+                }}
+                onClick={menu.onClick}
+              >
+                <ListItemIcon
+                  sx={{
+                    minWidth: 0,
+                    mr: open ? 3 : "auto",
+                    justifyContent: "center",
+                  }}
+                >
+                  {menu.icon}
+                </ListItemIcon>
+                <ListItemText primary={menu.text} sx={{ opacity: open ? 1 : 0 }} />
+              </ListItemButton>
+            ))}
+          </List>
+          <Divider />
           <List>
             {settingsMenus.map((menu) => (
               <ListItemButton
@@ -324,34 +370,8 @@ function FullLayout({ children }: any) {
               </ListItemButton>
             ))}
           </List>
-        )}
-        {!user && (
-          <List>
-            {loginMenus.map((menu) => (
-              <ListItemButton
-                key={menu.text}
-                sx={{
-                  minHeight: 48,
-                  justifyContent: open ? "initial" : "center",
-                  px: 2.5,
-                }}
-                onClick={menu.onClick}
-              >
-                <ListItemIcon
-                  sx={{
-                    minWidth: 0,
-                    mr: open ? 3 : "auto",
-                    justifyContent: "center",
-                  }}
-                >
-                  {menu.icon}
-                </ListItemIcon>
-                <ListItemText primary={menu.text} sx={{ opacity: open ? 1 : 0 }} />
-              </ListItemButton>
-            ))}
-          </List>
-        )}
-      </Drawer>
+        </Drawer>
+      )}
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         <DrawerHeader />
         {children}

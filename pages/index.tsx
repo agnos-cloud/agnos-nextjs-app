@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { DESIGNS_PATH, STORE_PATH, TEAMS_PATH } from "../constants/paths";
+import { LOGIN_PATH } from "../constants/paths";
 import styles from "../styles/Home.module.css";
 
 export default function Home() {
@@ -21,34 +21,30 @@ export default function Home() {
         </p>
 
         <div className={styles.grid}>
-          <Link href={DESIGNS_PATH}>
-            <a className={styles.card}>
-              <h2>Design &rarr;</h2>
-              <p>Create business domain models using an intuitive user interface.</p>
-            </a>
-          </Link>
+          <div className={styles.card}>
+            <h2>Design</h2>
+            <p>Create business domain models using an intuitive user interface.</p>
+          </div>
 
-          <Link href={TEAMS_PATH}>
-            <a className={styles.card}>
-              <h2>Develop &rarr;</h2>
-              <p>Build complete applications in minutes using any technology.</p>
-            </a>
-          </Link>
+          <div className={styles.card}>
+            <h2>Develop</h2>
+            <p>Build complete applications in minutes using any technology.</p>
+          </div>
 
-          <Link href={STORE_PATH}>
-            <a className={styles.card}>
-              <h2>Distribute &rarr;</h2>
-              <p>Share your project templates and components with other users.</p>
-            </a>
-          </Link>
+          <div className={styles.card}>
+            <h2>Distribute</h2>
+            <p>Share your project templates and components with other users.</p>
+          </div>
 
-          <Link href={`${DESIGNS_PATH}/new`}>
-            <a className={styles.card}>
-              <h2>Deploy &rarr;</h2>
-              <p>Deploy your applications to any popular cloud service provider.</p>
-            </a>
-          </Link>
+          <div className={styles.card}>
+            <h2>Deploy</h2>
+            <p>Deploy your applications to any popular cloud service provider.</p>
+          </div>
         </div>
+
+        <Link href={LOGIN_PATH}>
+          <a className={styles.link}>Sign in to continue &rarr;</a>
+        </Link>
       </main>
 
       {/* <footer className={styles.footer}>
