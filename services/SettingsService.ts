@@ -24,7 +24,7 @@ export default class SettingsService extends ApiService {
 
   update: (settings: SettingsInput) => Promise<Settings> = async (settings: SettingsInput) => {
     return axios({
-      method: "POST",
+      method: "PATCH",
       url: `${this.apiUrl}/settings`,
       headers: { authorization: `Bearer ${this.accessToken}` },
       data: settings,
