@@ -8,21 +8,6 @@ export default class SettingsService extends ApiService {
     super(user);
   }
 
-  create: (settings: SettingsInput) => Promise<Settings> = async (settings: SettingsInput) => {
-    return axios({
-      method: "POST",
-      url: `${this.apiUrl}/settings`,
-      headers: { authorization: `Bearer ${this.accessToken}` },
-      data: settings,
-    })
-      .then((response) => {
-        return response.data["settings"] as Settings;
-      })
-      .catch((error) => {
-        throw error;
-      });
-  };
-
   get: () => Promise<Settings> = async () => {
     return axios({
       method: "GET",
@@ -30,7 +15,22 @@ export default class SettingsService extends ApiService {
       headers: { authorization: `Bearer ${this.accessToken}` },
     })
       .then((response) => {
-        return response.data["settings"] as Settings;
+        return response.data.data as Settings;
+      })
+      .catch((error) => {
+        throw error;
+      });
+  };
+
+  update: (settings: SettingsInput) => Promise<Settings> = async (settings: SettingsInput) => {
+    return axios({
+      method: "POST",
+      url: `${this.apiUrl}/settings`,
+      headers: { authorization: `Bearer ${this.accessToken}` },
+      data: settings,
+    })
+      .then((response) => {
+        return response.data.data as Settings;
       })
       .catch((error) => {
         throw error;

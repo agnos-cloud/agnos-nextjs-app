@@ -50,6 +50,7 @@ import {
 } from "../../constants/paths";
 import { useUser } from "@auth0/nextjs-auth0";
 import { useColorMode } from "../../providers/ColorModeProvider";
+import { useSettings } from "../../hooks/settings.hooks";
 
 const drawerWidth = 240;
 
@@ -128,6 +129,13 @@ function FullLayout({ children }: any) {
   const [open, setOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const { user } = useUser();
+  const { colorMode: cm, setColorMode } = useSettings(user);
+
+  React.useEffect(() => {
+    if (theme.palette.mode !== (cm.toLocaleLowerCase() as "light" | "dark")) {
+      colorMode.toggleColorMode();
+    }
+  }, [user, cm, theme, colorMode]);
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -145,25 +153,12 @@ function FullLayout({ children }: any) {
     setAnchorEl(null);
   };
 
-  const handleLogin = () => {
-    setAnchorEl(null);
-    router.push(LOGIN_PATH);
-  };
-
-  const homeMenus = [
+  const mainMenus = [
     {
       text: "Home",
       icon: <HomeIcon />,
       onClick: () => router.push("/"),
     },
-    {
-      text: "Search",
-      icon: <SearchIcon />,
-      onClick: () => router.push("/search"),
-    },
-  ];
-
-  const mainMenus = [
     {
       text: "Designs",
       icon: <DesignsIcon />,
@@ -191,12 +186,7 @@ function FullLayout({ children }: any) {
     },
   ];
 
-  const settingsMenus = [
-    {
-      text: "Settings",
-      icon: <SettingsIcon />,
-      onClick: () => router.push("/settings"),
-    },
+  const userMenus = [
     {
       text: user?.name ?? "Profile",
       icon: user?.picture ? (
@@ -207,7 +197,12 @@ function FullLayout({ children }: any) {
       onClick: () => router.push("/profile"),
     },
     {
-      text: "Logout",
+      text: "Settings",
+      icon: <SettingsIcon />,
+      onClick: () => router.push("/settings"),
+    },
+    {
+      text: "Sign out",
       icon: <LogoutIcon />,
       onClick: () => router.push(LOGOUT_PATH),
     },
@@ -248,7 +243,19 @@ function FullLayout({ children }: any) {
             Agnos Cloud
           </Typography>
           <div>
-            <IconButton sx={{ ml: 1 }} onClick={colorMode.toggleColorMode} color="inherit">
+            {user && (
+              <IconButton sx={{ ml: 1 }} onClick={() => router.push("/search")} color="inherit">
+                <SearchIcon />
+              </IconButton>
+            )}
+            <IconButton
+              sx={{ ml: 1 }}
+              onClick={() => {
+                theme.palette.mode === "dark" ? setColorMode("LIGHT") : setColorMode("DARK");
+                colorMode.toggleColorMode();
+              }}
+              color="inherit"
+            >
               {theme.palette.mode === "dark" ? <LightModeIcon /> : <DarkModeIcon />}
             </IconButton>
             {!user && (
@@ -256,7 +263,7 @@ function FullLayout({ children }: any) {
                 <ProfileIcon />
               </IconButton>
             )}
-            {!true && (
+            {user && (
               <>
                 <IconButton
                   sx={{ ml: 1 }}
@@ -266,25 +273,33 @@ function FullLayout({ children }: any) {
                   onClick={handleMenu}
                   color="inherit"
                 >
-                  <ProfileIcon />
+                  {user?.picture ? (
+                    <Avatar alt={user?.name ?? ""} src={user?.picture} sx={{ width: 20, height: 20 }} />
+                  ) : (
+                    <ProfileIcon />
+                  )}
                 </IconButton>
                 <Menu
                   id="menu-appbar"
                   anchorEl={anchorEl}
-                  // anchorOrigin={{
-                  //   vertical: "top",
-                  //   horizontal: "right",
-                  // }}
                   keepMounted
-                  // transformOrigin={{
-                  //   vertical: "top",
-                  //   horizontal: "right",
-                  // }}
                   open={Boolean(anchorEl)}
                   onClose={handleMenuClose}
                 >
-                  <MenuItem onClick={handleLogin}>Log Out</MenuItem>
-                  <MenuItem onClick={handleLogin}>Log Out</MenuItem>
+                  {userMenus.map((menu) => (
+                    <MenuItem key={menu.text} onClick={menu.onClick}>
+                      <ListItemIcon
+                        sx={{
+                          minWidth: 0,
+                          mr: open ? 3 : "auto",
+                          justifyContent: "center",
+                        }}
+                      >
+                        {menu.icon}
+                      </ListItemIcon>
+                      <ListItemText>{menu.text}</ListItemText>
+                    </MenuItem>
+                  ))}
                 </Menu>
               </>
             )}
@@ -300,28 +315,6 @@ function FullLayout({ children }: any) {
           </DrawerHeader>
           <Divider />
           <List>
-            {homeMenus.map((menu) => (
-              <ListItemButton
-                key={menu.text}
-                sx={{
-                  minHeight: 48,
-                  justifyContent: open ? "initial" : "center",
-                  px: 2.5,
-                }}
-                onClick={menu.onClick}
-              >
-                <ListItemIcon
-                  sx={{
-                    minWidth: 0,
-                    mr: open ? 3 : "auto",
-                    justifyContent: "center",
-                  }}
-                >
-                  {menu.icon}
-                </ListItemIcon>
-                <ListItemText primary={menu.text} sx={{ opacity: open ? 1 : 0 }} />
-              </ListItemButton>
-            ))}
             {mainMenus.map((menu) => (
               <ListItemButton
                 key={menu.text}
@@ -347,7 +340,7 @@ function FullLayout({ children }: any) {
           </List>
           <Divider />
           <List>
-            {settingsMenus.map((menu) => (
+            {userMenus.map((menu) => (
               <ListItemButton
                 key={menu.text}
                 sx={{

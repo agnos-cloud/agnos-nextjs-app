@@ -1,9 +1,12 @@
 import Link from "next/link";
 import Image from "next/image";
 import { LOGIN_PATH } from "../constants/paths";
+import { useUser } from "@auth0/nextjs-auth0";
 import styles from "../styles/Home.module.css";
 
 export default function Home() {
+  const { user } = useUser();
+
   return (
     <div className={styles.container}>
       <main className={styles.main}>
@@ -42,9 +45,11 @@ export default function Home() {
           </div>
         </div>
 
-        <Link href={LOGIN_PATH}>
-          <a className={styles.link}>Sign in to continue &rarr;</a>
-        </Link>
+        {!user && (
+          <Link href={LOGIN_PATH}>
+            <a className={styles.link}>Sign in to continue &rarr;</a>
+          </Link>
+        )}
       </main>
 
       {/* <footer className={styles.footer}>
