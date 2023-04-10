@@ -1,17 +1,17 @@
 {
   "name": "agnos-nextjs-app",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "scripts": {
-    "dev": "next dev -p 4000",
     "build": "next build",
-    "start": "next start",
-    "lint": "next lint",
-    "prettier-format": "prettier --write ./**/*.{ts,tsx}",
-    "prepare": "husky install",
-    "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
-    "chromatic": "chromatic --exit-zero-on-changes"
+    "chromatic": "chromatic --exit-zero-on-changes",
+    "dev": "next dev -p 4000",
+    "lint": "next lint",
+    "prepare": "husky install",
+    "prettier-format": "prettier --write ./**/*.{ts,tsx}",
+    "start": "next start",
+    "storybook": "start-storybook -p 6006"
   },
   "dependencies": {
     "@auth0/nextjs-auth0": "^1.7.0",
@@ -73,6 +73,5 @@
       "prettier --write"
     ]
   },
-  "readme": "ERROR: No README data found!",
-  "_id": "agnos-nextjs-app@0.1.0"
+  "_id": "agnos-nextjs-app@0.2.0"
 }

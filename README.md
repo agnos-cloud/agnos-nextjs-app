@@ -1,34 +1,49 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Agnos App
+
+This is a [Next.js](https://nextjs.org/) client for the Agnos API.
 
 ## Getting Started
 
-First, run the development server:
+### Running Locally (Development Build)
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+- Create `.env.local` file in the project root directory and populate it accordingly. See `.env.example` for environment variables expected in `.env.local`
+- Run `yarn` to install dependencies.
+- Run `yarn dev` to run the development version
+- Navigate to [http://localhost:4000](http://localhost:4000) on your browser to see the running app.
 
-Open [http://localhost:4000](http://localhost:4000) with your browser to see the result.
+### Testing Locally
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+### Building for Production
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:4000/api/hello](http://localhost:4000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
-
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+- Run `yarn build`
 
 ## Deploy on Vercel
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+
+## Tools
+
+- [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app)
+- [Commitlint](https://commitlint.js.org/#/)
+- [ESLint](https://eslint.org/)
+- [Husky](https://github.com/typicode/husky)
+- [Jest](https://jestjs.io/)
+- [Prettier](https://prettier.io/)
+- [TypeScript](https://www.typescriptlang.org/)
+- [Yarn](https://yarnpkg.com/)
+- [Vercel Platform](https://vercel.com)
+
+## Resources
+
+- [Next.js Documentation](https://nextjs.org/docs)
+- [Learn Next.js](https://nextjs.org/learn)
+- [The Next.js GitHub repository](https://github.com/vercel/next.js/)
+- [NextJs API routes](https://nextjs.org/docs/api-routes/introduction)
+- [Next.js deployment documentation](https://nextjs.org/docs/deployment)
+- [How to Setup a TypeScript + Node.js Project](https://khalilstemmler.com/blogs/typescript/node-starter-project)
+- [How to use ESLint with TypeScript](https://khalilstemmler.com/blogs/typescript/eslint-for-typescript)
+- [How to use Prettier with ESLint and TypeScript in VSCode](https://khalilstemmler.com/blogs/tooling/prettier)
+- [Enforcing Coding Conventions with Husky Pre-commit Hooks](https://khalilstemmler.com/blogs/tooling/enforcing-husky-precommit-hooks)
+- [Path aliases with TypeScript in Node.js](https://dev.to/larswaechter/path-aliases-with-typescript-in-nodejs-4353)
