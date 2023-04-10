@@ -46,4 +46,5 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 - [How to use ESLint with TypeScript](https://khalilstemmler.com/blogs/typescript/eslint-for-typescript)
 - [How to use Prettier with ESLint and TypeScript in VSCode](https://khalilstemmler.com/blogs/tooling/prettier)
 - [Enforcing Coding Conventions with Husky Pre-commit Hooks](https://khalilstemmler.com/blogs/tooling/enforcing-husky-precommit-hooks)
+- [Test NextJs with Jest and React Testing Library](https://nextjs.org/docs/testing#jest-and-react-testing-library)
 - [Path aliases with TypeScript in Node.js](https://dev.to/larswaechter/path-aliases-with-typescript-in-nodejs-4353)
