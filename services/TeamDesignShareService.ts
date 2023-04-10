@@ -1,7 +1,7 @@
 import type { UserProfile } from "@auth0/nextjs-auth0";
 import axios from "axios";
 import type { TeamDesignShare } from "../models/TeamDesignShare";
-import ApiService from "./ApiService";
+import { ApiService } from "@services/base";
 
 export default class TeamDesignShareService extends ApiService {
   constructor(user: UserProfile | undefined) {

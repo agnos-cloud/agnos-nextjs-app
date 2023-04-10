@@ -1,6 +1,6 @@
 import type { UserProfile } from "@auth0/nextjs-auth0";
 
-export default class ApiService {
+export class ApiService {
   protected accessToken: string | undefined = undefined;
   protected apiUrl: string | undefined = process.env.API_URL;
 

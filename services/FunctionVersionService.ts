@@ -1,7 +1,7 @@
 import type { UserProfile } from "@auth0/nextjs-auth0";
 import axios from "axios";
 import type { FunctionVersion, FunctionVersionInput, FunctionVersionUpdate } from "../models/Function";
-import ApiService from "./ApiService";
+import { ApiService } from "@services/base";
 
 export default class FunctionVersionService extends ApiService {
   constructor(user: UserProfile | undefined) {

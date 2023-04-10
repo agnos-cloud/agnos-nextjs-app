@@ -1,7 +1,7 @@
 import type { UserProfile } from "@auth0/nextjs-auth0";
 import axios from "axios";
 import type { Plugin, PluginInput } from "../models/Plugin";
-import ApiService from "./ApiService";
+import { ApiService } from "@services/base";
 
 export default class PluginService extends ApiService {
   constructor(user: UserProfile | undefined) {
