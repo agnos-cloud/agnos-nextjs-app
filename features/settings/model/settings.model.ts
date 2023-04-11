@@ -1,5 +1,5 @@
-import type { Model } from "./Model";
-import type { User } from "./User";
+import type { Model } from "@models/base";
+import type { User } from "../../../models/User";
 
 export interface Settings extends SettingsInput, Model {
   user?: User;

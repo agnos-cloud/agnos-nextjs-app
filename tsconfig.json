@@ -38,7 +38,10 @@
     ],
     "baseUrl": "./",
     "paths": {
-      "@services/base": [ "features/base/services/base.service" ],
+      "@models/base": [ "features/base/model/base.model" ],
+      "@models/settings": [ "features/settings/model/settings.model" ],
+      "@services/base": [ "features/base/service/base.service" ],
+      "@services/settings": [ "features/settings/service/settings.service" ],
     }
   },
   "exclude": [

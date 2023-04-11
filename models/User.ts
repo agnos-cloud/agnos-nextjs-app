@@ -1,6 +1,6 @@
 import type { Membership } from "./Membership";
-import type { Model } from "./Model";
-import type { Settings } from "./Settings";
+import type { Model } from "@models/base";
+import type { Settings } from "@models/settings";
 import type { UserDesignShare } from "./UserDesignShare";
 
 export interface User extends Model {

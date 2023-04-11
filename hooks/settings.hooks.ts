@@ -1,6 +1,6 @@
 import type { UserProfile } from "@auth0/nextjs-auth0";
 import { useEffect, useState } from "react";
-import SettingsService from "../services/SettingsService";
+import SettingsService from "@services/settings";
 
 export function useSettings(user: UserProfile | undefined) {
   const [autoSave, setAutoSave] = useState(false);

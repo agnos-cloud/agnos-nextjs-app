@@ -1,6 +1,6 @@
 import type { UserProfile } from "@auth0/nextjs-auth0";
 import axios from "axios";
-import type { Settings, SettingsInput } from "../models/Settings";
+import type { Settings, SettingsInput } from "@models/settings";
 import { ApiService } from "@services/base";
 
 export default class SettingsService extends ApiService {

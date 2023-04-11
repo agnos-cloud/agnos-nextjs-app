@@ -1,4 +1,4 @@
-import type { Model } from "./Model";
+import type { Model } from "@models/base";
 import type { Permission } from "./Permission";
 import type { Team } from "./Team";
 import type { User } from "./User";

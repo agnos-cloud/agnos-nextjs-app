@@ -1,4 +1,4 @@
-import type { Model } from "./Model";
+import type { Model } from "@models/base";
 import type { Team } from "./Team";
 import type { TeamDesignShare } from "./TeamDesignShare";
 import type { User } from "./User";
