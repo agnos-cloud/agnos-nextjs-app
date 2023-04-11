@@ -6,7 +6,7 @@ import { UserProvider } from "@auth0/nextjs-auth0";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 
-import FullLayout from "../components/Layouts/FullLayout";
+import { DefaultLayout } from "@layouts/base";
 import ColorModeProvider from "../providers/ColorModeProvider";
 
 function MyApp({ Component, pageProps }: AppProps) {
@@ -34,9 +34,9 @@ function MyApp({ Component, pageProps }: AppProps) {
       <ColorModeProvider value={colorMode}>
         <ThemeProvider theme={theme}>
           <CssBaseline />
-          <FullLayout>
+          <DefaultLayout>
             <Component {...pageProps} />
-          </FullLayout>
+          </DefaultLayout>
         </ThemeProvider>
       </ColorModeProvider>
     </UserProvider>

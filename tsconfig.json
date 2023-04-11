@@ -38,6 +38,7 @@
     "baseUrl": "./",
     "paths": {
       "@hooks/settings": [ "features/settings/hook/settings.hook" ],
+      "@layouts/base": [ "features/base/layouts" ],
       "@models/base": [ "features/base/model/base.model" ],
       "@models/settings": [ "features/settings/model/settings.model" ],
       "@services/base": [ "features/base/service/base.service" ],

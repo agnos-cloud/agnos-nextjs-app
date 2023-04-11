@@ -70,6 +70,7 @@
   },
   "_moduleAliases": {
     "@hooks/settings": "build/features/settings/hook/settings.hook",
+    "@layouts/base": "build/features/base/layouts",
     "@models/base": "build/features/base/model/base.model",
     "@models/settings": "build/features/settings/model/settings.model",
     "@services/base": "build/features/base/service/base.service",
