@@ -21,6 +21,7 @@ module.exports = {
   coverageDirectory: "coverage",
   moduleWrapper: {
     "\\.(css|styl|less|sass|scss|png|jpg|jpeg|ttf|woff|woff2)$": "identity-obj-proxy",
+    "^@hooks/(.+)$": "<rootDir>/features/$1/hook/$1.hook",
     "^@models/(.+)$": "<rootDir>/features/$1/model/$1.model",
     "^@services/(.+)$": "<rootDir>/features/$1/service/$1.service",
   },

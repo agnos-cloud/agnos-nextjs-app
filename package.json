@@ -69,6 +69,7 @@
     "typescript": "^4.6.3"
   },
   "_moduleAliases": {
+    "@hooks/settings": "build/features/settings/hook/settings.hook",
     "@models/base": "build/features/base/model/base.model",
     "@models/settings": "build/features/settings/model/settings.model",
     "@services/base": "build/features/base/service/base.service",

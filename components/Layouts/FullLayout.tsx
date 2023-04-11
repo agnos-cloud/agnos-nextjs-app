@@ -50,7 +50,7 @@ import {
 } from "../../constants/paths";
 import { useUser } from "@auth0/nextjs-auth0";
 import { useColorMode } from "../../providers/ColorModeProvider";
-import { useSettings } from "../../hooks/settings.hooks";
+import { useSettings } from "@hooks/settings";
 
 const drawerWidth = 240;
 

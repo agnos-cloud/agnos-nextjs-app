@@ -35,6 +35,7 @@ export function useSettings(user: UserProfile | undefined) {
     };
 
     saveSettings();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [autoSave, colorMode, useGrayscaleIcons]);
 
   return {
