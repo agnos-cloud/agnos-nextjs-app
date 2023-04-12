@@ -37,6 +37,7 @@
     ],
     "baseUrl": "./",
     "paths": {
+      "@constants/*": [ "constants/*" ],
       "@hooks/settings": [ "features/settings/hook/settings.hook" ],
       "@layouts/base": [ "features/base/layouts" ],
       "@models/base": [ "features/base/model/base.model" ],

@@ -2,8 +2,6 @@ import * as React from "react";
 import { useState } from "react";
 import { styled, useTheme, Theme, CSSObject } from "@mui/material/styles";
 import {
-  AppBar as MuiAppBar,
-  AppBarProps as MuiAppBarProps,
   Avatar,
   Box,
   CssBaseline,
@@ -14,24 +12,16 @@ import {
   ListItemButton,
   ListItemIcon,
   ListItemText,
-  Toolbar,
-  Typography,
-  Menu,
-  MenuItem,
 } from "@mui/material";
 import {
-  Brightness4 as DarkModeIcon,
-  Brightness7 as LightModeIcon,
   ChevronLeft as ChevronLeftIcon,
   ChevronRight as ChevronRightIcon,
   Description as DesignsIcon,
   ExitToApp as LogoutIcon,
   Home as HomeIcon,
   FlashOn as FunctionsIcon,
-  Menu as MenuIcon,
   Power as PluginsIcon,
   Person as ProfileIcon,
-  Search as SearchIcon,
   Settings as SettingsIcon,
   Store as MarketIcon,
   Group as TeamsIcon,
@@ -40,23 +30,13 @@ import Head from "next/head";
 import router from "next/router";
 import Footer from "./components/Footer";
 
-import {
-  DESIGNS_PATH,
-  FUNCTIONS_PATH,
-  LOGIN_PATH,
-  LOGOUT_PATH,
-  PLUGINS_PATH,
-  STORE_PATH,
-  TEAMS_PATH,
-} from "../../../constants/paths";
+import { DESIGNS_PATH, FUNCTIONS_PATH, LOGOUT_PATH, PLUGINS_PATH, STORE_PATH, TEAMS_PATH } from "@constants/paths";
 import { useUser } from "@auth0/nextjs-auth0";
-import { useColorMode } from "../../../providers/ColorModeProvider";
-import { useSettings } from "@hooks/settings";
-
-const drawerWidth = 240;
+import AppBar from "./components/AppBar";
+import { DRAWER_WIDTH } from "@constants/dimensions";
 
 const openedMixin = (theme: Theme): CSSObject => ({
-  width: drawerWidth,
+  width: DRAWER_WIDTH,
   transition: theme.transitions.create("width", {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.enteringScreen,
@@ -85,32 +65,10 @@ const DrawerHeader = styled("div")(({ theme }) => ({
   ...theme.mixins.toolbar,
 }));
 
-interface AppBarProps extends MuiAppBarProps {
-  open?: boolean;
-}
-
-const AppBar = styled(MuiAppBar, {
-  shouldForwardProp: (prop) => prop !== "open",
-})<AppBarProps>(({ theme, open }) => ({
-  zIndex: theme.zIndex.drawer + 1,
-  transition: theme.transitions.create(["width", "margin"], {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.leavingScreen,
-  }),
-  ...(open && {
-    marginLeft: drawerWidth,
-    width: `calc(100% - ${drawerWidth}px)`,
-    transition: theme.transitions.create(["width", "margin"], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-  }),
-}));
-
 const Drawer = styled(MuiDrawer, {
   shouldForwardProp: (prop) => prop !== "open",
 })(({ theme, open }) => ({
-  width: drawerWidth,
+  width: DRAWER_WIDTH,
   flexShrink: 0,
   whiteSpace: "nowrap",
   boxSizing: "border-box",
@@ -124,34 +82,13 @@ const Drawer = styled(MuiDrawer, {
   }),
 }));
 
-function FullLayout({ children }: any) {
+function DefaultLayout({ children }: any) {
   const theme = useTheme();
-  const colorMode = useColorMode();
   const [open, setOpen] = useState(false);
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const { user } = useUser();
-  const { colorMode: cm, setColorMode } = useSettings(user);
-
-  React.useEffect(() => {
-    if (theme.palette.mode !== (cm.toLocaleLowerCase() as "light" | "dark")) {
-      colorMode.toggleColorMode();
-    }
-  }, [user, cm, theme, colorMode]);
-
-  const handleDrawerOpen = () => {
-    setOpen(true);
-  };
 
   const handleDrawerClose = () => {
     setOpen(false);
-  };
-
-  const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleMenuClose = () => {
-    setAnchorEl(null);
   };
 
   const mainMenus = [
@@ -218,96 +155,7 @@ function FullLayout({ children }: any) {
           <link rel="icon" href="/favicon.ico" />
         </Head>
         <CssBaseline />
-        <AppBar position="fixed" open={open}>
-          <Toolbar sx={{ mr: 2 }}>
-            {user && (
-              <IconButton
-                color="inherit"
-                aria-label="open drawer"
-                onClick={handleDrawerOpen}
-                edge="start"
-                sx={{
-                  marginRight: 5,
-                  ...(open && { display: "none" }),
-                }}
-              >
-                <MenuIcon />
-              </IconButton>
-            )}
-            <Typography
-              variant="h6"
-              noWrap
-              component="div"
-              onClick={() => router.push("/")}
-              style={{ cursor: "pointer" }}
-              sx={{ flexGrow: 1 }}
-            >
-              Agnos Cloud
-            </Typography>
-            <div>
-              {user && (
-                <IconButton sx={{ ml: 1 }} onClick={() => router.push("/search")} color="inherit">
-                  <SearchIcon />
-                </IconButton>
-              )}
-              <IconButton
-                sx={{ ml: 1 }}
-                onClick={() => {
-                  theme.palette.mode === "dark" ? setColorMode("LIGHT") : setColorMode("DARK");
-                  colorMode.toggleColorMode();
-                }}
-                color="inherit"
-              >
-                {theme.palette.mode === "dark" ? <LightModeIcon /> : <DarkModeIcon />}
-              </IconButton>
-              {!user && (
-                <IconButton sx={{ ml: 1 }} onClick={() => router.push(LOGIN_PATH)} color="inherit">
-                  <ProfileIcon />
-                </IconButton>
-              )}
-              {user && (
-                <>
-                  <IconButton
-                    sx={{ ml: 1 }}
-                    aria-label="account of current user"
-                    aria-controls="menu-appbar"
-                    aria-haspopup="true"
-                    onClick={handleMenu}
-                    color="inherit"
-                  >
-                    {user?.picture ? (
-                      <Avatar alt={user?.name ?? ""} src={user?.picture} sx={{ width: 20, height: 20 }} />
-                    ) : (
-                      <ProfileIcon />
-                    )}
-                  </IconButton>
-                  <Menu
-                    id="menu-appbar"
-                    anchorEl={anchorEl}
-                    keepMounted
-                    open={Boolean(anchorEl)}
-                    onClose={handleMenuClose}
-                  >
-                    {userMenus.map((menu) => (
-                      <MenuItem key={menu.text} onClick={menu.onClick}>
-                        <ListItemIcon
-                          sx={{
-                            minWidth: 0,
-                            mr: open ? 3 : "auto",
-                            justifyContent: "center",
-                          }}
-                        >
-                          {menu.icon}
-                        </ListItemIcon>
-                        <ListItemText>{menu.text}</ListItemText>
-                      </MenuItem>
-                    ))}
-                  </Menu>
-                </>
-              )}
-            </div>
-          </Toolbar>
-        </AppBar>
+        <AppBar />
         {user && (
           <Drawer variant="permanent" open={open}>
             <DrawerHeader>
@@ -377,4 +225,4 @@ function FullLayout({ children }: any) {
   );
 }
 
-export default FullLayout;
+export default DefaultLayout;
