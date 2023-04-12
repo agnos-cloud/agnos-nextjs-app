@@ -1,5 +1,4 @@
 import * as React from "react";
-import { useState } from "react";
 import { styled, useTheme, Theme, CSSObject } from "@mui/material/styles";
 import {
   Avatar,
@@ -29,6 +28,7 @@ import router from "next/router";
 import { DESIGNS_PATH, FUNCTIONS_PATH, LOGOUT_PATH, PLUGINS_PATH, STORE_PATH, TEAMS_PATH } from "@constants/paths";
 import { useUser } from "@auth0/nextjs-auth0";
 import { DRAWER_WIDTH } from "@constants/dimensions";
+import { useApp } from "@hooks/base";
 
 const openedMixin = (theme: Theme): CSSObject => ({
   width: DRAWER_WIDTH,
@@ -79,11 +79,11 @@ const StyledDrawer = styled(MuiDrawer, {
 
 function Drawer() {
   const theme = useTheme();
-  const [open, setOpen] = useState(false);
   const { user } = useUser();
+  const { openDrawer, setOpenDrawer } = useApp();
 
   const handleDrawerClose = () => {
-    setOpen(false);
+    setOpenDrawer(false);
   };
 
   const mainMenus = [
@@ -142,7 +142,7 @@ function Drawer() {
   ];
 
   return (
-    <StyledDrawer variant="permanent" open={open}>
+    <StyledDrawer variant="permanent" open={openDrawer}>
       <DrawerHeader>
         <IconButton onClick={handleDrawerClose}>
           {theme.direction === "rtl" ? <ChevronRightIcon /> : <ChevronLeftIcon />}
@@ -155,7 +155,7 @@ function Drawer() {
             key={menu.text}
             sx={{
               minHeight: 48,
-              justifyContent: open ? "initial" : "center",
+              justifyContent: openDrawer ? "initial" : "center",
               px: 2.5,
             }}
             onClick={menu.onClick}
@@ -163,13 +163,13 @@ function Drawer() {
             <ListItemIcon
               sx={{
                 minWidth: 0,
-                mr: open ? 3 : "auto",
+                mr: openDrawer ? 3 : "auto",
                 justifyContent: "center",
               }}
             >
               {menu.icon}
             </ListItemIcon>
-            <ListItemText primary={menu.text} sx={{ opacity: open ? 1 : 0 }} />
+            <ListItemText primary={menu.text} sx={{ opacity: openDrawer ? 1 : 0 }} />
           </ListItemButton>
         ))}
       </List>
@@ -180,7 +180,7 @@ function Drawer() {
             key={menu.text}
             sx={{
               minHeight: 48,
-              justifyContent: open ? "initial" : "center",
+              justifyContent: openDrawer ? "initial" : "center",
               px: 2.5,
             }}
             onClick={menu.onClick}
@@ -188,13 +188,13 @@ function Drawer() {
             <ListItemIcon
               sx={{
                 minWidth: 0,
-                mr: open ? 3 : "auto",
+                mr: openDrawer ? 3 : "auto",
                 justifyContent: "center",
               }}
             >
               {menu.icon}
             </ListItemIcon>
-            <ListItemText primary={menu.text} sx={{ opacity: open ? 1 : 0 }} />
+            <ListItemText primary={menu.text} sx={{ opacity: openDrawer ? 1 : 0 }} />
           </ListItemButton>
         ))}
       </List>

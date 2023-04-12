@@ -27,6 +27,7 @@ import { useColorMode } from "providers/ColorModeProvider";
 import { useUser } from "@auth0/nextjs-auth0";
 import { useSettings } from "@hooks/settings";
 import { DRAWER_WIDTH } from "@constants/dimensions";
+import { useApp } from "@hooks/base";
 
 interface AppBarProps extends MuiAppBarProps {
   open?: boolean;
@@ -53,7 +54,7 @@ const StyledAppBar = styled(MuiAppBar, {
 export default function AppBar() {
   const theme = useTheme();
   const colorMode = useColorMode();
-  const [open, setOpen] = useState(false);
+  const { openDrawer, setOpenDrawer } = useApp();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const { user } = useUser();
   const { colorMode: cm, setColorMode } = useSettings(user);
@@ -65,7 +66,7 @@ export default function AppBar() {
   }, [user, cm, theme, colorMode]);
 
   const handleDrawerOpen = () => {
-    setOpen(true);
+    setOpenDrawer(true);
   };
 
   const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
@@ -99,7 +100,7 @@ export default function AppBar() {
   ];
 
   return (
-    <StyledAppBar position="fixed" open={open}>
+    <StyledAppBar position="fixed" open={openDrawer}>
       <Toolbar sx={{ mr: 2 }}>
         {user && (
           <IconButton
@@ -109,7 +110,7 @@ export default function AppBar() {
             edge="start"
             sx={{
               marginRight: 5,
-              ...(open && { display: "none" }),
+              ...(openDrawer && { display: "none" }),
             }}
           >
             <MenuIcon />
@@ -168,7 +169,7 @@ export default function AppBar() {
                     <ListItemIcon
                       sx={{
                         minWidth: 0,
-                        mr: open ? 3 : "auto",
+                        mr: openDrawer ? 3 : "auto",
                         justifyContent: "center",
                       }}
                     >

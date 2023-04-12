@@ -38,10 +38,12 @@
     "baseUrl": "./",
     "paths": {
       "@constants/*": [ "constants/*" ],
+      "@hooks/base": [ "features/base/hook/base.hook" ],
       "@hooks/settings": [ "features/settings/hook/settings.hook" ],
       "@layouts/base": [ "features/base/layouts" ],
       "@models/base": [ "features/base/model/base.model" ],
       "@models/settings": [ "features/settings/model/settings.model" ],
+      "@providers/base": [ "features/base/provider/base.provider" ],
       "@services/base": [ "features/base/service/base.service" ],
       "@services/settings": [ "features/settings/service/settings.service" ],
     }

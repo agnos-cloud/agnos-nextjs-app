@@ -8,8 +8,10 @@ import CssBaseline from "@mui/material/CssBaseline";
 
 import { DefaultLayout } from "@layouts/base";
 import ColorModeProvider from "../providers/ColorModeProvider";
+import AppProvider from "@providers/base";
 
 function MyApp({ Component, pageProps }: AppProps) {
+  const [openDrawer, setOpenDrawer] = React.useState(false);
   const [mode, setMode] = React.useState<"light" | "dark">("light");
   const colorMode = React.useMemo(
     () => ({
@@ -29,14 +31,19 @@ function MyApp({ Component, pageProps }: AppProps) {
       }),
     [mode]
   );
+
+  const app = { openDrawer, setOpenDrawer };
+
   return (
     <UserProvider>
       <ColorModeProvider value={colorMode}>
         <ThemeProvider theme={theme}>
-          <CssBaseline />
-          <DefaultLayout>
-            <Component {...pageProps} />
-          </DefaultLayout>
+          <AppProvider value={app}>
+            <CssBaseline />
+            <DefaultLayout>
+              <Component {...pageProps} />
+            </DefaultLayout>
+          </AppProvider>
         </ThemeProvider>
       </ColorModeProvider>
     </UserProvider>

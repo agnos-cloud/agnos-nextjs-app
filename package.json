@@ -70,10 +70,12 @@
   },
   "_moduleAliases": {
     "@constants": "constants",
+    "@hooks/base": "build/features/base/hook/base.hook",
     "@hooks/settings": "build/features/settings/hook/settings.hook",
     "@layouts/base": "build/features/base/layouts",
     "@models/base": "build/features/base/model/base.model",
     "@models/settings": "build/features/settings/model/settings.model",
+    "@providers/base": "build/features/base/provider/base.provider",
     "@services/base": "build/features/base/service/base.service",
     "@services/settings": "build/features/settings/service/settings.service"
   },
