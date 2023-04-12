@@ -69,6 +69,8 @@
     "typescript": "^4.6.3"
   },
   "_moduleAliases": {
+    "@components/base": "build/features/base/components",
+    "@components/project": "build/features/project/components",
     "@constants": "constants",
     "@hooks/base": "build/features/base/hook/base.hook",
     "@hooks/settings": "build/features/settings/hook/settings.hook",
@@ -77,7 +79,9 @@
     "@models/settings": "build/features/settings/model/settings.model",
     "@providers/base": "build/features/base/provider/base.provider",
     "@services/base": "build/features/base/service/base.service",
-    "@services/settings": "build/features/settings/service/settings.service"
+    "@services/settings": "build/features/settings/service/settings.service",
+    "@views/base": "build/features/base/views",
+    "@views/org": "build/features/org/views"
   },
   "prettier": {
     "parser": "typescript",

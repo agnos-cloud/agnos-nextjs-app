@@ -37,6 +37,8 @@
     ],
     "baseUrl": "./",
     "paths": {
+      "@components/base": [ "features/base/components" ],
+      "@components/project": [ "features/project/components" ],
       "@constants/*": [ "constants/*" ],
       "@hooks/base": [ "features/base/hook/base.hook" ],
       "@hooks/settings": [ "features/settings/hook/settings.hook" ],
@@ -46,6 +48,8 @@
       "@providers/base": [ "features/base/provider/base.provider" ],
       "@services/base": [ "features/base/service/base.service" ],
       "@services/settings": [ "features/settings/service/settings.service" ],
+      "@views/base": [ "features/base/views" ],
+      "@views/org": [ "features/org/views" ],
     }
   },
   "exclude": [

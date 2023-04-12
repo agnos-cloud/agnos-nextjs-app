@@ -1,11 +1,10 @@
 import * as React from "react";
 import { Box, CssBaseline } from "@mui/material";
 import Head from "next/head";
-import Footer from "./components/Footer";
-
 import { useUser } from "@auth0/nextjs-auth0";
 import AppBar from "./components/AppBar";
 import Drawer, { DrawerHeader } from "./components/Drawer";
+import Footer from "./components/Footer";
 
 function DefaultLayout({ children }: any) {
   const { user } = useUser();
@@ -26,7 +25,7 @@ function DefaultLayout({ children }: any) {
           {children}
         </Box>
       </Box>
-      <Footer />
+      {false && <Footer />}
     </>
   );
 }

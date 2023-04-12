@@ -1,11 +1,11 @@
 import React from "react";
-import { styled } from "@mui/material/styles";
+import { styled, useTheme } from "@mui/material/styles";
 import { Container, Box, Typography, Link } from "@mui/material";
 
 const RootBox = styled(Box)(({ theme }) => ({
-  [theme.breakpoints.down("md")]: {
-    justifyContent: "center",
-  },
+  width: "100%",
+  justifyContent: "center",
+  padding: theme.spacing(0),
 }));
 
 const FooterBox = styled(Box)(({ theme }) => ({
@@ -13,26 +13,25 @@ const FooterBox = styled(Box)(({ theme }) => ({
   flexWrap: "wrap",
   justifyContent: "center",
   marginRight: "auto",
-  marginLeft: theme.spacing(3),
-  marginBottom: theme.spacing(0),
 
   [theme.breakpoints.down("md")]: {
     width: "100%",
-    marginLeft: "auto",
-    marginTop: theme.spacing(3),
-    marginBottom: theme.spacing(2),
   },
 }));
 
 const StyledLink = styled(Link)(({ theme }) => ({
-  marginLeft: theme.spacing(3),
+  fontSize: theme.typography.caption.fontSize,
   marginRight: theme.spacing(3),
   [theme.breakpoints.down("md")]: {
-    marginBottom: theme.spacing(2),
+    marginLeft: theme.spacing(5),
+  },
+  [theme.breakpoints.down("lg")]: {
+    marginLeft: theme.spacing(6),
   },
 }));
 
 export default function Footer() {
+  const theme = useTheme();
   const content = {
     copy: "© 2023 Agnos All rights reserved.",
     link1: "First Link",
@@ -42,7 +41,7 @@ export default function Footer() {
   };
 
   return (
-    <Container maxWidth="lg" sx={{ position: "static", bottom: 0 }}>
+    <Container maxWidth="lg" sx={{ position: "sticky", bottom: 0, backgroundColor: theme.palette.background.default }}>
       <RootBox py={6} display="flex" flexWrap="wrap" alignItems="center">
         <FooterBox component="nav">
           <StyledLink href="#" variant="body1" color="textPrimary">

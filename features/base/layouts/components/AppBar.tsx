@@ -13,8 +13,8 @@ import {
   MenuItem,
 } from "@mui/material";
 import {
-  Brightness4 as DarkModeIcon,
-  Brightness7 as LightModeIcon,
+  DarkMode as DarkModeIcon,
+  LightMode as LightModeIcon,
   ExitToApp as LogoutIcon,
   Menu as MenuIcon,
   Person as ProfileIcon,

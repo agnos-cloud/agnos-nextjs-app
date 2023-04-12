@@ -90,32 +90,32 @@ function Drawer() {
     {
       text: "Home",
       icon: <HomeIcon />,
-      onClick: () => router.push("/"),
+      path: "/",
     },
     {
       text: "Designs",
       icon: <DesignsIcon />,
-      onClick: () => router.push(DESIGNS_PATH),
+      path: DESIGNS_PATH,
     },
     {
       text: "Plugins",
       icon: <PluginsIcon />,
-      onClick: () => router.push(PLUGINS_PATH),
+      path: PLUGINS_PATH,
     },
     {
       text: "Functions",
       icon: <FunctionsIcon />,
-      onClick: () => router.push(FUNCTIONS_PATH),
+      path: FUNCTIONS_PATH,
     },
     {
       text: "Teams",
       icon: <TeamsIcon />,
-      onClick: () => router.push(TEAMS_PATH),
+      path: TEAMS_PATH,
     },
     {
       text: "Marketplace",
       icon: <MarketIcon />,
-      onClick: () => router.push(STORE_PATH),
+      path: STORE_PATH,
     },
   ];
 
@@ -127,17 +127,17 @@ function Drawer() {
       ) : (
         <ProfileIcon />
       ),
-      onClick: () => router.push("/profile"),
+      path: "/profile",
     },
     {
       text: "Settings",
       icon: <SettingsIcon />,
-      onClick: () => router.push("/settings"),
+      path: "/settings",
     },
     {
       text: "Sign out",
       icon: <LogoutIcon />,
-      onClick: () => router.push(LOGOUT_PATH),
+      path: LOGOUT_PATH,
     },
   ];
 
@@ -158,7 +158,8 @@ function Drawer() {
               justifyContent: drawerIsOpen ? "initial" : "center",
               px: 2.5,
             }}
-            onClick={menu.onClick}
+            selected={router.pathname === menu.path}
+            onClick={() => router.push(menu.path)}
           >
             <ListItemIcon
               sx={{
@@ -183,7 +184,8 @@ function Drawer() {
               justifyContent: drawerIsOpen ? "initial" : "center",
               px: 2.5,
             }}
-            onClick={menu.onClick}
+            selected={router.pathname === menu.path}
+            onClick={() => router.push(menu.path)}
           >
             <ListItemIcon
               sx={{
