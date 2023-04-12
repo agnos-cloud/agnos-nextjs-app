@@ -23,7 +23,6 @@ import {
 } from "@mui/icons-material";
 import router from "next/router";
 import { LOGIN_PATH, LOGOUT_PATH } from "@constants/paths";
-import { useColorMode } from "providers/ColorModeProvider";
 import { useUser } from "@auth0/nextjs-auth0";
 import { useSettings } from "@hooks/settings";
 import { DRAWER_WIDTH } from "@constants/dimensions";
@@ -53,20 +52,19 @@ const StyledAppBar = styled(MuiAppBar, {
 
 export default function AppBar() {
   const theme = useTheme();
-  const colorMode = useColorMode();
-  const { openDrawer, setOpenDrawer } = useApp();
+  const { drawerIsOpen, setDrawerIsOpen, togglePaletteMode } = useApp();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const { user } = useUser();
   const { colorMode: cm, setColorMode } = useSettings(user);
 
   React.useEffect(() => {
     if (theme.palette.mode !== (cm.toLocaleLowerCase() as "light" | "dark")) {
-      colorMode.toggleColorMode();
+      togglePaletteMode();
     }
-  }, [user, cm, theme, colorMode]);
+  }, [user, cm, theme, togglePaletteMode]);
 
   const handleDrawerOpen = () => {
-    setOpenDrawer(true);
+    setDrawerIsOpen(true);
   };
 
   const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
@@ -100,7 +98,7 @@ export default function AppBar() {
   ];
 
   return (
-    <StyledAppBar position="fixed" open={openDrawer}>
+    <StyledAppBar position="fixed" open={drawerIsOpen}>
       <Toolbar sx={{ mr: 2 }}>
         {user && (
           <IconButton
@@ -110,7 +108,7 @@ export default function AppBar() {
             edge="start"
             sx={{
               marginRight: 5,
-              ...(openDrawer && { display: "none" }),
+              ...(drawerIsOpen && { display: "none" }),
             }}
           >
             <MenuIcon />
@@ -136,7 +134,7 @@ export default function AppBar() {
             sx={{ ml: 1 }}
             onClick={() => {
               theme.palette.mode === "dark" ? setColorMode("LIGHT") : setColorMode("DARK");
-              colorMode.toggleColorMode();
+              togglePaletteMode();
             }}
             color="inherit"
           >
@@ -169,7 +167,7 @@ export default function AppBar() {
                     <ListItemIcon
                       sx={{
                         minWidth: 0,
-                        mr: openDrawer ? 3 : "auto",
+                        mr: drawerIsOpen ? 3 : "auto",
                         justifyContent: "center",
                       }}
                     >

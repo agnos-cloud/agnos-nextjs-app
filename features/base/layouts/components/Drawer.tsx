@@ -80,10 +80,10 @@ const StyledDrawer = styled(MuiDrawer, {
 function Drawer() {
   const theme = useTheme();
   const { user } = useUser();
-  const { openDrawer, setOpenDrawer } = useApp();
+  const { drawerIsOpen, setDrawerIsOpen } = useApp();
 
   const handleDrawerClose = () => {
-    setOpenDrawer(false);
+    setDrawerIsOpen(false);
   };
 
   const mainMenus = [
@@ -142,7 +142,7 @@ function Drawer() {
   ];
 
   return (
-    <StyledDrawer variant="permanent" open={openDrawer}>
+    <StyledDrawer variant="permanent" open={drawerIsOpen}>
       <DrawerHeader>
         <IconButton onClick={handleDrawerClose}>
           {theme.direction === "rtl" ? <ChevronRightIcon /> : <ChevronLeftIcon />}
@@ -155,7 +155,7 @@ function Drawer() {
             key={menu.text}
             sx={{
               minHeight: 48,
-              justifyContent: openDrawer ? "initial" : "center",
+              justifyContent: drawerIsOpen ? "initial" : "center",
               px: 2.5,
             }}
             onClick={menu.onClick}
@@ -163,13 +163,13 @@ function Drawer() {
             <ListItemIcon
               sx={{
                 minWidth: 0,
-                mr: openDrawer ? 3 : "auto",
+                mr: drawerIsOpen ? 3 : "auto",
                 justifyContent: "center",
               }}
             >
               {menu.icon}
             </ListItemIcon>
-            <ListItemText primary={menu.text} sx={{ opacity: openDrawer ? 1 : 0 }} />
+            <ListItemText primary={menu.text} sx={{ opacity: drawerIsOpen ? 1 : 0 }} />
           </ListItemButton>
         ))}
       </List>
@@ -180,7 +180,7 @@ function Drawer() {
             key={menu.text}
             sx={{
               minHeight: 48,
-              justifyContent: openDrawer ? "initial" : "center",
+              justifyContent: drawerIsOpen ? "initial" : "center",
               px: 2.5,
             }}
             onClick={menu.onClick}
@@ -188,13 +188,13 @@ function Drawer() {
             <ListItemIcon
               sx={{
                 minWidth: 0,
-                mr: openDrawer ? 3 : "auto",
+                mr: drawerIsOpen ? 3 : "auto",
                 justifyContent: "center",
               }}
             >
               {menu.icon}
             </ListItemIcon>
-            <ListItemText primary={menu.text} sx={{ opacity: openDrawer ? 1 : 0 }} />
+            <ListItemText primary={menu.text} sx={{ opacity: drawerIsOpen ? 1 : 0 }} />
           </ListItemButton>
         ))}
       </List>
