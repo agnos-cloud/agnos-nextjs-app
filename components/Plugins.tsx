@@ -5,9 +5,7 @@ import { useEffect, useState } from "react";
 import { useCreatePluginForm } from "../hooks/plugin.hooks";
 import type { Plugin } from "../models/Plugin";
 import PluginService from "../services/PluginService";
-import ErrorBox from "./ErrorBox";
-import Fab from "./Fab";
-import Loading from "./Loading";
+import { ErrorBox, Fab, Loading } from "@components/base";
 import MultiPurposeDialog from "./MultiPurposeDialog";
 import PluginCard from "./PluginCard";
 

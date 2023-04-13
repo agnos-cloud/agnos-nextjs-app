@@ -7,15 +7,12 @@ import {
   Group as MembersIcon,
   Power as PluginsIcon,
 } from "@mui/icons-material";
-import TabPanel from "../../components/TabPanel";
+import { ErrorBox, Loading, LoginBackdrop, TabPanel } from "@components/base";
 import Designs from "../../components/Designs";
 import { useUser } from "@auth0/nextjs-auth0";
-import LoginBackdrop from "../../components/LoginBackdrop";
 import Plugins from "../../components/Plugins";
 import Functions from "../../components/Functions";
 import type { Team } from "../../models/Team";
-import Loading from "../../components/Loading";
-import ErrorBox from "../../components/ErrorBox";
 import TeamService from "../../services/TeamService";
 
 function a11yProps(index: number) {

@@ -1,7 +1,7 @@
 import { Backdrop } from "@mui/material";
 import Link from "next/link";
 import { useState } from "react";
-import { LOGIN_PATH } from "../constants/paths";
+import { LOGIN_PATH } from "@constants/paths";
 
 const LoginBackdrop = () => {
   const [open, setOpen] = useState(true);

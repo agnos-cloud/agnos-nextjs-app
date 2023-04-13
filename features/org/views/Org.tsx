@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useRouter } from "next/router";
-import { Box, Tab, Tabs, Typography } from "@mui/material";
+import { Box, Tab, Tabs, Typography, useTheme } from "@mui/material";
 import {
   FlashOn as FunctionsIcon,
   GridViewRounded as ComponentsIcon,
@@ -10,13 +10,10 @@ import {
   LanOutlined as TemplatesIcon,
   Power as PluginsIcon,
 } from "@mui/icons-material";
-import TabPanel from "../../../components/TabPanel";
 import { useUser } from "@auth0/nextjs-auth0";
-import LoginBackdrop from "../../../components/LoginBackdrop";
-import type { Team as Org } from "../../../models/Team";
-import Loading from "../../../components/Loading";
-import ErrorBox from "../../../components/ErrorBox";
+import { ErrorBox, Loading, LoginBackdrop, TabPanel } from "@components/base";
 import { ProjectsGridView } from "@components/project";
+import { useOrg } from "@hooks/org";
 
 function a11yProps(index: number) {
   return {
@@ -28,11 +25,9 @@ function a11yProps(index: number) {
 const OrgView = () => {
   const location = useRouter();
   const { user } = useUser();
-  const [org, setOrg] = useState<Org | undefined>(undefined);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [error, setError] = useState<Error | undefined>(undefined);
-
+  const theme = useTheme();
   const { id } = location.query;
+  const { data: org, isLoading, error } = useOrg(user, id as string | undefined);
 
   const [tabValue, setTabValue] = useState(0);
 
@@ -40,12 +35,16 @@ const OrgView = () => {
     setTabValue(newValue);
   };
 
-  if (isLoading || org) {
+  if (isLoading) {
     return <Loading />;
   }
 
   if (error) {
     return <ErrorBox error={error} />;
+  }
+
+  if (!org) {
+    return <ErrorBox error={new Error("Could not load organization")} />;
   }
 
   if (!user) {
@@ -66,13 +65,55 @@ const OrgView = () => {
       )}
       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
         <Tabs value={tabValue} onChange={handleChange} aria-label="team tabs">
-          <Tab label="Projects" icon={<ProjectsIcon fontSize="small" />} iconPosition="start" {...a11yProps(0)} />
-          <Tab label="Plugins" icon={<PluginsIcon fontSize="small" />} iconPosition="start" {...a11yProps(1)} />
-          <Tab label="Functions" icon={<FunctionsIcon fontSize="small" />} iconPosition="start" {...a11yProps(1)} />
-          <Tab label="Components" icon={<ComponentsIcon fontSize="small" />} iconPosition="start" {...a11yProps(1)} />
-          <Tab label="Templates" icon={<TemplatesIcon fontSize="small" />} iconPosition="start" {...a11yProps(1)} />
-          <Tab label="Members" icon={<MembersIcon fontSize="small" />} iconPosition="start" {...a11yProps(1)} />
-          <Tab label="Teams" icon={<TeamsIcon fontSize="small" />} iconPosition="start" {...a11yProps(1)} />
+          <Tab
+            label="Projects"
+            icon={<ProjectsIcon fontSize="small" />}
+            iconPosition="start"
+            sx={{ fontSize: theme.typography.caption.fontSize }}
+            {...a11yProps(0)}
+          />
+          <Tab
+            label="Plugins"
+            icon={<PluginsIcon fontSize="small" />}
+            iconPosition="start"
+            sx={{ fontSize: theme.typography.caption.fontSize }}
+            {...a11yProps(1)}
+          />
+          <Tab
+            label="Functions"
+            icon={<FunctionsIcon fontSize="small" />}
+            iconPosition="start"
+            sx={{ fontSize: theme.typography.caption.fontSize }}
+            {...a11yProps(1)}
+          />
+          <Tab
+            label="Components"
+            icon={<ComponentsIcon fontSize="small" />}
+            iconPosition="start"
+            sx={{ fontSize: theme.typography.caption.fontSize }}
+            {...a11yProps(1)}
+          />
+          <Tab
+            label="Templates"
+            icon={<TemplatesIcon fontSize="small" />}
+            iconPosition="start"
+            sx={{ fontSize: theme.typography.caption.fontSize }}
+            {...a11yProps(1)}
+          />
+          <Tab
+            label="Members"
+            icon={<MembersIcon fontSize="small" />}
+            iconPosition="start"
+            sx={{ fontSize: theme.typography.caption.fontSize }}
+            {...a11yProps(1)}
+          />
+          <Tab
+            label="Teams"
+            icon={<TeamsIcon fontSize="small" />}
+            iconPosition="start"
+            sx={{ fontSize: theme.typography.caption.fontSize }}
+            {...a11yProps(1)}
+          />
         </Tabs>
       </Box>
       <TabPanel value={tabValue} index={0}>

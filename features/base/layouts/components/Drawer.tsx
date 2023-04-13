@@ -11,21 +11,21 @@ import {
   ListItemText,
 } from "@mui/material";
 import {
+  AccessTime as RecentIcon,
   ChevronLeft as ChevronLeftIcon,
   ChevronRight as ChevronRightIcon,
-  Description as DesignsIcon,
+  Workspaces as SharedProjectsIcon,
   ExitToApp as LogoutIcon,
   Home as HomeIcon,
-  FlashOn as FunctionsIcon,
-  Power as PluginsIcon,
   Person as ProfileIcon,
   Settings as SettingsIcon,
+  StarOutline as FavoritesIcon,
   Store as MarketIcon,
-  Group as TeamsIcon,
+  CorporateFare as OrgsIcon,
 } from "@mui/icons-material";
 import router from "next/router";
 
-import { DESIGNS_PATH, FUNCTIONS_PATH, LOGOUT_PATH, PLUGINS_PATH, STORE_PATH, TEAMS_PATH } from "@constants/paths";
+import { SHARED_PATH, LOGOUT_PATH, STORE_PATH, ORGS_PATH, RECENT_PATH, FAVORITES_PATH } from "@constants/paths";
 import { useUser } from "@auth0/nextjs-auth0";
 import { DRAWER_WIDTH } from "@constants/dimensions";
 import { useApp } from "@hooks/base";
@@ -93,29 +93,29 @@ function Drawer() {
       path: "/",
     },
     {
-      text: "Designs",
-      icon: <DesignsIcon />,
-      path: DESIGNS_PATH,
+      text: "Shared Projects",
+      icon: <SharedProjectsIcon />,
+      path: SHARED_PATH,
     },
     {
-      text: "Plugins",
-      icon: <PluginsIcon />,
-      path: PLUGINS_PATH,
-    },
-    {
-      text: "Functions",
-      icon: <FunctionsIcon />,
-      path: FUNCTIONS_PATH,
-    },
-    {
-      text: "Teams",
-      icon: <TeamsIcon />,
-      path: TEAMS_PATH,
+      text: "Organizations",
+      icon: <OrgsIcon />,
+      path: ORGS_PATH,
     },
     {
       text: "Marketplace",
       icon: <MarketIcon />,
       path: STORE_PATH,
+    },
+    {
+      text: "Recent",
+      icon: <RecentIcon />,
+      path: RECENT_PATH,
+    },
+    {
+      text: "Favorites",
+      icon: <FavoritesIcon />,
+      path: FAVORITES_PATH,
     },
   ];
 

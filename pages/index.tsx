@@ -1,9 +1,9 @@
 import Link from "next/link";
 import Image from "next/image";
-import { LOGIN_PATH } from "../constants/paths";
+import { LOGIN_PATH } from "@constants/paths";
 import { useUser } from "@auth0/nextjs-auth0";
-import styles from "../styles/Home.module.css";
 import { OrgView } from "@views/org";
+import styles from "@styles/Home.module.css";
 
 export default function Home() {
   const { user } = useUser();
@@ -56,11 +56,9 @@ export default function Home() {
           </div>
         </div>
 
-        {!user && (
-          <Link href={LOGIN_PATH}>
-            <a className={styles.link}>Sign in to continue &rarr;</a>
-          </Link>
-        )}
+        <Link href={LOGIN_PATH}>
+          <a className={styles.link}>Sign in to continue &rarr;</a>
+        </Link>
       </main>
     </div>
   );
