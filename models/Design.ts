@@ -1,7 +1,7 @@
 import type { Model } from "@models/base";
 import type { Team } from "./Team";
 import type { TeamDesignShare } from "./TeamDesignShare";
-import type { User } from "./User";
+import type { User } from "@models/user";
 import type { UserDesignShare } from "./UserDesignShare";
 
 export interface Design extends Omit<DesignInput, "team">, Model {

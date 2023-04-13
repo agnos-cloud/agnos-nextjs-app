@@ -1,7 +1,7 @@
 import { Grid } from "@mui/material";
 import { useEffect, useState } from "react";
 import { ErrorBox, Fab, Loading } from "@components/base";
-import type { Membership } from "../../models/Membership";
+import type { Membership } from "@models/membership";
 import { useUser } from "@auth0/nextjs-auth0";
 import MembershipCard from "../../components/MembershipCard";
 import { LoginBackdrop } from "@components/base";

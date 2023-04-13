@@ -1,7 +1,7 @@
 import type { Menu } from "./Menu";
 import type { Model } from "@models/base";
 import type { Team } from "./Team";
-import type { User } from "./User";
+import type { User } from "@models/user";
 
 export interface Plugin extends Omit<PluginInput, "team">, Model {
   picture?: string;

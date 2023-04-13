@@ -1,9 +1,9 @@
 import type { Design } from "./Design";
-import type { Membership } from "./Membership";
+import type { Membership } from "@models/membership";
 import type { Model } from "@models/base";
 import type { Plugin } from "./Plugin";
 import type { TeamDesignShare } from "./TeamDesignShare";
-import type { User } from "./User";
+import type { User } from "@models/user";
 
 export interface Team extends TeamInput, Model {
   autoCreated?: boolean;

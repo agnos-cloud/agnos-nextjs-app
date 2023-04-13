@@ -1,11 +1,20 @@
 import type { Model } from "@models/base";
-import type { User } from "../../../models/User";
+import { Collaboration } from "@models/collaboration";
+import { Membership } from "@models/membership";
+import { Project } from "@models/project";
+import type { User } from "@models/user";
 
 export interface Org extends OrgInput, Model {
-  // collaborations?: Array<OrgCollaboration>;
+  collaborations?: Array<string> | Array<Collaboration>;
   emailIsVerified?: boolean;
+  memberships?: Array<string> | Array<Membership>;
   personal?: boolean;
-  user?: User;
+  projects?: Array<string> | Array<Project>;
+  user: string | User;
+}
+
+export interface OrgUpdate extends Omit<OrgInput, "name"> {
+  name?: string;
 }
 
 export interface OrgInput {
