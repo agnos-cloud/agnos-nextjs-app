@@ -1,7 +1,7 @@
 import { PermissionScope } from "../constants/permissions";
-import type { Model } from "./Model";
+import type { Model } from "@models/base";
 import type { Team } from "./Team";
-import type { User } from "./User";
+import type { User } from "@models/user";
 
 export interface Function extends Omit<FunctionInput, "team">, Model {
   team?: Team;

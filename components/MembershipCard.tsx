@@ -17,7 +17,7 @@ import {
   Visibility as ReadIcon,
 } from "@mui/icons-material";
 import router from "next/router";
-import type { Membership } from "../models/Membership";
+import type { Membership } from "@models/membership";
 
 export interface MembershipCardProps {
   membership: Membership;

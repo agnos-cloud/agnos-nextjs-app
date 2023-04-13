@@ -5,10 +5,8 @@ import { DataGrid, GridColDef, GridValueGetterParams } from "@mui/x-data-grid";
 import type { FunctionVersion } from "../models/Function";
 import { useFunctionVersionForm } from "../hooks/functionVersion.hooks";
 import FunctionVersionService from "../services/FunctionVersionService";
-import Loading from "./Loading";
-import ErrorBox from "./ErrorBox";
+import { ErrorBox, Fab, Loading } from "@components/base";
 import MultiPurposeDialog from "./MultiPurposeDialog";
-import Fab from "./Fab";
 
 const columns: GridColDef[] = [
   { field: "id", headerName: "ID", width: 300 },

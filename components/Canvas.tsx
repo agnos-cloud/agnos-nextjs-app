@@ -16,7 +16,7 @@ import ReactFlow, {
   ConnectionLineType,
   updateEdge,
 } from "react-flow-renderer";
-import { useSettings } from "../hooks/settings.hooks";
+import { useSettings } from "@hooks/settings";
 import type { Design } from "../models/Design";
 
 export interface CanvasProps {

@@ -1,17 +1,18 @@
 {
   "name": "agnos-nextjs-app",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "scripts": {
-    "dev": "next dev -p 4000",
     "build": "next build",
-    "start": "next start",
-    "lint": "next lint",
-    "prettier-format": "prettier --write ./**/*.{ts,tsx}",
-    "prepare": "husky install",
-    "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
-    "chromatic": "chromatic --exit-zero-on-changes"
+    "chromatic": "chromatic --exit-zero-on-changes",
+    "dev": "next dev -p 4000",
+    "lint": "next lint",
+    "prepare": "husky install",
+    "prettier-format": "prettier --write ./**/*.{ts,tsx}",
+    "start": "next start",
+    "storybook": "start-storybook -p 6006",
+    "test": "jest --watch"
   },
   "dependencies": {
     "@auth0/nextjs-auth0": "^1.7.0",
@@ -41,6 +42,9 @@
     "@storybook/manager-webpack5": "^6.5.9",
     "@storybook/react": "^6.5.9",
     "@storybook/testing-library": "^0.0.13",
+    "@storybook/testing-react": "^2.0.0",
+    "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/react": "^14.0.0",
     "@types/jest": "^27.4.1",
     "@types/node": "^17.0.23",
     "@types/react": "^17.0.43",
@@ -55,10 +59,37 @@
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-storybook": "^0.5.13",
     "husky": "^8.0.0",
-    "jest": "^27.5.1",
+    "jest": "^29.5.0",
+    "jest-dom": "^4.0.0",
+    "jest-environment-jsdom": "^29.5.0",
     "lint-staged": "^13.0.3",
+    "module-alias": "^2.2.2",
     "prettier": "^2.7.1",
+    "ts-jest": "^29.1.0",
     "typescript": "^4.6.3"
+  },
+  "_moduleAliases": {
+    "@components/base": "build/features/base/components",
+    "@components/project": "build/features/project/components",
+    "@constants": "constants",
+    "@hooks/base": "build/features/base/hook/base.hook",
+    "@hooks/org": "build/features/org/hook/org.hook",
+    "@hooks/settings": "build/features/settings/hook/settings.hook",
+    "@layouts/base": "build/features/base/layouts",
+    "@models/base": "build/features/base/model/base.model",
+    "@models/collaboration": "build/features/collaboration/model/collaboration.model",
+    "@models/membership": "build/features/membership/model/membership.model",
+    "@models/settings": "build/features/settings/model/settings.model",
+    "@models/org": "build/features/org/model/org.model",
+    "@models/project": "build/features/project/model/project.model",
+    "@models/user": "build/features/user/model/user.model",
+    "@providers/base": "build/features/base/provider/base.provider",
+    "@services/base": "build/features/base/service/base.service",
+    "@services/org": "build/features/org/service/org.service",
+    "@services/settings": "build/features/settings/service/settings.service",
+    "@styles": "styles",
+    "@views/base": "build/features/base/views",
+    "@views/org": "build/features/org/views"
   },
   "prettier": {
     "parser": "typescript",
@@ -73,6 +104,5 @@
       "prettier --write"
     ]
   },
-  "readme": "ERROR: No README data found!",
-  "_id": "agnos-nextjs-app@0.1.0"
+  "_id": "agnos-nextjs-app@0.2.0"
 }

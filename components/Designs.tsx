@@ -5,12 +5,10 @@ import type { TeamDesignShare } from "../models/TeamDesignShare";
 import MultiPurposeDialog from "./MultiPurposeDialog";
 import { useUser } from "@auth0/nextjs-auth0";
 import router from "next/router";
-import ErrorBox from "./ErrorBox";
-import Loading from "./Loading";
+import { ErrorBox, Fab, Loading } from "@components/base";
 import TeamDesignShareService from "../services/TeamDesignShareService";
 import DesignService from "../services/DesignService";
 import { useCreateDesignForm } from "../hooks/design.hooks";
-import Fab from "./Fab";
 
 export interface DesignsProps {
   teamId?: string;

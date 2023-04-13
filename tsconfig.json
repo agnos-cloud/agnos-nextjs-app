@@ -14,7 +14,7 @@
     "noImplicitThis": true,
     "alwaysStrict": true,
     "noUnusedLocals": true,
-    "importsNotUsedAsValues": "error",
+    // "verbatimModuleSyntax": true,
     "noUnusedParameters": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
@@ -34,7 +34,31 @@
       "dom",
       "dom.iterable",
       "esnext"
-    ]
+    ],
+    "baseUrl": "./",
+    "paths": {
+      "@components/base": [ "features/base/components" ],
+      "@components/project": [ "features/project/components" ],
+      "@constants/*": [ "constants/*" ],
+      "@hooks/base": [ "features/base/hook/base.hook" ],
+      "@hooks/org": [ "features/org/hook/org.hook" ],
+      "@hooks/settings": [ "features/settings/hook/settings.hook" ],
+      "@layouts/base": [ "features/base/layouts" ],
+      "@models/base": [ "features/base/model/base.model" ],
+      "@models/collaboration": [ "features/collaboration/model/collaboration.model" ],
+      "@models/membership": [ "features/membership/model/membership.model" ],
+      "@models/settings": [ "features/settings/model/settings.model" ],
+      "@models/org": [ "features/org/model/org.model" ],
+      "@models/project": [ "features/project/model/project.model" ],
+      "@models/user": [ "features/user/model/user.model" ],
+      "@providers/base": [ "features/base/provider/base.provider" ],
+      "@services/base": [ "features/base/service/base.service" ],
+      "@services/org": [ "features/org/service/org.service" ],
+      "@services/settings": [ "features/settings/service/settings.service" ],
+      "@styles/*": [ "styles/*" ],
+      "@views/base": [ "features/base/views" ],
+      "@views/org": [ "features/org/views" ],
+    }
   },
   "exclude": [
     "node_modules"

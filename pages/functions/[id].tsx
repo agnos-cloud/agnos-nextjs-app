@@ -3,13 +3,10 @@ import { Box, Tab, Tabs, Typography } from "@mui/material";
 import { ForkRight as VersionsIcon, FlashOn as FunctionsIcon, Notes as LogsIcon } from "@mui/icons-material";
 import { useRouter } from "next/router";
 import { useUser } from "@auth0/nextjs-auth0";
-import LoginBackdrop from "../../components/LoginBackdrop";
-import TabPanel from "../../components/TabPanel";
+import { ErrorBox, Loading, LoginBackdrop, TabPanel } from "@components/base";
 import FunctionVersions from "../../components/FunctionVersions";
 import type { Function } from "../../models/Function";
 import FunctionService from "../../services/FunctionService";
-import Loading from "../../components/Loading";
-import ErrorBox from "../../components/ErrorBox";
 import FunctionLogs from "../../components/FunctionLogs";
 import FunctionInvocations from "../../components/FunctionInvocations";
 

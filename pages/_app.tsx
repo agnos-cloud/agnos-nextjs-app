@@ -1,18 +1,22 @@
-import "../styles/globals.css";
+// import "module-alias/register";
+import "@styles/globals.css";
 import React from "react";
 import type { AppProps } from "next/app";
 import { UserProvider } from "@auth0/nextjs-auth0";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 
-import FullLayout from "../components/Layouts/FullLayout";
-import ColorModeProvider from "../providers/ColorModeProvider";
+import { DefaultLayout } from "@layouts/base";
+import AppProvider from "@providers/base";
 
 function MyApp({ Component, pageProps }: AppProps) {
+  const [drawerIsOpen, setDrawerIsOpen] = React.useState(false);
   const [mode, setMode] = React.useState<"light" | "dark">("light");
-  const colorMode = React.useMemo(
+
+  const app = React.useMemo(
     () => ({
-      toggleColorMode: () => {
+      setDrawerIsOpen,
+      togglePaletteMode: () => {
         setMode((prevMode) => (prevMode === "light" ? "dark" : "light"));
       },
     }),
@@ -28,16 +32,17 @@ function MyApp({ Component, pageProps }: AppProps) {
       }),
     [mode]
   );
+
   return (
     <UserProvider>
-      <ColorModeProvider value={colorMode}>
-        <ThemeProvider theme={theme}>
+      <ThemeProvider theme={theme}>
+        <AppProvider value={{ ...app, drawerIsOpen }}>
           <CssBaseline />
-          <FullLayout>
+          <DefaultLayout>
             <Component {...pageProps} />
-          </FullLayout>
-        </ThemeProvider>
-      </ColorModeProvider>
+          </DefaultLayout>
+        </AppProvider>
+      </ThemeProvider>
     </UserProvider>
   );
 }

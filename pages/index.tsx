@@ -1,9 +1,23 @@
 import Link from "next/link";
 import Image from "next/image";
-import { LOGIN_PATH } from "../constants/paths";
-import styles from "../styles/Home.module.css";
+import { LOGIN_PATH } from "@constants/paths";
+import { useUser } from "@auth0/nextjs-auth0";
+import { OrgView } from "@views/org";
+import styles from "@styles/Home.module.css";
 
 export default function Home() {
+  const { user } = useUser();
+
+  if (user) {
+    return (
+      <div className={styles.container}>
+        <main className={styles.main}>
+          <OrgView />
+        </main>
+      </div>
+    );
+  }
+
   return (
     <div className={styles.container}>
       <main className={styles.main}>
@@ -46,19 +60,6 @@ export default function Home() {
           <a className={styles.link}>Sign in to continue &rarr;</a>
         </Link>
       </main>
-
-      {/* <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{" "}
-          <span className={styles.logo}>
-            <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
-          </span>
-        </a>
-      </footer> */}
     </div>
   );
 }

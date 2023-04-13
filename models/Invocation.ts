@@ -1,6 +1,6 @@
 import type { Env } from "../constants/env";
 import type { InvocationType } from "../constants/invocation";
-import type { Model } from "./Model";
+import type { Model } from "@models/base";
 
 export interface Invocation extends Model {
   caller?: string;
