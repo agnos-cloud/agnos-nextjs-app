@@ -10,7 +10,7 @@ import { useApp } from "@hooks/base";
 
 function DefaultLayout({ children }: any) {
   const { user } = useUser();
-  const { closeDialog, dialogActions, dialogContent, dialogIsOpen, dialogTitle } = useApp();
+  const { closeDialog, dialogActions, dialogContent, dialogIsLoading, dialogIsOpen, dialogTitle } = useApp();
 
   return (
     <>
@@ -27,7 +27,13 @@ function DefaultLayout({ children }: any) {
           <DrawerHeader />
           {children}
 
-          <MultiPurposeDialog open={dialogIsOpen} title={dialogTitle} onClose={closeDialog} actions={dialogActions}>
+          <MultiPurposeDialog
+            actions={dialogActions}
+            loading={dialogIsLoading}
+            open={dialogIsOpen}
+            title={dialogTitle}
+            onClose={closeDialog}
+          >
             {dialogContent}
           </MultiPurposeDialog>
         </Box>

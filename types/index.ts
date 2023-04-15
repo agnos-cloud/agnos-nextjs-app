@@ -12,11 +12,11 @@ export type Query = {
 export type AppContext = {
   dialogActions: DialogAction[];
   dialogContent: ReactElement<any, string | JSXElementConstructor<any>> | null;
+  dialogIsLoading: boolean;
   dialogIsOpen: boolean;
   dialogTitle: string;
   drawerIsOpen: boolean;
-  setDialogActions: (_: DialogAction[]) => void;
-  setDialogContent: (_: ReactElement<any, string | JSXElementConstructor<any>>) => void;
+  setDialogIsLoading: (_: boolean) => void;
   setDrawerIsOpen: (_: boolean) => void;
   openDialog: (_: DialogOptions) => void;
   closeDialog: () => void;
@@ -27,6 +27,7 @@ export type DialogOptions = {
   title?: string;
   content: ReactElement<any, string | JSXElementConstructor<any>> | null;
   actions?: DialogAction[];
+  loading?: boolean;
 };
 
 export type DialogAction = {

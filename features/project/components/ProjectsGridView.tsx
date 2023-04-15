@@ -2,7 +2,7 @@ import { useUser } from "@auth0/nextjs-auth0";
 import { Grid } from "@mui/material";
 import { EmptyBox, ErrorBox, Fab, Loading } from "@components";
 import { useProjects } from "@hooks/project";
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import { useApp } from "@hooks/base";
 import { DialogOptions } from "@types";
 import CreateProjectForm from "./CreateProjectForm";
@@ -23,14 +23,30 @@ function ProjectsGridView(props: ProjectsGridViewProps) {
     }),
     [org]
   );
-  const { data: projects, loading, error } = useProjects(user, query);
-  const { openDialog, closeDialog } = useApp();
+  const { data: projects, loading, error, create, creating, createError } = useProjects(user, query);
+  const { openDialog, closeDialog, setDialogIsLoading } = useApp();
+
+  useEffect(() => {
+    handleCloseDialog();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [projects]);
+
+  useEffect(() => {
+    setDialogIsLoading(creating);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [creating]);
 
   const onChange = (project: Omit<ProjectInput, "org">) => {
     newProject = project;
   };
 
   const newProjectForm = useMemo(() => <CreateProjectForm onChange={onChange} />, []);
+
+  const handleSubmit = () => {
+    if (newProject) {
+      create({ ...newProject, org: org as string });
+    }
+  };
 
   const newProjectArgs: DialogOptions = useMemo(
     () => ({
@@ -39,17 +55,26 @@ function ProjectsGridView(props: ProjectsGridViewProps) {
       actions: [
         {
           text: "Cancel",
-          onClick: closeDialog,
+          onClick: () => {
+            handleCloseDialog();
+          },
         },
         {
           text: "Submit",
-          onClick: () => alert(JSON.stringify(newProject)),
+          onClick: handleSubmit,
         },
       ],
     }),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     []
   );
+
+  const handleOpenDialog = () => openDialog(newProjectArgs);
+
+  const handleCloseDialog = () => {
+    newProject = undefined;
+    closeDialog();
+  };
 
   if (loading) {
     return <Loading />;
@@ -67,7 +92,7 @@ function ProjectsGridView(props: ProjectsGridViewProps) {
           actions={[
             {
               text: "New Project",
-              onClick: () => openDialog(newProjectArgs),
+              onClick: handleOpenDialog,
             },
           ]}
         />
@@ -79,7 +104,7 @@ function ProjectsGridView(props: ProjectsGridViewProps) {
         ))
       )}
 
-      <Fab onClick={() => openDialog(newProjectArgs)} />
+      <Fab onClick={handleOpenDialog} />
     </Grid>
   );
 }

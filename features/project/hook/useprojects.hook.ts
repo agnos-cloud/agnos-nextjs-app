@@ -30,16 +30,31 @@ export function useProjects(user: UserProfile | undefined, query: Query | undefi
   const create = (project: ProjectInput) => {
     if (user) {
       setCreating(true);
-      new ProjectService(user)
-        .create(project)
-        .then((response) => {
-          setData((data: Array<Project> | undefined) => [...(data || []), response]);
-          setCreating(false);
-        })
-        .catch((error) => {
-          setCreateError(new Error(error));
-          setCreating(false);
-        });
+      console.log(project);
+      setTimeout(() => {
+        setData((data: Array<Project> | undefined) => [
+          ...(data || []),
+          {
+            _id: "hdhdh",
+            org: "hss",
+            user: "jdjddkkd",
+            name: project.name,
+            createdAt: new Date(),
+            updatedAt: new Date(),
+          },
+        ]);
+        setCreating(false);
+      }, 5000);
+      //   new ProjectService(user)
+      //     .create(project)
+      //     .then((response) => {
+      //       setData((data: Array<Project> | undefined) => [...(data || []), response]);
+      //       setCreating(false);
+      //     })
+      //     .catch((error) => {
+      //       setCreateError(new Error(error));
+      //       setCreating(false);
+      //     });
     }
   };
 

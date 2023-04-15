@@ -1,14 +1,14 @@
-import { AppContext, DialogAction, DialogOptions } from "@types";
-import React, { JSXElementConstructor, ReactElement } from "react";
+import { AppContext, DialogOptions } from "@types";
+import React from "react";
 
 const AppContext = React.createContext<AppContext>({
   dialogActions: [],
   dialogContent: null,
   dialogIsOpen: false,
   dialogTitle: "",
+  dialogIsLoading: false,
   drawerIsOpen: false,
-  setDialogActions: (_: DialogAction[]) => {},
-  setDialogContent: (_: ReactElement<any, string | JSXElementConstructor<any>> | null) => {},
+  setDialogIsLoading: (_: boolean) => {},
   setDrawerIsOpen: (_: boolean) => {},
   openDialog: (_: DialogOptions) => {},
   closeDialog: () => {},

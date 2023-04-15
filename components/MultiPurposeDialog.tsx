@@ -6,11 +6,12 @@ export interface MultiPurposeDialogProps {
   children?: any;
   open: boolean;
   title?: string;
+  loading?: boolean;
   onClose: () => void;
 }
 
 const MultiPurposeDialog = (props: MultiPurposeDialogProps) => {
-  const { actions, children, open, title, onClose } = props;
+  const { actions, children, loading, open, title, onClose } = props;
 
   const handleClose = () => {
     onClose();
@@ -22,7 +23,7 @@ const MultiPurposeDialog = (props: MultiPurposeDialogProps) => {
       <DialogContent>{children}</DialogContent>
       <DialogActions>
         {actions.map((action, index) => (
-          <Button key={index} onClick={action.onClick}>
+          <Button key={index} onClick={action.onClick} disabled={loading}>
             {action.text}
           </Button>
         ))}

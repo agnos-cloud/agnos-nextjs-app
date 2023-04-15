@@ -16,6 +16,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     any,
     string | JSXElementConstructor<any>
   > | null>(null);
+  const [dialogIsLoading, setDialogIsLoading] = React.useState(false);
   const [dialogIsOpen, setDialogIsOpen] = React.useState(false);
   const [dialogTitle, setDialogTitle] = React.useState("");
   const [drawerIsOpen, setDrawerIsOpen] = React.useState(false);
@@ -23,10 +24,16 @@ function MyApp({ Component, pageProps }: AppProps) {
 
   const app = React.useMemo(
     () => ({
-      setDialogActions,
-      setDialogContent,
+      dialogActions,
+      dialogContent,
+      dialogIsLoading,
+      dialogIsOpen,
+      dialogTitle,
+      drawerIsOpen,
+      setDialogIsLoading,
       setDrawerIsOpen,
       openDialog: (options: DialogOptions) => {
+        setDialogIsLoading(options.loading || false);
         setDialogIsOpen(true);
         setDialogTitle(options.title || "Dialog");
         setDialogContent(options.content);
@@ -39,8 +46,18 @@ function MyApp({ Component, pageProps }: AppProps) {
         setMode((prevMode) => (prevMode === "light" ? "dark" : "light"));
       },
     }),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     []
   );
+
+  const states = {
+    dialogActions,
+    dialogContent,
+    dialogIsLoading,
+    dialogIsOpen,
+    dialogTitle,
+    drawerIsOpen,
+  };
 
   const theme = React.useMemo(
     () =>
@@ -55,7 +72,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <UserProvider>
       <ThemeProvider theme={theme}>
-        <AppProvider value={{ ...app, dialogActions, dialogContent, dialogIsOpen, dialogTitle, drawerIsOpen }}>
+        <AppProvider value={{ ...app, ...states }}>
           <CssBaseline />
           <DefaultLayout>
             <Component {...pageProps} />
