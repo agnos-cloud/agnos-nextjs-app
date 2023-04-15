@@ -5,10 +5,14 @@ import { useProjects } from "@hooks/project";
 import { useMemo } from "react";
 import { useApp } from "@hooks/base";
 import { DialogOptions } from "@types";
+import CreateProjectForm from "./CreateProjectForm";
+import { ProjectInput } from "@models/project";
 
 export interface ProjectsGridViewProps {
   org?: string;
 }
+
+let newProject: Omit<ProjectInput, "org"> | undefined = undefined;
 
 function ProjectsGridView(props: ProjectsGridViewProps) {
   const { org } = props;
@@ -22,10 +26,16 @@ function ProjectsGridView(props: ProjectsGridViewProps) {
   const { data: projects, loading, error } = useProjects(user, query);
   const { openDialog, closeDialog } = useApp();
 
+  const onChange = (project: Omit<ProjectInput, "org">) => {
+    newProject = project;
+  };
+
+  const newProjectForm = useMemo(() => <CreateProjectForm onChange={onChange} />, []);
+
   const newProjectArgs: DialogOptions = useMemo(
     () => ({
       title: "New Project",
-      content: <div>Hello World from projects!</div>,
+      content: newProjectForm,
       actions: [
         {
           text: "Cancel",
@@ -33,7 +43,7 @@ function ProjectsGridView(props: ProjectsGridViewProps) {
         },
         {
           text: "Submit",
-          onClick: () => {},
+          onClick: () => alert(JSON.stringify(newProject)),
         },
       ],
     }),
