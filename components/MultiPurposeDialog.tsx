@@ -1,11 +1,8 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle } from "@mui/material";
-import type { MouseEventHandler } from "react";
+import { DialogAction } from "@types";
 
 export interface MultiPurposeDialogProps {
-  actions: {
-    text: string;
-    onClick: MouseEventHandler<HTMLButtonElement> | undefined;
-  }[];
+  actions: DialogAction[];
   children?: any;
   open: boolean;
   title?: string;

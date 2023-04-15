@@ -4,7 +4,7 @@ import { DataGrid, GridColDef, GridValueGetterParams } from "@mui/x-data-grid";
 import type { Invocation } from "../models/Invocation";
 import { InvocationType } from "../constants/invocation";
 import socket from "../utils/socket";
-import { ErrorBox, Loading } from "@components/base";
+import { ErrorBox, Loading } from "@components";
 import { Box } from "@mui/material";
 import Toast from "./Toast";
 import InvocationService from "../services/InvocationService";

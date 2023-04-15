@@ -11,7 +11,7 @@ import {
   Power as PluginsIcon,
 } from "@mui/icons-material";
 import { useUser } from "@auth0/nextjs-auth0";
-import { ErrorBox, Loading, LoginBackdrop, TabPanel } from "@components/base";
+import { ErrorBox, Loading, LoginBackdrop, TabPanel } from "@components";
 import { ProjectsGridView } from "@components/project";
 import { useOrg } from "@hooks/org";
 

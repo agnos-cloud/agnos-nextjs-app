@@ -1,8 +1,10 @@
 import { useUser } from "@auth0/nextjs-auth0";
 import { Grid } from "@mui/material";
-import { ErrorBox, Fab, Loading } from "@components/base";
+import { ErrorBox, Fab, Loading } from "@components";
 import { useProjects } from "@hooks/project";
 import { useMemo } from "react";
+import { useApp } from "@hooks/base";
+import { DialogOptions } from "@types";
 
 export interface ProjectsGridViewProps {
   org?: string;
@@ -18,6 +20,25 @@ function ProjectsGridView(props: ProjectsGridViewProps) {
     [org]
   );
   const { data: projects, loading, error } = useProjects(user, query);
+  const { openDialog, closeDialog } = useApp();
+
+  const newProjectArgs: DialogOptions = useMemo(
+    () => ({
+      title: "New Project",
+      actions: [
+        {
+          text: "Cancel",
+          onClick: closeDialog,
+        },
+        {
+          text: "Submit",
+          onClick: () => {},
+        },
+      ],
+    }),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    []
+  );
 
   if (loading) {
     return <Loading />;
@@ -39,7 +60,7 @@ function ProjectsGridView(props: ProjectsGridViewProps) {
         ))
       )}
 
-      <Fab onClick={() => {}} />
+      <Fab onClick={() => openDialog(newProjectArgs)} />
     </Grid>
   );
 }

@@ -4,10 +4,9 @@ import type { Function } from "../models/Function";
 import { useCreateFunctionForm } from "../hooks/function.hooks";
 import FunctionService from "../services/FunctionService";
 import router from "next/router";
-import { ErrorBox, Fab, Loading } from "@components/base";
+import { ErrorBox, Fab, Loading, MultiPurposeDialog } from "@components";
 import { Grid } from "@mui/material";
 import FunctionCard from "./FunctionCard";
-import MultiPurposeDialog from "./MultiPurposeDialog";
 
 export interface FunctionsProps {
   teamId?: string;

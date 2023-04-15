@@ -1,10 +1,10 @@
 import { Grid } from "@mui/material";
 import { useEffect, useState } from "react";
-import { ErrorBox, Fab, Loading } from "@components/base";
+import { ErrorBox, Fab, Loading } from "@components";
 import type { Membership } from "@models/membership";
 import { useUser } from "@auth0/nextjs-auth0";
 import MembershipCard from "../../components/MembershipCard";
-import { LoginBackdrop } from "@components/base";
+import { LoginBackdrop } from "@components";
 import MembershipService from "../../services/MembershipService";
 
 //TODO: add teams => setMemberships((prev) => [...prev, {...}])

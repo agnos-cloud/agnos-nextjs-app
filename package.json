@@ -69,6 +69,7 @@
     "typescript": "^4.6.3"
   },
   "_moduleAliases": {
+    "@components": "build/components",
     "@components/base": "build/features/base/components",
     "@components/project": "build/features/project/components",
     "@constants": "build/constants",

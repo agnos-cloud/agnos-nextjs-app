@@ -37,6 +37,7 @@
     ],
     "baseUrl": "./",
     "paths": {
+      "@components": [ "components" ],
       "@components/base": [ "features/base/components" ],
       "@components/project": [ "features/project/components" ],
       "@constants/*": [ "constants/*" ],

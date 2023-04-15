@@ -7,10 +7,10 @@ import {
   Group as MembersIcon,
   Power as PluginsIcon,
 } from "@mui/icons-material";
-import { ErrorBox, Loading, TabPanel } from "@components/base";
+import { ErrorBox, Loading, TabPanel } from "@components";
 import Designs from "../../components/Designs";
 import { useUser } from "@auth0/nextjs-auth0";
-import { LoginBackdrop } from "@components/base";
+import { LoginBackdrop } from "@components";
 import Plugins from "../../components/Plugins";
 import Functions from "../../components/Functions";
 import type { Team } from "../../models/Team";

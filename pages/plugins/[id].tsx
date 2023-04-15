@@ -5,9 +5,8 @@ import { useRouter } from "next/router";
 import { useUser } from "@auth0/nextjs-auth0";
 import PluginService from "../../services/PluginService";
 import type { Plugin, PluginVersion } from "../../models/Plugin";
-import { ErrorBox, Fab, Loading, LoginBackdrop } from "@components/base";
+import { ErrorBox, Fab, Loading, LoginBackdrop, MultiPurposeDialog } from "@components";
 import { usePluginVersionForm } from "../../hooks/pluginVersion.hooks";
-import MultiPurposeDialog from "../../components/MultiPurposeDialog";
 import PluginVersionService from "../../services/PluginVersionService";
 
 const columns: GridColDef[] = [
