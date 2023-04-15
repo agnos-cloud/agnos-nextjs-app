@@ -1,6 +1,6 @@
 import { useUser } from "@auth0/nextjs-auth0";
 import { Grid } from "@mui/material";
-import { ErrorBox, Fab, Loading } from "@components";
+import { EmptyBox, ErrorBox, Fab, Loading } from "@components";
 import { useProjects } from "@hooks/project";
 import { useMemo } from "react";
 import { useApp } from "@hooks/base";
@@ -25,6 +25,7 @@ function ProjectsGridView(props: ProjectsGridViewProps) {
   const newProjectArgs: DialogOptions = useMemo(
     () => ({
       title: "New Project",
+      content: <div>Hello World from projects!</div>,
       actions: [
         {
           text: "Cancel",
@@ -51,7 +52,15 @@ function ProjectsGridView(props: ProjectsGridViewProps) {
   return (
     <Grid container spacing={1}>
       {!projects || projects?.length === 0 ? (
-        <ErrorBox error={new Error("No projects!")} />
+        <EmptyBox
+          message="No projects found for this space"
+          actions={[
+            {
+              text: "New Project",
+              onClick: () => openDialog(newProjectArgs),
+            },
+          ]}
+        />
       ) : (
         projects.map((proj) => (
           <Grid key={proj._id} item xs={12} sm={6} md={4} lg={3} xl={2}>
