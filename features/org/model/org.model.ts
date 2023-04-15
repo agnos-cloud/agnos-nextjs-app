@@ -10,7 +10,7 @@ export interface Org extends OrgInput, Model {
   memberships?: Array<string> | Array<Membership>;
   personal?: boolean;
   projects?: Array<string> | Array<Project>;
-  user: string | User;
+  user: string | User | null;
 }
 
 export interface OrgUpdate extends Omit<OrgInput, "name"> {

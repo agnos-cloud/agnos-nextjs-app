@@ -29,6 +29,8 @@ module.exports = {
     "^@providers/(.+)$": "<rootDir>/features/$1/provider/$1.provider",
     "^@services/(.+)$": "<rootDir>/features/$1/service/$1.service",
     "^@styles/(.+)$": "<rootDir>/styles/$1",
+    "^@types$": "<rootDir>/types",
+    "^@utils/(.+)$": "<rootDir>/utils/$1",
     "^@views/(.+)$": "<rootDir>/features/$1/views",
   },
 };

@@ -117,7 +117,7 @@ const OrgView = () => {
         </Tabs>
       </Box>
       <TabPanel value={tabValue} index={0}>
-        <ProjectsGridView />
+        <ProjectsGridView org={org._id} />
       </TabPanel>
       <TabPanel value={tabValue} index={1}>
         plugins

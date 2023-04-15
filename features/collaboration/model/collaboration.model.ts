@@ -6,10 +6,10 @@ import type { User } from "@models/user";
 import { Team } from "models/Team";
 
 export interface Collaboration extends Omit<CollaborationInput, "org" | "project" | "team" | "user">, Model {
-  org: string | Org;
-  project: string | Project;
-  team?: string | Team;
-  user?: string | User;
+  org: string | Org | null;
+  project: string | Project | null;
+  team?: string | Team | null;
+  user?: string | User | null;
 }
 
 export interface CollaborationUpdate extends Omit<CollaborationInput, "org" | "project" | "team" | "user"> {
