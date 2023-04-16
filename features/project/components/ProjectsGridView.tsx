@@ -7,6 +7,7 @@ import { useApp } from "@hooks/base";
 import { DialogOptions } from "@types";
 import CreateProjectForm from "./CreateProjectForm";
 import { ProjectInput } from "@models/project";
+import ProjectCard from "./ProjectCard";
 
 export interface ProjectsGridViewProps {
   org?: string;
@@ -99,7 +100,7 @@ function ProjectsGridView(props: ProjectsGridViewProps) {
       ) : (
         projects.map((proj) => (
           <Grid key={proj._id} item xs={12} sm={6} md={4} lg={3} xl={2}>
-            {proj.name}
+            <ProjectCard project={proj} />
           </Grid>
         ))
       )}

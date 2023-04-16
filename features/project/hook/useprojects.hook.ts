@@ -30,21 +30,23 @@ export function useProjects(user: UserProfile | undefined, query: Query | undefi
   const create = (project: ProjectInput) => {
     if (user) {
       setCreating(true);
-      console.log(project);
       setTimeout(() => {
         setData((data: Array<Project> | undefined) => [
-          ...(data || []),
           {
             _id: "hdhdh",
             org: "hss",
             user: "jdjddkkd",
             name: project.name,
+            private: project.private,
+            picture: "https://agnos-cdn.s3.amazonaws.com/favicon.png",
+            description: project.description,
             createdAt: new Date(),
             updatedAt: new Date(),
           },
+          ...(data || []),
         ]);
         setCreating(false);
-      }, 5000);
+      }, 3000);
       //   new ProjectService(user)
       //     .create(project)
       //     .then((response) => {
