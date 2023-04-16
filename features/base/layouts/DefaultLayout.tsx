@@ -5,12 +5,23 @@ import { useUser } from "@auth0/nextjs-auth0";
 import AppBar from "./components/AppBar";
 import Drawer, { DrawerHeader } from "./components/Drawer";
 import Footer from "./components/Footer";
-import { MultiPurposeDialog } from "@components";
+import { MultiPurposeDialog, Toast } from "@components";
 import { useApp } from "@hooks/base";
 
 function DefaultLayout({ children }: any) {
   const { user } = useUser();
-  const { closeDialog, dialogActions, dialogContent, dialogIsLoading, dialogIsOpen, dialogTitle } = useApp();
+  const {
+    closeDialog,
+    dialogActions,
+    dialogContent,
+    dialogIsLoading,
+    dialogIsOpen,
+    dialogTitle,
+    closeToast,
+    toastMessage,
+    toastType,
+    toastIsOpen,
+  } = useApp();
 
   return (
     <>
@@ -36,6 +47,8 @@ function DefaultLayout({ children }: any) {
           >
             {dialogContent}
           </MultiPurposeDialog>
+
+          <Toast message={toastMessage} open={toastIsOpen} type={toastType} onClose={closeToast} />
         </Box>
       </Box>
       {false && <Footer />}

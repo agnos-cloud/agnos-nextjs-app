@@ -8,12 +8,14 @@ import { DialogOptions } from "@types";
 import CreateProjectForm from "./CreateProjectForm";
 import { ProjectInput } from "@models/project";
 import ProjectCard from "./ProjectCard";
+import { LogType } from "@constants/log";
+import router from "next/router";
 
 export interface ProjectsGridViewProps {
   org?: string;
 }
 
-let newProject: Omit<ProjectInput, "org"> | undefined = undefined;
+let projectToCreate: Omit<ProjectInput, "org"> | undefined = undefined;
 
 function ProjectsGridView(props: ProjectsGridViewProps) {
   const { org } = props;
@@ -21,11 +23,20 @@ function ProjectsGridView(props: ProjectsGridViewProps) {
   const query = useMemo(
     () => ({
       ...(org && { org }),
+      "@sort": { updatedAt: "desc" as "desc" | "asc" },
     }),
     [org]
   );
-  const { data: projects, loading, error, create, creating, createError } = useProjects(user, query);
-  const { openDialog, closeDialog, setDialogIsLoading } = useApp();
+  const {
+    data: projects,
+    loading,
+    error,
+    create,
+    creating,
+    createError,
+    newData: newProject,
+  } = useProjects(user, query);
+  const { openDialog, closeDialog, setDialogIsLoading, openToast } = useApp();
 
   useEffect(() => {
     handleCloseDialog();
@@ -33,19 +44,33 @@ function ProjectsGridView(props: ProjectsGridViewProps) {
   }, [projects]);
 
   useEffect(() => {
+    if (createError) {
+      handleOpenToast(createError);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [createError]);
+
+  useEffect(() => {
+    if (newProject) {
+      router.push(`/projects/${newProject._id}`);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [newProject]);
+
+  useEffect(() => {
     setDialogIsLoading(creating);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [creating]);
 
   const onChange = (project: Omit<ProjectInput, "org">) => {
-    newProject = project;
+    projectToCreate = project;
   };
 
   const newProjectForm = useMemo(() => <CreateProjectForm onChange={onChange} />, []);
 
   const handleSubmit = () => {
-    if (newProject) {
-      create({ ...newProject, org: org as string });
+    if (projectToCreate) {
+      create({ ...projectToCreate, org: org as string });
     }
   };
 
@@ -73,9 +98,15 @@ function ProjectsGridView(props: ProjectsGridViewProps) {
   const handleOpenDialog = () => openDialog(newProjectArgs);
 
   const handleCloseDialog = () => {
-    newProject = undefined;
+    projectToCreate = undefined;
     closeDialog();
   };
+
+  const handleOpenToast = (error: Error) =>
+    openToast({
+      message: error.message,
+      type: LogType.ERROR,
+    });
 
   if (loading) {
     return <Loading />;

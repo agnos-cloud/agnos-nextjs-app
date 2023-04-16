@@ -1,3 +1,5 @@
+import { InvocationType } from "@constants/invocation";
+import { LogType } from "@constants/log";
 import { JSXElementConstructor, MouseEventHandler, ReactElement } from "react";
 
 export type Obj = Record<string, unknown>;
@@ -9,6 +11,8 @@ export type Query = {
   "@include"?: Array<{ path: string; select?: string }>;
 } & Obj;
 
+export type ToastPosition = Array<"bottom" | "center" | "left" | "right" | "top">;
+
 export type AppContext = {
   dialogActions: DialogAction[];
   dialogContent: ReactElement<any, string | JSXElementConstructor<any>> | null;
@@ -16,10 +20,16 @@ export type AppContext = {
   dialogIsOpen: boolean;
   dialogTitle: string;
   drawerIsOpen: boolean;
+  toastIsOpen: boolean;
+  toastMessage: string | string[];
+  toastPosition: ToastPosition;
+  toastType: InvocationType | LogType;
   setDialogIsLoading: (_: boolean) => void;
   setDrawerIsOpen: (_: boolean) => void;
   openDialog: (_: DialogOptions) => void;
   closeDialog: () => void;
+  openToast: (_: ToastOptions) => void;
+  closeToast: () => void;
   togglePaletteMode: () => void;
 };
 
@@ -33,4 +43,10 @@ export type DialogOptions = {
 export type DialogAction = {
   text: string;
   onClick: MouseEventHandler<HTMLButtonElement> | undefined;
+};
+
+export type ToastOptions = {
+  message?: string | string[];
+  position?: ToastPosition;
+  type?: InvocationType | LogType;
 };

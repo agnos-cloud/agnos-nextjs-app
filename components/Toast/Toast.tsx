@@ -1,16 +1,17 @@
 import { Alert, Snackbar } from "@mui/material";
-import type { InvocationType } from "../../constants/invocation";
-import type { LogType } from "../../constants/log";
+import type { InvocationType } from "@constants/invocation";
+import type { LogType } from "@constants/log";
+import { ToastPosition } from "@types";
 
 export interface ToastProps {
   message: string | string[];
   open: boolean;
-  position?: Array<"bottom" | "center" | "left" | "right" | "top">;
+  position?: ToastPosition;
   type?: InvocationType | LogType;
   onClose: () => void;
 }
 
-const Toast = ({ message, open, type, position = ["top", "center"], onClose }: ToastProps) => {
+const Toast = ({ message, open, type, position = ["top", "right"], onClose }: ToastProps) => {
   return (
     <Snackbar
       autoHideDuration={5000}
@@ -27,7 +28,7 @@ const Toast = ({ message, open, type, position = ["top", "center"], onClose }: T
         severity={String(type || "info").toLowerCase()}
         sx={{ width: "100%" }}
       >
-        {typeof message === "object"
+        {Array.isArray(message)
           ? message.map((m, i) => <div key={i}>{m}</div>)
           : typeof message === "undefined"
           ? "undefined"

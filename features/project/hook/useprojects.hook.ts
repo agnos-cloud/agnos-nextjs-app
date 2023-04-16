@@ -3,9 +3,11 @@ import { useEffect, useState } from "react";
 import type { Project, ProjectInput } from "@models/project";
 import ProjectService from "@services/project";
 import { Query } from "@types";
+import { ApiService } from "@services/base";
 
-export function useProjects(user: UserProfile | undefined, query: Query | undefined) {
+export function useProjects<TService extends ApiService>(user: UserProfile | undefined, query: Query | undefined) {
   const [data, setData] = useState<Array<Project> | undefined>(undefined);
+  const [newData, setNewData] = useState<Project | undefined>(undefined);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<Error | undefined>(undefined);
   const [creating, setCreating] = useState<boolean>(false);
@@ -13,6 +15,7 @@ export function useProjects(user: UserProfile | undefined, query: Query | undefi
 
   useEffect(() => {
     if (user) {
+      setError(undefined);
       setLoading(true);
       new ProjectService(user)
         .getMany(query)
@@ -29,34 +32,19 @@ export function useProjects(user: UserProfile | undefined, query: Query | undefi
 
   const create = (project: ProjectInput) => {
     if (user) {
+      setCreateError(undefined);
       setCreating(true);
-      setTimeout(() => {
-        setData((data: Array<Project> | undefined) => [
-          {
-            _id: "hdhdh",
-            org: "hss",
-            user: "jdjddkkd",
-            name: project.name,
-            private: project.private,
-            picture: "https://agnos-cdn.s3.amazonaws.com/favicon.png",
-            description: project.description,
-            createdAt: new Date(),
-            updatedAt: new Date(),
-          },
-          ...(data || []),
-        ]);
-        setCreating(false);
-      }, 3000);
-      //   new ProjectService(user)
-      //     .create(project)
-      //     .then((response) => {
-      //       setData((data: Array<Project> | undefined) => [...(data || []), response]);
-      //       setCreating(false);
-      //     })
-      //     .catch((error) => {
-      //       setCreateError(new Error(error));
-      //       setCreating(false);
-      //     });
+      new ProjectService(user)
+        .create(project)
+        .then((response) => {
+          setData((data: Array<Project> | undefined) => [response, ...(data || [])]);
+          setNewData(response);
+          setCreating(false);
+        })
+        .catch((error) => {
+          setCreateError(new Error(error));
+          setCreating(false);
+        });
     }
   };
 
@@ -67,5 +55,6 @@ export function useProjects(user: UserProfile | undefined, query: Query | undefi
     create,
     createError,
     creating,
+    newData,
   } as const;
 }
