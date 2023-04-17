@@ -3,10 +3,14 @@ import axios from "axios";
 import type { Settings, SettingsInput } from "@models/settings";
 import { ApiService } from "@services/base";
 
-export default class SettingsService extends ApiService {
+export default class SettingsService extends ApiService<Settings, SettingsInput, SettingsInput> {
   constructor(user: UserProfile | undefined) {
     super(user);
   }
+
+  create: (settings: SettingsInput) => Promise<Settings> = async (_: SettingsInput) => {
+    throw new Error("Method not implemented.");
+  };
 
   get: () => Promise<Settings> = async () => {
     return axios({
@@ -20,6 +24,10 @@ export default class SettingsService extends ApiService {
       .catch((error) => {
         throw error;
       });
+  };
+
+  getMany: () => Promise<Settings[]> = async () => {
+    throw new Error("Method not implemented.");
   };
 
   update: (settings: SettingsInput) => Promise<Settings> = async (settings: SettingsInput) => {

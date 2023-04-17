@@ -19,6 +19,7 @@ function DefaultLayout({ children }: any) {
     dialogTitle,
     closeToast,
     toastMessage,
+    toastPosition,
     toastType,
     toastIsOpen,
   } = useApp();
@@ -48,7 +49,13 @@ function DefaultLayout({ children }: any) {
             {dialogContent}
           </MultiPurposeDialog>
 
-          <Toast message={toastMessage} open={toastIsOpen} type={toastType} onClose={closeToast} />
+          <Toast
+            message={toastMessage}
+            open={toastIsOpen}
+            type={toastType}
+            position={toastPosition}
+            onClose={closeToast}
+          />
         </Box>
       </Box>
       {false && <Footer />}

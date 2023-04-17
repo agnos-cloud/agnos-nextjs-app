@@ -1,15 +1,15 @@
 import { useUser } from "@auth0/nextjs-auth0";
 import { Grid } from "@mui/material";
 import { EmptyBox, ErrorBox, Fab, Loading } from "@components";
-import { useProjects } from "@hooks/project";
 import { useEffect, useMemo } from "react";
-import { useApp } from "@hooks/base";
+import { useApi, useApp } from "@hooks/base";
 import { DialogOptions } from "@types";
 import CreateProjectForm from "./CreateProjectForm";
-import { ProjectInput } from "@models/project";
+import { Project, ProjectInput, ProjectUpdate } from "@models/project";
 import ProjectCard from "./ProjectCard";
 import { LogType } from "@constants/log";
 import router from "next/router";
+import ProjectService from "@services/project";
 
 export interface ProjectsGridViewProps {
   org?: string;
@@ -28,39 +28,50 @@ function ProjectsGridView(props: ProjectsGridViewProps) {
     [org]
   );
   const {
-    data: projects,
-    loading,
-    error,
+    list: projects,
+    fetchList: fetchProjects,
+    fetchingList: fetchingProjects,
+    fetchingListError: fetchingProjectsError,
+    createdItem: createdProject,
     create,
-    creating,
-    createError,
-    newData: newProject,
-  } = useProjects(user, query);
+    creatingItem: creatingProject,
+    creatingItemError: creatingProjectError,
+  } = useApi<ProjectService, Project, ProjectInput, ProjectUpdate>(ProjectService, user);
   const { openDialog, closeDialog, setDialogIsLoading, openToast } = useApp();
 
+  // this hook fetches projects when the user or query changes
+  useEffect(() => {
+    fetchProjects(query);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user, query]);
+
+  // this hook closes the dialog when the list of projects changes (either due to a new project being created or a project being deleted)
   useEffect(() => {
     handleCloseDialog();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [projects]);
 
+  // this hook opens the toast when there is an error creating a project
   useEffect(() => {
-    if (createError) {
-      handleOpenToast(createError);
+    if (creatingProjectError) {
+      handleOpenToast(creatingProjectError);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [createError]);
+  }, [creatingProjectError]);
 
+  // this hook redirects to the new project when it is created
   useEffect(() => {
-    if (newProject) {
-      router.push(`/projects/${newProject._id}`);
+    if (createdProject) {
+      router.push(`/projects/${createdProject._id}`);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [newProject]);
+  }, [createdProject]);
 
+  // this hook sets the dialog to loading when the project is being created
   useEffect(() => {
-    setDialogIsLoading(creating);
+    setDialogIsLoading(creatingProject);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [creating]);
+  }, [creatingProject]);
 
   const onChange = (project: Omit<ProjectInput, "org">) => {
     projectToCreate = project;
@@ -108,12 +119,12 @@ function ProjectsGridView(props: ProjectsGridViewProps) {
       type: LogType.ERROR,
     });
 
-  if (loading) {
+  if (fetchingProjects) {
     return <Loading />;
   }
 
-  if (error) {
-    return <ErrorBox error={error} />;
+  if (fetchingProjectsError) {
+    return <ErrorBox error={fetchingProjectsError} />;
   }
 
   return (

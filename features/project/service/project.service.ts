@@ -1,11 +1,11 @@
 import type { UserProfile } from "@auth0/nextjs-auth0";
 import axios from "axios";
-import type { Project, ProjectInput } from "@models/project";
+import type { Project, ProjectInput, ProjectUpdate } from "@models/project";
 import { ApiService } from "@services/base";
 import { Query } from "@types";
 import { getQueryString } from "@utils/url";
 
-export default class ProjectService extends ApiService {
+export default class ProjectService extends ApiService<Project, ProjectInput, ProjectUpdate> {
   constructor(user: UserProfile | undefined) {
     super(user);
   }
@@ -25,10 +25,10 @@ export default class ProjectService extends ApiService {
       });
   };
 
-  get: (id: string) => Promise<Project> = async (id: string) => {
+  get: (id?: string) => Promise<Project> = async (id?: string) => {
     return axios({
       method: "GET",
-      url: `${this.apiUrl}/projects/${id}`,
+      url: `${this.apiUrl}/projects${id ? `/${id}` : ""}`,
       headers: { authorization: `Bearer ${this.accessToken}` },
     })
       .then((response) => {
@@ -39,7 +39,7 @@ export default class ProjectService extends ApiService {
       });
   };
 
-  getMany: (query: Query | undefined) => Promise<Project[]> = async (query: Query | undefined) => {
+  getMany: (query?: Query) => Promise<Project[]> = async (query?: Query) => {
     return axios({
       method: "GET",
       url: `${this.apiUrl}/projects${query ? `?${getQueryString(query)}` : ""}`,

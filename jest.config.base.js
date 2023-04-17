@@ -24,7 +24,7 @@ module.exports = {
     "^@components$": "<rootDir>/components",
     "^@components/(.+)$": "<rootDir>/features/$1/components",
     "^@constants/(.+)$": "<rootDir>/constants/$1",
-    "^@hooks/(.+)$": "<rootDir>/features/$1/hook/$1.hook",
+    "^@hooks/(.+)$": "<rootDir>/features/$1/hook",
     "^@layouts/(.+)$": "<rootDir>/features/$1/layouts",
     "^@models/(.+)$": "<rootDir>/features/$1/model/$1.model",
     "^@providers/(.+)$": "<rootDir>/features/$1/provider/$1.provider",

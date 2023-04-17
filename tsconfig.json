@@ -41,7 +41,7 @@
       "@components/base": [ "features/base/components" ],
       "@components/project": [ "features/project/components" ],
       "@constants/*": [ "constants/*" ],
-      "@hooks/base": [ "features/base/hook/base.hook" ],
+      "@hooks/base": [ "features/base/hook" ],
       "@hooks/org": [ "features/org/hook/org.hook" ],
       "@hooks/project": [ "features/project/hook/project.hook" ],
       "@hooks/settings": [ "features/settings/hook/settings.hook" ],

@@ -73,7 +73,7 @@
     "@components/base": "build/features/base/components",
     "@components/project": "build/features/project/components",
     "@constants": "build/constants",
-    "@hooks/base": "build/features/base/hook/base.hook",
+    "@hooks/base": "build/features/base/hook",
     "@hooks/org": "build/features/org/hook/org.hook",
     "@hooks/project": "build/features/project/hook/project.hook",
     "@hooks/settings": "build/features/settings/hook/settings.hook",
