@@ -21,14 +21,17 @@ module.exports = {
   coverageDirectory: "coverage",
   moduleWrapper: {
     "\\.(css|styl|less|sass|scss|png|jpg|jpeg|ttf|woff|woff2)$": "identity-obj-proxy",
+    "^@components$": "<rootDir>/components",
     "^@components/(.+)$": "<rootDir>/features/$1/components",
     "^@constants/(.+)$": "<rootDir>/constants/$1",
-    "^@hooks/(.+)$": "<rootDir>/features/$1/hook/$1.hook",
+    "^@hooks/(.+)$": "<rootDir>/features/$1/hook",
     "^@layouts/(.+)$": "<rootDir>/features/$1/layouts",
     "^@models/(.+)$": "<rootDir>/features/$1/model/$1.model",
     "^@providers/(.+)$": "<rootDir>/features/$1/provider/$1.provider",
     "^@services/(.+)$": "<rootDir>/features/$1/service/$1.service",
     "^@styles/(.+)$": "<rootDir>/styles/$1",
+    "^@types$": "<rootDir>/types",
+    "^@utils/(.+)$": "<rootDir>/utils/$1",
     "^@views/(.+)$": "<rootDir>/features/$1/views",
   },
 };

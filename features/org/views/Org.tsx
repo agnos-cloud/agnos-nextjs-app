@@ -11,7 +11,7 @@ import {
   Power as PluginsIcon,
 } from "@mui/icons-material";
 import { useUser } from "@auth0/nextjs-auth0";
-import { ErrorBox, Loading, LoginBackdrop, TabPanel } from "@components/base";
+import { ErrorBox, Loading, LoginBackdrop, TabPanel } from "@components";
 import { ProjectsGridView } from "@components/project";
 import { useOrg } from "@hooks/org";
 
@@ -117,7 +117,7 @@ const OrgView = () => {
         </Tabs>
       </Box>
       <TabPanel value={tabValue} index={0}>
-        <ProjectsGridView />
+        <ProjectsGridView org={org._id} />
       </TabPanel>
       <TabPanel value={tabValue} index={1}>
         plugins

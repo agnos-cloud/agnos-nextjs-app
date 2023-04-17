@@ -5,9 +5,9 @@ import { Collaboration } from "@models/collaboration";
 
 export interface Project extends Omit<ProjectInput, "org">, Model {
   collaborations?: Array<string> | Array<Collaboration>;
-  org: string | Org;
+  org: string | Org | null;
   personal?: boolean;
-  user: string | User;
+  user: string | User | null;
 }
 
 export interface ProjectUpdate extends Omit<ProjectInput, "name" | "org"> {

@@ -69,11 +69,13 @@
     "typescript": "^4.6.3"
   },
   "_moduleAliases": {
+    "@components": "build/components",
     "@components/base": "build/features/base/components",
     "@components/project": "build/features/project/components",
-    "@constants": "constants",
-    "@hooks/base": "build/features/base/hook/base.hook",
+    "@constants": "build/constants",
+    "@hooks/base": "build/features/base/hook",
     "@hooks/org": "build/features/org/hook/org.hook",
+    "@hooks/project": "build/features/project/hook/project.hook",
     "@hooks/settings": "build/features/settings/hook/settings.hook",
     "@layouts/base": "build/features/base/layouts",
     "@models/base": "build/features/base/model/base.model",
@@ -86,8 +88,11 @@
     "@providers/base": "build/features/base/provider/base.provider",
     "@services/base": "build/features/base/service/base.service",
     "@services/org": "build/features/org/service/org.service",
+    "@services/project": "build/features/project/service/project.service",
     "@services/settings": "build/features/settings/service/settings.service",
-    "@styles": "styles",
+    "@styles": "build/styles",
+    "@types": "build/types",
+    "@utils": "build/utils",
     "@views/base": "build/features/base/views",
     "@views/org": "build/features/org/views"
   },

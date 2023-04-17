@@ -3,7 +3,7 @@ import { Box, Tab, Tabs, Typography } from "@mui/material";
 import { ForkRight as VersionsIcon, FlashOn as FunctionsIcon, Notes as LogsIcon } from "@mui/icons-material";
 import { useRouter } from "next/router";
 import { useUser } from "@auth0/nextjs-auth0";
-import { ErrorBox, Loading, LoginBackdrop, TabPanel } from "@components/base";
+import { ErrorBox, Loading, LoginBackdrop, TabPanel } from "@components";
 import FunctionVersions from "../../components/FunctionVersions";
 import type { Function } from "../../models/Function";
 import FunctionService from "../../services/FunctionService";

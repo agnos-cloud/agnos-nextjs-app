@@ -4,7 +4,7 @@ import { DataGrid, GridColDef, GridValueGetterParams } from "@mui/x-data-grid";
 import type { Log } from "../models/Log";
 import { DataType, LogType } from "../constants/log";
 import { useUser } from "@auth0/nextjs-auth0";
-import { ErrorBox, Loading } from "@components/base";
+import { ErrorBox, Loading } from "@components";
 import LogService from "../services/LogService";
 import socket from "../utils/socket";
 import Toast from "./Toast";

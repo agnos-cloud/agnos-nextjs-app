@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useUser } from "@auth0/nextjs-auth0";
 import { useRouter } from "next/router";
 import { ReactFlowProvider } from "react-flow-renderer";
-import { ErrorBox, Loading, LoginBackdrop } from "@components/base";
+import { ErrorBox, Loading, LoginBackdrop } from "@components";
 import Canvas from "../../components/Canvas";
 import type { Design } from "../../models/Design";
 import DesignService from "../../services/DesignService";

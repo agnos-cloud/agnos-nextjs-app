@@ -5,9 +5,9 @@ import { Org } from "@models/org";
 import { RoleName } from "@constants/permissions";
 
 export interface Membership extends Omit<MembershipInput, "org" | "team" | "user">, Model {
-  org: string | Org;
-  team?: string | Team;
-  user: string | User;
+  org: string | Org | null;
+  team?: string | Team | null;
+  user: string | User | null;
 }
 
 export interface MembershipUpdate extends Omit<MembershipInput, "org" | "team" | "user"> {

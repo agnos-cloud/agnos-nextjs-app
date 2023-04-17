@@ -10,5 +10,5 @@ export interface User extends Model {
   emailIsVerified?: boolean;
   memberships?: Array<string> | Array<Membership>;
   picture?: string;
-  settings?: string | Settings;
+  settings?: string | Settings | null;
 }
