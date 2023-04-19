@@ -63,6 +63,8 @@
       "@utils/*": [ "utils/*" ],
       "@views/base": [ "features/base/views" ],
       "@views/org": [ "features/org/views" ],
+      "@views/project": [ "features/project/views" ],
+      "@views/shared": [ "features/shared/views" ],
     }
   },
   "exclude": [

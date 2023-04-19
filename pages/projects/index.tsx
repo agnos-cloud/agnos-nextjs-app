@@ -1,12 +1,12 @@
 import { useUser } from "@auth0/nextjs-auth0";
 import { ErrorBox, Loading, LoginBackdrop } from "@components";
-import { ProjectsGridView } from "@components/project";
+import { ProjectsGridView } from "@views/project";
 import { useApi } from "@hooks/base";
 import { Org, OrgInput, OrgUpdate } from "@models/org";
 import OrgService from "@services/org";
 import { useEffect } from "react";
 
-export default function Designs() {
+export default function List() {
   const { user } = useUser();
   const {
     item: org,

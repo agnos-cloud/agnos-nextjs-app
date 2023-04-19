@@ -1,1 +1,2 @@
-export { default as ProjectsGridView } from "./ProjectsGridView";
+export { default as CreateProjectForm } from "./CreateProjectForm";
+export { default as ProjectCard } from "./ProjectCard";

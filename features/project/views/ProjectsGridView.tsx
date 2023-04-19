@@ -4,28 +4,30 @@ import { EmptyBox, ErrorBox, Fab, Loading } from "@components";
 import { useEffect, useMemo } from "react";
 import { useApi, useApp } from "@hooks/base";
 import { DialogOptions } from "@types";
-import CreateProjectForm from "./CreateProjectForm";
 import { Project, ProjectInput, ProjectUpdate } from "@models/project";
-import ProjectCard from "./ProjectCard";
+import { CreateProjectForm, ProjectCard } from "@components/project";
 import { LogType } from "@constants/log";
 import router from "next/router";
 import ProjectService from "@services/project";
 
 export interface ProjectsGridViewProps {
   org?: string;
+  shared?: boolean;
+  readonly?: boolean;
 }
 
 let projectToCreate: Omit<ProjectInput, "org"> | undefined = undefined;
 
 function ProjectsGridView(props: ProjectsGridViewProps) {
-  const { org } = props;
+  const { readonly, org, shared } = props;
   const { user } = useUser();
   const query = useMemo(
     () => ({
       ...(org && { org }),
+      ...(shared && { personal: true, "user:ne": user?._id }),
       "@sort": { updatedAt: "desc" as "desc" | "asc" },
     }),
-    [org]
+    [org, shared, user]
   );
   const {
     list: projects,
@@ -132,12 +134,16 @@ function ProjectsGridView(props: ProjectsGridViewProps) {
       {!projects || projects?.length === 0 ? (
         <EmptyBox
           message="No projects found for this space"
-          actions={[
-            {
-              text: "New Project",
-              onClick: handleOpenDialog,
-            },
-          ]}
+          actions={
+            readonly
+              ? []
+              : [
+                  {
+                    text: "New Project",
+                    onClick: handleOpenDialog,
+                  },
+                ]
+          }
         />
       ) : (
         projects.map((proj) => (
@@ -147,7 +153,7 @@ function ProjectsGridView(props: ProjectsGridViewProps) {
         ))
       )}
 
-      <Fab onClick={handleOpenDialog} />
+      {!readonly && <Fab onClick={handleOpenDialog} />}
     </Grid>
   );
 }

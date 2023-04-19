@@ -89,6 +89,11 @@ function Drawer() {
       path: "/",
     },
     {
+      text: "Shared Space",
+      icon: <SharedProjectsIcon />,
+      path: SHARED_PATH,
+    },
+    {
       text: "Projects",
       icon: <ProjectsIcon />,
       path: "/projects",
@@ -109,11 +114,6 @@ function Drawer() {
   ];
 
   const miscMenus = [
-    {
-      text: "Shared Projects",
-      icon: <SharedProjectsIcon />,
-      path: SHARED_PATH,
-    },
     {
       text: "Recent",
       icon: <RecentIcon />,

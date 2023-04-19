@@ -19,8 +19,8 @@ const afterCallback = async (_req: any, _res: any, session: any, _state: any) =>
         authorization: `Bearer ${accessToken}`,
       },
     });
-    if (response.data.session?.user) {
-      session.user._id = response.data.session.user;
+    if (response.data.data?.user) {
+      session.user._id = response.data.data.user;
     }
   } catch (e) {
     console.log(e);

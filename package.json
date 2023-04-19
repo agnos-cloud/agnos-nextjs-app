@@ -94,7 +94,9 @@
     "@types": "build/types",
     "@utils": "build/utils",
     "@views/base": "build/features/base/views",
-    "@views/org": "build/features/org/views"
+    "@views/org": "build/features/org/views",
+    "@views/project": "build/features/project/views",
+    "@views/shared": "build/features/shared/views"
   },
   "prettier": {
     "parser": "typescript",
