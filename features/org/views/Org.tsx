@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { Box, Tab, Tabs, Typography, useTheme } from "@mui/material";
 import {
@@ -13,7 +13,9 @@ import {
 import { useUser } from "@auth0/nextjs-auth0";
 import { ErrorBox, Loading, LoginBackdrop, TabPanel } from "@components";
 import { ProjectsGridView } from "@components/project";
-import { useOrg } from "@hooks/org";
+import { useApi } from "@hooks/base";
+import OrgService from "@services/org";
+import { Org, OrgInput, OrgUpdate } from "@models/org";
 
 function a11yProps(index: number) {
   return {
@@ -27,20 +29,31 @@ const OrgView = () => {
   const { user } = useUser();
   const theme = useTheme();
   const { id } = location.query;
-  const { data: org, isLoading, error } = useOrg(user, id as string | undefined);
+  const {
+    item: org,
+    fetchItem: fetchOrg,
+    fetchingItem: fetchingOrg,
+    fetchingItemError: fetchingOrgError,
+  } = useApi<OrgService, Org, OrgInput, OrgUpdate>(OrgService, user);
 
   const [tabValue, setTabValue] = useState(0);
+
+  // this hook fetches the org when the id param changes
+  useEffect(() => {
+    fetchOrg(id as string);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [id]);
 
   const handleChange = (_event: React.SyntheticEvent, newValue: number) => {
     setTabValue(newValue);
   };
 
-  if (isLoading) {
+  if (fetchingOrg) {
     return <Loading />;
   }
 
-  if (error) {
-    return <ErrorBox error={error} />;
+  if (fetchingOrgError) {
+    return <ErrorBox error={fetchingOrgError} />;
   }
 
   if (!org) {

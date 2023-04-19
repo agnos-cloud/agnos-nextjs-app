@@ -10,12 +10,12 @@ export default class ProjectService extends ApiService<Project, ProjectInput, Pr
     super(user);
   }
 
-  create: (project: ProjectInput) => Promise<Project> = async (project: ProjectInput) => {
+  create: (input: ProjectInput) => Promise<Project> = async (input: ProjectInput) => {
     return axios({
       method: "POST",
       url: `${this.apiUrl}/projects`,
       headers: { authorization: `Bearer ${this.accessToken}` },
-      data: project,
+      data: input,
     })
       .then((response) => {
         return response.data.data as Project;

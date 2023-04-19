@@ -33,7 +33,7 @@ function ProjectsGridView(props: ProjectsGridViewProps) {
     fetchingList: fetchingProjects,
     fetchingListError: fetchingProjectsError,
     createdItem: createdProject,
-    create,
+    create: createProject,
     creatingItem: creatingProject,
     creatingItemError: creatingProjectError,
   } = useApi<ProjectService, Project, ProjectInput, ProjectUpdate>(ProjectService, user);
@@ -81,7 +81,7 @@ function ProjectsGridView(props: ProjectsGridViewProps) {
 
   const handleSubmit = () => {
     if (projectToCreate) {
-      create({ ...projectToCreate, org: org as string });
+      createProject({ ...projectToCreate, org: org as string });
     }
   };
 
