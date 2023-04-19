@@ -1,1 +1,1 @@
-export { default as OrgView } from "./Org";
+export { default as OrgView } from "./OrgView";

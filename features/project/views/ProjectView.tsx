@@ -1,19 +1,22 @@
-import React, { useState } from "react";
-import { useRouter } from "next/router";
-import { Box, Tab, Tabs, Typography, useTheme } from "@mui/material";
+import React, { useEffect, useState } from "react";
+import { Box, Stack, Tab, Tabs, Typography, useTheme } from "@mui/material";
 import {
-  FlashOn as FunctionsIcon,
+  DataObject as ModelsIcon,
   GridViewRounded as ComponentsIcon,
-  Group as TeamsIcon,
-  Groups as MembersIcon,
-  Lan as ProjectsIcon,
-  LanOutlined as TemplatesIcon,
-  Power as PluginsIcon,
+  Groups as CollaboratorsIcon,
+  Settings as SettingsIcon,
+  TableRows as StacksIcon,
 } from "@mui/icons-material";
 import { useUser } from "@auth0/nextjs-auth0";
+import Image from "next/image";
 import { ErrorBox, Loading, LoginBackdrop, TabPanel } from "@components";
-import { ProjectsGridView } from "@components/project";
-import { useOrg } from "@hooks/org";
+import { useApi } from "@hooks/base";
+import ProjectService from "@services/project";
+import { Project, ProjectInput, ProjectUpdate } from "@models/project";
+
+export interface ProjectViewProps {
+  id: string;
+}
 
 function a11yProps(index: number) {
   return {
@@ -22,29 +25,38 @@ function a11yProps(index: number) {
   };
 }
 
-const OrgView = () => {
-  const location = useRouter();
+const ProjectView = (props: ProjectViewProps) => {
   const { user } = useUser();
   const theme = useTheme();
-  const { id } = location.query;
-  const { data: org, isLoading, error } = useOrg(user, id as string | undefined);
+  const { id } = props;
+  const {
+    item: project,
+    fetchItem: fetchProject,
+    fetchingItem: fetchingProject,
+    fetchingItemError: fetchingProjectError,
+  } = useApi<ProjectService, Project, ProjectInput, ProjectUpdate>(ProjectService, user);
 
   const [tabValue, setTabValue] = useState(0);
+
+  useEffect(() => {
+    fetchProject(id as string);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [id]);
 
   const handleChange = (_event: React.SyntheticEvent, newValue: number) => {
     setTabValue(newValue);
   };
 
-  if (isLoading) {
+  if (fetchingProject) {
     return <Loading />;
   }
 
-  if (error) {
-    return <ErrorBox error={error} />;
+  if (fetchingProjectError) {
+    return <ErrorBox error={fetchingProjectError} />;
   }
 
-  if (!org) {
-    return <ErrorBox error={new Error("Could not load organization")} />;
+  if (!project) {
+    return <ErrorBox error={new Error("Could not load project")} />;
   }
 
   if (!user) {
@@ -53,38 +65,25 @@ const OrgView = () => {
 
   return (
     <Box sx={{ width: "100%", height: "100vh" }}>
-      {id && (
-        <>
+      <Stack direction="row" spacing={theme.spacing(2)}>
+        {project.picture && <Image src={project.picture} alt={project.name} width={32} height={32} />}
+        <Stack>
           <Typography variant="body1" color="text.secondary">
-            {org?.name}
+            {project.name}
           </Typography>
           <Typography variant="caption" color="text.secondary">
-            {org?.description}
+            {project.description}
           </Typography>
-        </>
-      )}
+        </Stack>
+      </Stack>
       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
         <Tabs value={tabValue} onChange={handleChange} aria-label="team tabs">
           <Tab
-            label="Projects"
-            icon={<ProjectsIcon fontSize="small" />}
+            label="Models"
+            icon={<ModelsIcon fontSize="small" />}
             iconPosition="start"
             sx={{ fontSize: theme.typography.caption.fontSize }}
             {...a11yProps(0)}
-          />
-          <Tab
-            label="Plugins"
-            icon={<PluginsIcon fontSize="small" />}
-            iconPosition="start"
-            sx={{ fontSize: theme.typography.caption.fontSize }}
-            {...a11yProps(1)}
-          />
-          <Tab
-            label="Functions"
-            icon={<FunctionsIcon fontSize="small" />}
-            iconPosition="start"
-            sx={{ fontSize: theme.typography.caption.fontSize }}
-            {...a11yProps(1)}
           />
           <Tab
             label="Components"
@@ -94,22 +93,22 @@ const OrgView = () => {
             {...a11yProps(1)}
           />
           <Tab
-            label="Templates"
-            icon={<TemplatesIcon fontSize="small" />}
+            label="Stacks"
+            icon={<StacksIcon fontSize="small" />}
             iconPosition="start"
             sx={{ fontSize: theme.typography.caption.fontSize }}
             {...a11yProps(1)}
           />
           <Tab
-            label="Members"
-            icon={<MembersIcon fontSize="small" />}
+            label="Collaborators"
+            icon={<CollaboratorsIcon fontSize="small" />}
             iconPosition="start"
             sx={{ fontSize: theme.typography.caption.fontSize }}
             {...a11yProps(1)}
           />
           <Tab
-            label="Teams"
-            icon={<TeamsIcon fontSize="small" />}
+            label="Settings"
+            icon={<SettingsIcon fontSize="small" />}
             iconPosition="start"
             sx={{ fontSize: theme.typography.caption.fontSize }}
             {...a11yProps(1)}
@@ -117,28 +116,22 @@ const OrgView = () => {
         </Tabs>
       </Box>
       <TabPanel value={tabValue} index={0}>
-        <ProjectsGridView org={org._id} />
+        models
       </TabPanel>
       <TabPanel value={tabValue} index={1}>
-        plugins
-      </TabPanel>
-      <TabPanel value={tabValue} index={2}>
-        functions
-      </TabPanel>
-      <TabPanel value={tabValue} index={3}>
         components
       </TabPanel>
+      <TabPanel value={tabValue} index={2}>
+        stacks
+      </TabPanel>
+      <TabPanel value={tabValue} index={3}>
+        collaborators
+      </TabPanel>
       <TabPanel value={tabValue} index={4}>
-        project templates
-      </TabPanel>
-      <TabPanel value={tabValue} index={5}>
-        members
-      </TabPanel>
-      <TabPanel value={tabValue} index={6}>
-        teams
+        settings
       </TabPanel>
     </Box>
   );
 };
 
-export default OrgView;
+export default ProjectView;

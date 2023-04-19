@@ -8,7 +8,7 @@ export default class SettingsService extends ApiService<Settings, SettingsInput,
     super(user);
   }
 
-  create: (settings: SettingsInput) => Promise<Settings> = async (_: SettingsInput) => {
+  create: (input: SettingsInput) => Promise<Settings> = async (_: SettingsInput) => {
     throw new Error("Method not implemented.");
   };
 
@@ -30,12 +30,12 @@ export default class SettingsService extends ApiService<Settings, SettingsInput,
     throw new Error("Method not implemented.");
   };
 
-  update: (settings: SettingsInput) => Promise<Settings> = async (settings: SettingsInput) => {
+  update: (update: SettingsInput) => Promise<Settings> = async (update: SettingsInput) => {
     return axios({
       method: "PATCH",
       url: `${this.apiUrl}/settings`,
       headers: { authorization: `Bearer ${this.accessToken}` },
-      data: settings,
+      data: update,
     })
       .then((response) => {
         return response.data.data as Settings;

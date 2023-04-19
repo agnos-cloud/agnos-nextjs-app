@@ -7,7 +7,7 @@ import { Team } from "models/Team";
 
 export interface Collaboration extends Omit<CollaborationInput, "org" | "project" | "team" | "user">, Model {
   org: string | Org | null;
-  project: string | Project | null;
+  project?: string | Project | null;
   team?: string | Team | null;
   user?: string | User | null;
 }
@@ -19,7 +19,7 @@ export interface CollaborationUpdate extends Omit<CollaborationInput, "org" | "p
 export interface CollaborationInput {
   org: string;
   permission?: PermissionName;
-  project: string;
+  project?: string;
   team?: string;
   user?: string;
 }

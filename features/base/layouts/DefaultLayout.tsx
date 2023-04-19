@@ -5,24 +5,9 @@ import { useUser } from "@auth0/nextjs-auth0";
 import AppBar from "./components/AppBar";
 import Drawer, { DrawerHeader } from "./components/Drawer";
 import Footer from "./components/Footer";
-import { MultiPurposeDialog, Toast } from "@components";
-import { useApp } from "@hooks/base";
 
 function DefaultLayout({ children }: any) {
   const { user } = useUser();
-  const {
-    closeDialog,
-    dialogActions,
-    dialogContent,
-    dialogIsLoading,
-    dialogIsOpen,
-    dialogTitle,
-    closeToast,
-    toastMessage,
-    toastPosition,
-    toastType,
-    toastIsOpen,
-  } = useApp();
 
   return (
     <>
@@ -38,24 +23,6 @@ function DefaultLayout({ children }: any) {
         <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
           <DrawerHeader />
           {children}
-
-          <MultiPurposeDialog
-            actions={dialogActions}
-            loading={dialogIsLoading}
-            open={dialogIsOpen}
-            title={dialogTitle}
-            onClose={closeDialog}
-          >
-            {dialogContent}
-          </MultiPurposeDialog>
-
-          <Toast
-            message={toastMessage}
-            open={toastIsOpen}
-            type={toastType}
-            position={toastPosition}
-            onClose={closeToast}
-          />
         </Box>
       </Box>
       {false && <Footer />}
