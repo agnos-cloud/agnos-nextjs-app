@@ -1,7 +1,6 @@
 import * as React from "react";
 import { styled, useTheme, Theme, CSSObject } from "@mui/material/styles";
 import {
-  Avatar,
   Drawer as MuiDrawer,
   Divider,
   IconButton,
@@ -15,9 +14,8 @@ import {
   ChevronLeft as ChevronLeftIcon,
   ChevronRight as ChevronRightIcon,
   Workspaces as SharedProjectsIcon,
-  ExitToApp as LogoutIcon,
   Home as HomeIcon,
-  Person as ProfileIcon,
+  Lan as ProjectsIcon,
   Settings as SettingsIcon,
   StarOutline as FavoritesIcon,
   Store as MarketIcon,
@@ -25,8 +23,7 @@ import {
 } from "@mui/icons-material";
 import router from "next/router";
 
-import { SHARED_PATH, LOGOUT_PATH, STORE_PATH, ORGS_PATH, RECENT_PATH, FAVORITES_PATH } from "@constants/paths";
-import { useUser } from "@auth0/nextjs-auth0";
+import { SHARED_PATH, STORE_PATH, ORGS_PATH, RECENT_PATH, FAVORITES_PATH } from "@constants/paths";
 import { DRAWER_WIDTH } from "@constants/dimensions";
 import { useApp } from "@hooks/base";
 
@@ -79,24 +76,26 @@ const StyledDrawer = styled(MuiDrawer, {
 
 function Drawer() {
   const theme = useTheme();
-  const { user } = useUser();
   const { drawerIsOpen, setDrawerIsOpen } = useApp();
 
   const handleDrawerClose = () => {
     setDrawerIsOpen(false);
   };
 
-  const mainMenus = [
+  const personalMenus = [
     {
       text: "Home",
       icon: <HomeIcon />,
       path: "/",
     },
     {
-      text: "Shared Projects",
-      icon: <SharedProjectsIcon />,
-      path: SHARED_PATH,
+      text: "Projects",
+      icon: <ProjectsIcon />,
+      path: "/projects",
     },
+  ];
+
+  const orgMenus = [
     {
       text: "Organizations",
       icon: <OrgsIcon />,
@@ -106,6 +105,14 @@ function Drawer() {
       text: "Marketplace",
       icon: <MarketIcon />,
       path: STORE_PATH,
+    },
+  ];
+
+  const miscMenus = [
+    {
+      text: "Shared Projects",
+      icon: <SharedProjectsIcon />,
+      path: SHARED_PATH,
     },
     {
       text: "Recent",
@@ -117,27 +124,10 @@ function Drawer() {
       icon: <FavoritesIcon />,
       path: FAVORITES_PATH,
     },
-  ];
-
-  const userMenus = [
-    {
-      text: user?.name ?? "Profile",
-      icon: user?.picture ? (
-        <Avatar alt={user?.name ?? ""} src={user?.picture} sx={{ width: 20, height: 20 }} />
-      ) : (
-        <ProfileIcon />
-      ),
-      path: "/profile",
-    },
     {
       text: "Settings",
       icon: <SettingsIcon />,
       path: "/settings",
-    },
-    {
-      text: "Sign out",
-      icon: <LogoutIcon />,
-      path: LOGOUT_PATH,
     },
   ];
 
@@ -150,7 +140,7 @@ function Drawer() {
       </DrawerHeader>
       <Divider />
       <List>
-        {mainMenus.map((menu) => (
+        {personalMenus.map((menu) => (
           <ListItemButton
             key={menu.text}
             sx={{
@@ -176,7 +166,33 @@ function Drawer() {
       </List>
       <Divider />
       <List>
-        {userMenus.map((menu) => (
+        {orgMenus.map((menu) => (
+          <ListItemButton
+            key={menu.text}
+            sx={{
+              minHeight: 48,
+              justifyContent: drawerIsOpen ? "initial" : "center",
+              px: 2.5,
+            }}
+            selected={router.pathname === menu.path}
+            onClick={() => router.push(menu.path)}
+          >
+            <ListItemIcon
+              sx={{
+                minWidth: 0,
+                mr: drawerIsOpen ? 3 : "auto",
+                justifyContent: "center",
+              }}
+            >
+              {menu.icon}
+            </ListItemIcon>
+            <ListItemText primary={menu.text} sx={{ opacity: drawerIsOpen ? 1 : 0 }} />
+          </ListItemButton>
+        ))}
+      </List>
+      <Divider />
+      <List>
+        {miscMenus.map((menu) => (
           <ListItemButton
             key={menu.text}
             sx={{
