@@ -11,6 +11,7 @@ import AppProvider from "@providers/base";
 import { DialogAction, DialogOptions, ToastOptions, ToastPosition } from "@types";
 import { InvocationType } from "@constants/invocation";
 import { LogType } from "@constants/log";
+import { MultiPurposeDialog, Toast } from "@components";
 
 function MyApp({ Component, pageProps }: AppProps) {
   const [dialogActions, setDialogActions] = React.useState<DialogAction[]>([]);
@@ -95,6 +96,24 @@ function MyApp({ Component, pageProps }: AppProps) {
           <CssBaseline />
           <DefaultLayout>
             <Component {...pageProps} />
+
+            <MultiPurposeDialog
+              actions={dialogActions}
+              loading={dialogIsLoading}
+              open={dialogIsOpen}
+              title={dialogTitle}
+              onClose={() => setDialogIsOpen(false)}
+            >
+              {dialogContent}
+            </MultiPurposeDialog>
+
+            <Toast
+              message={toastMessage}
+              open={toastIsOpen}
+              type={toastType}
+              position={toastPosition}
+              onClose={() => setToastIsOpen(false)}
+            />
           </DefaultLayout>
         </AppProvider>
       </ThemeProvider>
