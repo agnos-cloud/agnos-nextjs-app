@@ -54,7 +54,7 @@ function FunctionInvocations(props: FunctionInvocationsProps) {
   const [error, setError] = useState<Error | undefined>(undefined);
   const [openToast, setOpenToast] = useState(false);
   const [toastMessage, setToastMessage] = useState<string[]>([]);
-  const [toastType, setToastType] = useState<InvocationType>(InvocationType.SUCCESS);
+  const [toastType, setToastType] = useState<InvocationType>(InvocationType.success);
   const pageSize = 10;
 
   useEffect(() => {
@@ -149,9 +149,9 @@ function FunctionInvocations(props: FunctionInvocationsProps) {
           getRowClassName={(params) =>
             `grid-row--${params.indexRelativeToCurrentPage % 2 === 0 ? "even" : "odd"}` +
             ` grid-row--${
-              params.row["type"] === InvocationType.ERROR
+              params.row["type"] === InvocationType.error
                 ? "error"
-                : params.row["type"] === InvocationType.SUCCESS
+                : params.row["type"] === InvocationType.success
                 ? "success"
                 : "info"
             }`

@@ -21,10 +21,11 @@ let projectToCreate: Omit<ProjectInput, "org"> | undefined = undefined;
 function ProjectsGridView(props: ProjectsGridViewProps) {
   const { readonly, org, shared } = props;
   const { user } = useUser();
+  // TODO: change this query to use collaborations
   const query = useMemo(
     () => ({
       ...(org && { org }),
-      ...(shared && { personal: true, "user:ne": user?._id }),
+      ...(shared && { personal: true, "user:ne": user?._id }), // TODO: this is not how to get shared projects; load the user's collaborations -> get the projects from there -> filter out the ones that are not shared (filter out the ones that are not personal, then the ones that are his)
       "@sort": { updatedAt: "desc" as "desc" | "asc" },
     }),
     [org, shared, user]
@@ -118,7 +119,7 @@ function ProjectsGridView(props: ProjectsGridViewProps) {
   const handleOpenToast = (error: Error) =>
     openToast({
       message: error.message,
-      type: LogType.ERROR,
+      type: LogType.error,
     });
 
   if (fetchingProjects) {

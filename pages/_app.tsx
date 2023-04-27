@@ -25,7 +25,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   const [drawerIsOpen, setDrawerIsOpen] = React.useState(false);
   const [toastMessage, setToastMessage] = React.useState<string | string[]>("");
   const [toastPosition, setToastPosition] = React.useState<ToastPosition>(["top", "right"]);
-  const [toastType, setToastType] = React.useState<InvocationType | LogType>(LogType.INFO);
+  const [toastType, setToastType] = React.useState<InvocationType | LogType>(LogType.info);
   const [toastIsOpen, setToastIsOpen] = React.useState(false);
   const [mode, setMode] = React.useState<"light" | "dark">("light");
 
@@ -52,7 +52,7 @@ function MyApp({ Component, pageProps }: AppProps) {
       openToast: (options: ToastOptions) => {
         setToastMessage(options.message || "");
         setToastPosition(options.position || ["top", "right"]);
-        setToastType(options.type || LogType.INFO);
+        setToastType(options.type || LogType.info);
         setToastIsOpen(true);
       },
       closeToast: () => {

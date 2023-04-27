@@ -17,9 +17,11 @@ interface FunctionVersion {
 }
 
 enum PermissionScope {
-    "READ:DESIGN" = "READ:DESIGN",
-    "READ:ENVIRONMENT" = "READ:ENVIRONMENT",
-    "READ:USER" = "READ:USER",
+    "read:design" = "read:design",
+    "read:environment" = "read:environment",
+    "read:org" = "read:org",
+    "read:project" = "read:project",
+    "read:user" = "read:user",
 }
 
 interface Team {

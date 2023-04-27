@@ -350,7 +350,7 @@ const Actions = (props: ActionsProps) => {
   const { user } = useUser();
   const [openToast, setOpenToast] = React.useState(false);
   const [toastMessage, setToastMessage] = React.useState<string>("");
-  const [toastType, setToastType] = React.useState<InvocationType>(InvocationType.SUCCESS);
+  const [toastType, setToastType] = React.useState<InvocationType>(InvocationType.success);
 
   if (!actions || !actions.length) {
     return <></>;
@@ -396,11 +396,11 @@ const Actions = (props: ActionsProps) => {
                 }
 
                 setToastMessage(JSON.stringify(response.result));
-                setToastType(InvocationType.SUCCESS);
+                setToastType(InvocationType.success);
                 setOpenToast(true);
               } catch (error) {
                 setToastMessage(String(error));
-                setToastType(InvocationType.ERROR);
+                setToastType(InvocationType.error);
                 setOpenToast(true);
               }
             }}

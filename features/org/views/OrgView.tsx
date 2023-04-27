@@ -49,6 +49,10 @@ const OrgView = () => {
     setTabValue(newValue);
   };
 
+  if (!user) {
+    return <LoginBackdrop />;
+  }
+
   if (fetchingOrg) {
     return <Loading />;
   }
@@ -61,14 +65,14 @@ const OrgView = () => {
     return <ErrorBox error={new Error("Could not load organization")} />;
   }
 
-  if (!user) {
-    return <LoginBackdrop />;
-  }
-
   return (
     <Box sx={{ width: "100%", height: "100vh" }}>
       <Stack direction="row" spacing={theme.spacing(2)}>
-        {org.picture && <Image src={org.picture} alt={org.name} width={32} height={32} />}
+        <Box sx={{ pt: theme.spacing(1) }}>
+          {org.picture && (
+            <Image src={org.picture} alt={org.name} width={32} height={32} style={{ borderRadius: "50%" }} />
+          )}
+        </Box>
         <Stack>
           <Typography variant="body1" color="text.secondary">
             {org.name}
@@ -99,35 +103,35 @@ const OrgView = () => {
             icon={<FunctionsIcon fontSize="small" />}
             iconPosition="start"
             sx={{ fontSize: theme.typography.caption.fontSize }}
-            {...a11yProps(1)}
+            {...a11yProps(2)}
           />
           <Tab
             label="Components"
             icon={<ComponentsIcon fontSize="small" />}
             iconPosition="start"
             sx={{ fontSize: theme.typography.caption.fontSize }}
-            {...a11yProps(1)}
+            {...a11yProps(3)}
           />
           <Tab
             label="Templates"
             icon={<TemplatesIcon fontSize="small" />}
             iconPosition="start"
             sx={{ fontSize: theme.typography.caption.fontSize }}
-            {...a11yProps(1)}
+            {...a11yProps(4)}
           />
           <Tab
             label="Members"
             icon={<MembersIcon fontSize="small" />}
             iconPosition="start"
             sx={{ fontSize: theme.typography.caption.fontSize }}
-            {...a11yProps(1)}
+            {...a11yProps(5)}
           />
           <Tab
             label="Teams"
             icon={<TeamsIcon fontSize="small" />}
             iconPosition="start"
             sx={{ fontSize: theme.typography.caption.fontSize }}
-            {...a11yProps(1)}
+            {...a11yProps(6)}
           />
         </Tabs>
       </Box>

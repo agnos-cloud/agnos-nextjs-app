@@ -4,7 +4,7 @@ import SettingsService from "@services/settings";
 
 export function useSettings(user: UserProfile | undefined) {
   const [autoSave, setAutoSave] = useState(false);
-  const [colorMode, setColorMode] = useState<"DARK" | "LIGHT">("LIGHT");
+  const [colorMode, setColorMode] = useState<"dark" | "light">("light");
   const [useGrayscaleIcons, setUseGrayscaleIcons] = useState(false);
 
   useEffect(() => {
@@ -15,7 +15,7 @@ export function useSettings(user: UserProfile | undefined) {
 
       if (settings) {
         setAutoSave(settings.autoSave || false);
-        setColorMode(settings.colorMode || "LIGHT");
+        setColorMode(settings.colorMode || "light");
         setUseGrayscaleIcons(settings.useGrayscaleIcons || false);
       }
     };

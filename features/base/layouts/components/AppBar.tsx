@@ -133,7 +133,7 @@ export default function AppBar() {
           <IconButton
             sx={{ ml: 1 }}
             onClick={() => {
-              theme.palette.mode === "dark" ? setColorMode("LIGHT") : setColorMode("DARK");
+              theme.palette.mode === "dark" ? setColorMode("light") : setColorMode("dark");
               togglePaletteMode();
             }}
             color="inherit"

@@ -5,6 +5,6 @@ export interface Permission {
   value: number;
 }
 
-export type PermissionName = "READ" | "WRITE" | "ADMIN";
+export type PermissionName = "read" | "write" | "admin";
 
-export type RoleName = "GUEST" | "MEMBER" | "OWNER";
+export type RoleName = "guest" | "member" | "owner";

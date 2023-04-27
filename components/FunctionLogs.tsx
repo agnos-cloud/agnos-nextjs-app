@@ -53,7 +53,7 @@ function FunctionLogs(props: FunctionLogsProps) {
   const [error, setError] = useState<Error | undefined>(undefined);
   const [openToast, setOpenToast] = useState(false);
   const [toastMessage, setToastMessage] = useState<string>("");
-  const [toastType, setToastType] = useState<LogType>(LogType.INFO);
+  const [toastType, setToastType] = useState<LogType>(LogType.info);
   const pageSize = 10;
 
   useEffect(() => {
@@ -81,7 +81,7 @@ function FunctionLogs(props: FunctionLogsProps) {
   const handleRowClick = (param: any, _event: any) => {
     const type = param.row["dataType"];
     let data = param.row["data"];
-    if (type === DataType.OBJECT) data = JSON.stringify(data);
+    if (type === DataType.object) data = JSON.stringify(data);
     setOpenToast(true);
     setToastMessage(data);
     setToastType(param.row.type);
@@ -123,11 +123,11 @@ function FunctionLogs(props: FunctionLogsProps) {
           getRowClassName={(params) =>
             `grid-row--${params.indexRelativeToCurrentPage % 2 === 0 ? "even" : "odd"}` +
             ` grid-row--${
-              params.row["type"] === LogType.ERROR
+              params.row["type"] === LogType.error
                 ? "error"
-                : params.row["type"] === LogType.SUCCESS
+                : params.row["type"] === LogType.success
                 ? "success"
-                : params.row["type"] === LogType.WARNING
+                : params.row["type"] === LogType.warning
                 ? "warning"
                 : "info"
             }`

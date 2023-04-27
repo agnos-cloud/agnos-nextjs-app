@@ -44,8 +44,8 @@ export function useFunctionVersionForm() {
         const type = log["dataType"];
         let data = log["data"];
         let env = log["env"];
-        if (type === DataType.OBJECT) data = JSON.stringify(data);
-        if (env === Env.TEST) setConsoleTexts((texts) => [...texts, data]);
+        if (type === DataType.object) data = JSON.stringify(data);
+        if (env === Env.test) setConsoleTexts((texts) => [...texts, data]);
       });
     }
   }, [id, user]);
@@ -140,9 +140,9 @@ export function useFunctionVersionForm() {
               disablePadding
             >
               <ListItemIcon>
-                {scope === PermissionScope["READ:DESIGN"] && <DesignIcon />}
-                {scope === PermissionScope["READ:ENVIRONMENT"] && <EnvIcon />}
-                {scope === PermissionScope["READ:USER"] && <UserIcon />}
+                {scope === PermissionScope["read:design"] && <DesignIcon />}
+                {scope === PermissionScope["read:environment"] && <EnvIcon />}
+                {scope === PermissionScope["read:user"] && <UserIcon />}
               </ListItemIcon>
               <ListItemText id="switch-list-label-wifi" primary={scope} />
             </ListItem>

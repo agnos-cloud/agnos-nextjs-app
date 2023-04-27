@@ -25,10 +25,10 @@ export default class ProjectService extends ApiService<Project, ProjectInput, Pr
       });
   };
 
-  get: (id?: string) => Promise<Project> = async (id?: string) => {
+  get: (id?: string, query?: Query) => Promise<Project> = async (id?: string, query?: Query) => {
     return axios({
       method: "GET",
-      url: `${this.apiUrl}/projects${id ? `/${id}` : ""}`,
+      url: `${this.apiUrl}/projects${id ? `/${id}` : ""}${query ? `?${getQueryString(query)}` : ""}`,
       headers: { authorization: `Bearer ${this.accessToken}` },
     })
       .then((response) => {

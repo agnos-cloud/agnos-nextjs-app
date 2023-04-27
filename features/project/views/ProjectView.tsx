@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { Box, Stack, Tab, Tabs, Typography, useTheme } from "@mui/material";
 import {
+  Architecture as DesignsIcon,
   DataObject as ModelsIcon,
-  GridViewRounded as ComponentsIcon,
   Groups as CollaboratorsIcon,
   Settings as SettingsIcon,
-  TableRows as StacksIcon,
+  Storage as DataIcon,
 } from "@mui/icons-material";
 import { useUser } from "@auth0/nextjs-auth0";
 import Image from "next/image";
@@ -13,6 +13,7 @@ import { ErrorBox, Loading, LoginBackdrop, TabPanel } from "@components";
 import { useApi } from "@hooks/base";
 import ProjectService from "@services/project";
 import { Project, ProjectInput, ProjectUpdate } from "@models/project";
+import ProjectModelsView from "./ProjectModelsView";
 
 export interface ProjectViewProps {
   id: string;
@@ -29,6 +30,12 @@ const ProjectView = (props: ProjectViewProps) => {
   const { user } = useUser();
   const theme = useTheme();
   const { id } = props;
+  const query = useMemo(
+    () => ({
+      "@include": [{ path: "canvas", select: "nodes" }],
+    }),
+    []
+  );
   const {
     item: project,
     fetchItem: fetchProject,
@@ -39,13 +46,17 @@ const ProjectView = (props: ProjectViewProps) => {
   const [tabValue, setTabValue] = useState(0);
 
   useEffect(() => {
-    fetchProject(id as string);
+    fetchProject(id as string, query);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
   const handleChange = (_event: React.SyntheticEvent, newValue: number) => {
     setTabValue(newValue);
   };
+
+  if (!user) {
+    return <LoginBackdrop />;
+  }
 
   if (fetchingProject) {
     return <Loading />;
@@ -59,14 +70,14 @@ const ProjectView = (props: ProjectViewProps) => {
     return <ErrorBox error={new Error("Could not load project")} />;
   }
 
-  if (!user) {
-    return <LoginBackdrop />;
-  }
-
   return (
     <Box sx={{ width: "100%", height: "100vh" }}>
       <Stack direction="row" spacing={theme.spacing(2)}>
-        {project.picture && <Image src={project.picture} alt={project.name} width={32} height={32} />}
+        <Box sx={{ pt: theme.spacing(1) }}>
+          {project.picture && (
+            <Image src={project.picture} alt={project.name} width={32} height={32} style={{ borderRadius: "50%" }} />
+          )}
+        </Box>
         <Stack>
           <Typography variant="body1" color="text.secondary">
             {project.name}
@@ -86,43 +97,43 @@ const ProjectView = (props: ProjectViewProps) => {
             {...a11yProps(0)}
           />
           <Tab
-            label="Components"
-            icon={<ComponentsIcon fontSize="small" />}
+            label="Data"
+            icon={<DataIcon fontSize="small" />}
             iconPosition="start"
             sx={{ fontSize: theme.typography.caption.fontSize }}
             {...a11yProps(1)}
           />
           <Tab
-            label="Stacks"
-            icon={<StacksIcon fontSize="small" />}
+            label="Designs"
+            icon={<DesignsIcon fontSize="small" />}
             iconPosition="start"
             sx={{ fontSize: theme.typography.caption.fontSize }}
-            {...a11yProps(1)}
+            {...a11yProps(2)}
           />
           <Tab
             label="Collaborators"
             icon={<CollaboratorsIcon fontSize="small" />}
             iconPosition="start"
             sx={{ fontSize: theme.typography.caption.fontSize }}
-            {...a11yProps(1)}
+            {...a11yProps(3)}
           />
           <Tab
             label="Settings"
             icon={<SettingsIcon fontSize="small" />}
             iconPosition="start"
             sx={{ fontSize: theme.typography.caption.fontSize }}
-            {...a11yProps(1)}
+            {...a11yProps(4)}
           />
         </Tabs>
       </Box>
       <TabPanel value={tabValue} index={0}>
-        models
+        <ProjectModelsView project={project} />
       </TabPanel>
       <TabPanel value={tabValue} index={1}>
-        components
+        data
       </TabPanel>
       <TabPanel value={tabValue} index={2}>
-        stacks
+        designs
       </TabPanel>
       <TabPanel value={tabValue} index={3}>
         collaborators

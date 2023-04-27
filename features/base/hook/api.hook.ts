@@ -45,13 +45,13 @@ export function useApi<
     }
   };
 
-  const fetchItem = (id?: string) => {
+  const fetchItem = (id?: string, query?: Query) => {
     if (user) {
       setItem(undefined);
       setFetchingItemError(undefined);
       setFetchingItem(true);
       new Service(user)
-        .get(id)
+        .get(id, query)
         .then((response) => {
           setItem(response);
           setFetchingItem(false);

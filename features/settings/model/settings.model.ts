@@ -7,6 +7,6 @@ export interface Settings extends SettingsInput, Model {
 
 export interface SettingsInput {
   autoSave?: boolean;
-  colorMode?: "DARK" | "LIGHT";
+  colorMode?: "dark" | "light";
   useGrayscaleIcons?: boolean;
 }
