@@ -1,5 +1,6 @@
 import { InvocationType } from "@constants/invocation";
 import { LogType } from "@constants/log";
+import { Breakpoint } from "@mui/material";
 import { JSXElementConstructor, MouseEventHandler, ReactElement } from "react";
 
 export type Obj = Record<string, unknown>;
@@ -38,6 +39,7 @@ export type DialogOptions = {
   content: ReactElement<any, string | JSXElementConstructor<any>> | null;
   actions?: DialogAction[];
   loading?: boolean;
+  maxWidth?: false | Breakpoint | undefined;
 };
 
 export type DialogAction = {

@@ -13,7 +13,16 @@ function CreateProjectModelForm(props: CreateProjectModelFormProps) {
 
   return (
     <>
-      <JsonSchemaEditor onSchemaChange={handleSchemaChange} />
+      <JsonSchemaEditor
+        onSchemaChange={handleSchemaChange}
+        data={{
+          type: "object",
+          title: "",
+          description: "",
+          properties: {},
+          required: [],
+        }}
+      />
     </>
   );
 }

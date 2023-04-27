@@ -1,4 +1,4 @@
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle } from "@mui/material";
+import { Breakpoint, Button, Dialog, DialogActions, DialogContent, DialogTitle } from "@mui/material";
 import { DialogAction } from "@types";
 
 export interface MultiPurposeDialogProps {
@@ -7,18 +7,19 @@ export interface MultiPurposeDialogProps {
   open: boolean;
   title?: string;
   loading?: boolean;
+  maxWidth?: false | Breakpoint | undefined;
   onClose: () => void;
 }
 
 const MultiPurposeDialog = (props: MultiPurposeDialogProps) => {
-  const { actions, children, loading, open, title, onClose } = props;
+  const { actions, children, loading, open, title, maxWidth, onClose } = props;
 
   const handleClose = () => {
     onClose();
   };
 
   return (
-    <Dialog open={open} onClose={handleClose} fullWidth={true}>
+    <Dialog open={open} onClose={handleClose} fullWidth={true} maxWidth={maxWidth}>
       <DialogTitle>{title || "Dialog"}</DialogTitle>
       <DialogContent>{children}</DialogContent>
       <DialogActions>

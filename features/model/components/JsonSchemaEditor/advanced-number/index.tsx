@@ -13,7 +13,7 @@ import {
 } from "@chakra-ui/react";
 
 import { AdvancedItemStateProps, JSONSchema7 } from "../JsonSchemaEditor.types";
-import { none, useState } from "@hookstate/core";
+import { none, useHookstate } from "@hookstate/core";
 
 export const AdvancedNumber: React.FunctionComponent<AdvancedItemStateProps> = (
   props: React.PropsWithChildren<AdvancedItemStateProps>
@@ -29,7 +29,7 @@ export const AdvancedNumber: React.FunctionComponent<AdvancedItemStateProps> = (
     return array;
   };
 
-  const itemState = useState(itemStateProp);
+  const itemState = useHookstate(itemStateProp);
 
   const isEnumChecked = (itemState.value as JSONSchema7).enum !== undefined;
   const enumData = (itemState.value as JSONSchema7).enum ? (itemState.enum.value as string[]) : [];

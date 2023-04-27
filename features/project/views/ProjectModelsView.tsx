@@ -85,6 +85,7 @@ function ProjectModelsView(props: ProjectModelsViewProps) {
     () => ({
       title: "New Project Model",
       content: newProjectModelForm,
+      maxWidth: "xl",
       actions: [
         {
           text: "Cancel",
