@@ -23,13 +23,16 @@ import { Canvas as CanvasInterface } from "@models/canvas";
 import router from "next/router";
 import ProjectService from "@services/project";
 import { Canvas } from "@components/canvas";
+import socket from "@utils/socket";
+import ModelService from "@services/model";
+import { Model, ModelInput, ModelUpdate } from "@models/model";
 
 export interface ProjectModelsViewProps {
   project: Project;
   readonly?: boolean;
 }
 
-let projectToCreate: Omit<ProjectInput, "org"> | undefined = undefined;
+let schemaToCreate: object | undefined = undefined;
 
 const nodeTypes = {};
 
@@ -56,6 +59,12 @@ function ProjectModelsView(props: ProjectModelsViewProps) {
   const { project, readonly } = props;
   const { user } = useUser();
   const { openDialog, closeDialog, setDialogIsLoading, openToast } = useApp();
+  const {
+    createdItem: createdProjectModel,
+    create: createProjectModel,
+    creatingItem: creatingProjectModel,
+    creatingItemError: creatingProjectModelError,
+  } = useApi<ModelService, Model, ModelInput, ModelUpdate>(ModelService, user);
 
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
@@ -68,16 +77,33 @@ function ProjectModelsView(props: ProjectModelsViewProps) {
     }
   }, [project]);
 
-  const onChange = (model: string) => {
-    console.log(JSON.parse(model));
+  useEffect(() => {
+    console.log(">>>>>>>>");
+    console.log(socket);
+    const channel = typeof project.canvas === "string" ? `canvas:${project.canvas}` : `canvas:${project.canvas?._id}`;
+    console.log(channel);
+    socket.on(channel, (event) => {
+      setNodes((curr) => [
+        ...curr,
+        { id: "test", type: "test", position: { x: 100, y: 100 }, data: { label: "test" } },
+      ]);
+    });
+  }, []);
+
+  const onChange = (schema: string) => {
+    console.log(JSON.parse(schema));
     // projectToCreate = project;
+    try {
+      schemaToCreate = JSON.parse(schema);
+    } catch (e) {}
   };
 
   const newProjectModelForm = useMemo(() => <CreateProjectModelForm onChange={onChange} />, []);
 
   const handleSubmit = () => {
-    if (projectToCreate) {
-      // createProject({ ...projectToCreate, org: org as string });
+    console.log(schemaToCreate);
+    if (schemaToCreate) {
+      createProjectModel({ name: "just testing", project: project._id, schema: schemaToCreate });
     }
   };
 
@@ -106,7 +132,7 @@ function ProjectModelsView(props: ProjectModelsViewProps) {
   const handleOpenDialog = () => openDialog(newProjectArgs);
 
   const handleCloseDialog = () => {
-    projectToCreate = undefined;
+    schemaToCreate = undefined;
     closeDialog();
   };
 
