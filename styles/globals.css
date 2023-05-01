@@ -14,3 +14,82 @@ a {
 * {
   box-sizing: border-box;
 }
+
+/************ models ************/
+
+.react-flow__node-data {
+  padding: 0;
+  background-color: #f07706;
+  color: white;
+  width: 150px;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+
+.react-flow__node-model {
+  padding: 0;
+  background-color: #4587f1;
+  color: white;
+  width: 150px;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+
+.react-flow__node-model .title {
+  text-align: center;
+  height: 15px;
+  margin: 2px;
+  font-size: xx-small;
+  margin-bottom: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.react-flow__node-model .content {
+  background-color: #dbdcdd;
+  color: #000000;
+  padding: 5px;
+  padding-left: 0;
+  font-size: xx-small;
+}
+
+.react-flow__node-model .content-row {
+  height: 15px;
+  margin-left: 5px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.react-flow__node-model .content-row-value {
+  white-space:nowrap;
+}
+
+.react-flow__node-model .content-row-value-integer {
+  color: #5f0253;
+}
+.react-flow__node-model .content-row-value-number {
+  color: #5f0253;
+}
+.react-flow__node-model .content-row-value-boolean {
+  color: #02085f;
+}
+.react-flow__node-model .content-row-value-string {
+  color: #5f2c02;
+}
+
+.react-flow__node-model .content-row-object {
+  margin-left: 5px;
+}
+
+.react-flow__node-model .content-row-object-title {
+  height: 15px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.react-flow__node-model .content-row-object-body {
+  height: 15px;
+}

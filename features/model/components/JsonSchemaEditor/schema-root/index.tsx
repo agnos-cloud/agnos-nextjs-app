@@ -49,7 +49,7 @@ export const SchemaRoot: React.FunctionComponent<SchemaArrayProps> = (
           size="sm"
           margin={2}
           variant="outline"
-          placeholder="Add Title"
+          placeholder="Enter model name"
           onChange={(evt: React.ChangeEvent<HTMLInputElement>) => {
             state.title.set(evt.target.value);
           }}
@@ -60,10 +60,11 @@ export const SchemaRoot: React.FunctionComponent<SchemaArrayProps> = (
           size="sm"
           margin={2}
           variant="outline"
-          placeholder="Add Description"
+          placeholder="Enter model description"
           onChange={(evt: React.ChangeEvent<HTMLInputElement>) => {
             state.description.set(evt.target.value);
           }}
+          isRequired
         />
 
         {state.value?.type === "object" && (
