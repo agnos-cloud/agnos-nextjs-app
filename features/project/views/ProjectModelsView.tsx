@@ -10,6 +10,8 @@ import { LogType } from "@constants/log";
 import { ReactFlowProvider, Node, addEdge, Edge, Connection, useNodesState, useEdgesState } from "reactflow";
 import { Canvas as CanvasInterface } from "@models/canvas";
 import { Canvas } from "@components/canvas";
+import { Canvas as CanvasModel, CanvasInput, CanvasUpdate } from "@models/canvas";
+import CanvasService from "@services/canvas";
 import socket from "@utils/socket";
 import ModelService from "@services/model";
 import { Model, ModelInput, ModelUpdate } from "@models/model";
@@ -45,6 +47,10 @@ function ProjectModelsView(props: ProjectModelsViewProps) {
     creatingItem: creatingProjectModel,
     creatingItemError: creatingProjectModelError,
   } = useApi<ModelService, Model, ModelInput, ModelUpdate>(ModelService, user);
+  const { update: updateProjectCanvas } = useApi<CanvasService, CanvasModel, CanvasInput, CanvasUpdate>(
+    CanvasService,
+    user
+  );
 
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
@@ -54,8 +60,9 @@ function ProjectModelsView(props: ProjectModelsViewProps) {
   useEffect(() => {
     const channel = typeof project.canvas === "string" ? `canvas:${project.canvas}` : `canvas:${project.canvas?._id}`;
     socket.on(channel, (event) => {
-      console.log(event);
-      if (event.type === "node_added") {
+      if (event.type === "canvas_updated") {
+        setNodes(event.nodes);
+      } else if (event.type === "node_added") {
         setNodes((curr) => [...curr, event.node]);
       }
     });
@@ -94,17 +101,19 @@ function ProjectModelsView(props: ProjectModelsViewProps) {
   }, [models]);
 
   const onChange = (schema: string) => {
-    console.log(JSON.parse(schema));
     // projectToCreate = project;
     try {
       schemaToCreate = JSON.parse(schema);
     } catch (e) {}
   };
 
+  const handleOnNodeDragStop = (_: React.MouseEvent<Element, MouseEvent>, __: Node<any>) => {
+    updateProjectCanvas(undefined, { project: project._id, nodes: nodes });
+  };
+
   const newProjectModelForm = useMemo(() => <CreateProjectModelForm onChange={onChange} />, []);
 
   const handleSubmit = () => {
-    console.log(schemaToCreate);
     if (schemaToCreate) {
       if (!schemaToCreate.title) {
         openToast({
@@ -121,7 +130,6 @@ function ProjectModelsView(props: ProjectModelsViewProps) {
         schema: schemaToCreate,
         events: [{ type: "model_created", after: schemaToCreate }],
       });
-      // client: design custom node for model
     }
   };
 
@@ -173,6 +181,7 @@ function ProjectModelsView(props: ProjectModelsViewProps) {
           nodeColor={nodeColor}
           nodeTypes={nodeTypes}
           onConnect={onConnect}
+          onNodeDragStop={handleOnNodeDragStop}
           onEdgesChange={onEdgesChange}
           onNodesChange={onNodesChange}
         />

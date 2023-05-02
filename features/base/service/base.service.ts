@@ -15,4 +15,5 @@ export abstract class ApiService<ReturnType, InputType, UpdateType> {
   abstract create: (input: InputType) => Promise<ReturnType>;
   abstract get: (id?: string, query?: Query) => Promise<ReturnType>;
   abstract getMany: (query?: Query) => Promise<ReturnType[]>;
+  abstract update: (id: string | undefined, update: UpdateType) => Promise<ReturnType>;
 }

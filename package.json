@@ -100,6 +100,7 @@
     "@models/user": "build/features/user/model/user.model",
     "@providers/base": "build/features/base/provider/base.provider",
     "@services/base": "build/features/base/service/base.service",
+    "@services/canvas": "build/features/canvas/service/canvas.service",
     "@services/model": "build/features/model/service/model.service",
     "@services/org": "build/features/org/service/org.service",
     "@services/project": "build/features/project/service/project.service",

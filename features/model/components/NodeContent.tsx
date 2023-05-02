@@ -13,6 +13,8 @@ export const NodeContent = (props: NodeContentProps) => {
   let row = -1;
   const { id, data } = props;
 
+  if (!data) return null;
+
   const getContent = (value: any, key?: string, fullKey?: string) => {
     row++;
 

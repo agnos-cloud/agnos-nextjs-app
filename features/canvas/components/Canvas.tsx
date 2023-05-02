@@ -1,4 +1,5 @@
 import { Box } from "@mui/material";
+
 import { Obj } from "@types";
 import ReactFlow, {
   Background,
@@ -9,6 +10,7 @@ import ReactFlow, {
   MiniMap,
   Node,
   NodeChange,
+  NodeDragHandler,
   NodeTypes,
 } from "reactflow";
 import "reactflow/dist/base.css";
@@ -22,17 +24,13 @@ type CanvasProps = {
   nodeColor: (node: Node) => string;
   nodeTypes?: Obj;
   onConnect: (params: Edge | Connection) => void;
+  onNodeDragStop?: NodeDragHandler | undefined;
   onEdgesChange: OnChange<EdgeChange>;
   onNodesChange: OnChange<NodeChange>;
 };
 
 const Canvas = (props: CanvasProps) => {
-  const { edges, nodes, nodeColor, nodeTypes, onConnect, onEdgesChange, onNodesChange } = props;
-
-  const handleOnNodeDragStop = (event: React.MouseEvent<Element, MouseEvent>, node: Node<any>) => {
-    console.log(event);
-    console.log(node);
-  };
+  const { edges, nodes, nodeColor, nodeTypes, onConnect, onNodeDragStop, onEdgesChange, onNodesChange } = props;
 
   return (
     <Box sx={{ width: "100%", height: "100vh" }}>
@@ -43,7 +41,7 @@ const Canvas = (props: CanvasProps) => {
         nodeTypes={nodeTypes as NodeTypes}
         onConnect={onConnect}
         onEdgesChange={onEdgesChange}
-        onNodeDragStop={handleOnNodeDragStop}
+        onNodeDragStop={onNodeDragStop}
         onNodesChange={onNodesChange}
       >
         <Background />

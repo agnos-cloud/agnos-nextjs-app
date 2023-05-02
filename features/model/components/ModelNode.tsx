@@ -9,11 +9,11 @@ const ModelNode = ({ id, data }: Partial<NodeProps>) => {
       <div className="title" title={data?.description}>
         {data?.title}
       </div>
-      <NodeContent id={id} data={data.properties} />
+      <NodeContent id={id} data={data.properties || {}} />
     </>
   );
 };
 
-ModelNode.displayName = "ResourceNode";
+ModelNode.displayName = "ModelNode";
 
 export default memo(ModelNode);

@@ -29,4 +29,11 @@ export default class OrgService extends ApiService<Org, OrgInput, OrgUpdate> {
   getMany: () => Promise<Org[]> = async () => {
     throw new Error("Method not implemented.");
   };
+
+  update: (_: string | undefined, update: OrgUpdate) => Promise<Org> = async (
+    _: string | undefined,
+    update: OrgUpdate
+  ) => {
+    throw new Error("Method not implemented.");
+  };
 }

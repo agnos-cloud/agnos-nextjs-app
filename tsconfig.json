@@ -59,6 +59,7 @@
       "@models/user": [ "features/user/model/user.model" ],
       "@providers/base": [ "features/base/provider/base.provider" ],
       "@services/base": [ "features/base/service/base.service" ],
+      "@services/canvas": [ "features/canvas/service/canvas.service" ],
       "@services/model": [ "features/model/service/model.service" ],
       "@services/org": [ "features/org/service/org.service" ],
       "@services/project": [ "features/project/service/project.service" ],

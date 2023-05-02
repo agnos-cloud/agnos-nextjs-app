@@ -27,7 +27,7 @@ export function useSettings(user: UserProfile | undefined) {
     const saveSettings = async () => {
       if (!user) return;
 
-      new SettingsService(user).update({
+      new SettingsService(user).update(undefined, {
         useGrayscaleIcons,
         autoSave,
         colorMode,
