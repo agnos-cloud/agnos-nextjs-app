@@ -2,13 +2,14 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { Box, Stack, Tab, Tabs, Typography, useTheme } from "@mui/material";
 import {
-  FlashOn as FunctionsIcon,
+  // FlashOn as FunctionsIcon,
   GridViewRounded as ComponentsIcon,
   Group as TeamsIcon,
   Groups as MembersIcon,
   Lan as ProjectsIcon,
   LanOutlined as TemplatesIcon,
-  Power as PluginsIcon,
+  // Power as PluginsIcon,
+  Settings as SettingsIcon,
 } from "@mui/icons-material";
 import { useUser } from "@auth0/nextjs-auth0";
 import Image from "next/image";
@@ -43,7 +44,7 @@ const OrgView = () => {
   useEffect(() => {
     fetchOrg(id as string);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id]);
+  }, [user, id]);
 
   const handleChange = (_event: React.SyntheticEvent, newValue: number) => {
     setTabValue(newValue);
@@ -92,46 +93,39 @@ const OrgView = () => {
             {...a11yProps(0)}
           />
           <Tab
-            label="Plugins"
-            icon={<PluginsIcon fontSize="small" />}
-            iconPosition="start"
-            sx={{ fontSize: theme.typography.caption.fontSize }}
-            {...a11yProps(1)}
-          />
-          <Tab
-            label="Functions"
-            icon={<FunctionsIcon fontSize="small" />}
-            iconPosition="start"
-            sx={{ fontSize: theme.typography.caption.fontSize }}
-            {...a11yProps(2)}
-          />
-          <Tab
             label="Components"
             icon={<ComponentsIcon fontSize="small" />}
             iconPosition="start"
             sx={{ fontSize: theme.typography.caption.fontSize }}
-            {...a11yProps(3)}
+            {...a11yProps(1)}
           />
           <Tab
             label="Templates"
             icon={<TemplatesIcon fontSize="small" />}
             iconPosition="start"
             sx={{ fontSize: theme.typography.caption.fontSize }}
-            {...a11yProps(4)}
+            {...a11yProps(2)}
           />
           <Tab
             label="Members"
             icon={<MembersIcon fontSize="small" />}
             iconPosition="start"
             sx={{ fontSize: theme.typography.caption.fontSize }}
-            {...a11yProps(5)}
+            {...a11yProps(3)}
           />
           <Tab
             label="Teams"
             icon={<TeamsIcon fontSize="small" />}
             iconPosition="start"
             sx={{ fontSize: theme.typography.caption.fontSize }}
-            {...a11yProps(6)}
+            {...a11yProps(4)}
+          />
+          <Tab
+            label="Settings"
+            icon={<SettingsIcon fontSize="small" />}
+            iconPosition="start"
+            sx={{ fontSize: theme.typography.caption.fontSize }}
+            {...a11yProps(4)}
           />
         </Tabs>
       </Box>
@@ -139,22 +133,19 @@ const OrgView = () => {
         <ProjectsGridView org={org._id} />
       </TabPanel>
       <TabPanel value={tabValue} index={1}>
-        plugins
-      </TabPanel>
-      <TabPanel value={tabValue} index={2}>
-        functions
-      </TabPanel>
-      <TabPanel value={tabValue} index={3}>
         components
       </TabPanel>
-      <TabPanel value={tabValue} index={4}>
+      <TabPanel value={tabValue} index={2}>
         project templates
       </TabPanel>
-      <TabPanel value={tabValue} index={5}>
+      <TabPanel value={tabValue} index={3}>
         members
       </TabPanel>
-      <TabPanel value={tabValue} index={6}>
+      <TabPanel value={tabValue} index={4}>
         teams
+      </TabPanel>
+      <TabPanel value={tabValue} index={5}>
+        settings
       </TabPanel>
     </Box>
   );

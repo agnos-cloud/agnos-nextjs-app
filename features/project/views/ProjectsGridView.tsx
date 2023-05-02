@@ -9,6 +9,8 @@ import { CreateProjectForm, ProjectCard } from "@components/project";
 import { LogType } from "@constants/log";
 import router from "next/router";
 import ProjectService from "@services/project";
+import CollaborationService from "@services/collaboration";
+import { Collaboration, CollaborationInput, CollaborationUpdate } from "@models/collaboration";
 
 export interface ProjectsGridViewProps {
   org?: string;
@@ -25,16 +27,20 @@ function ProjectsGridView(props: ProjectsGridViewProps) {
   const query = useMemo(
     () => ({
       ...(org && { org }),
-      ...(shared && { personal: true, "user:ne": user?._id }), // TODO: this is not how to get shared projects; load the user's collaborations -> get the projects from there -> filter out the ones that are not shared (filter out the ones that are not personal, then the ones that are his)
+      // "project:ne": null,
       "@sort": { updatedAt: "desc" as "desc" | "asc" },
+      "@include": [{ path: "project", select: "_id name description picture private createdAt" }],
     }),
-    [org, shared, user]
+    [org]
   );
   const {
+    list: collaborations,
+    fetchList: fetchCollaborations,
+    fetchingList: fetchingCollaborations,
+    fetchingListError: fetchingCollaborationsError,
+  } = useApi<CollaborationService, Collaboration, CollaborationInput, CollaborationUpdate>(CollaborationService, user);
+  const {
     list: projects,
-    fetchList: fetchProjects,
-    fetchingList: fetchingProjects,
-    fetchingListError: fetchingProjectsError,
     createdItem: createdProject,
     create: createProject,
     creatingItem: creatingProject,
@@ -44,7 +50,7 @@ function ProjectsGridView(props: ProjectsGridViewProps) {
 
   // this hook fetches projects when the user or query changes
   useEffect(() => {
-    fetchProjects(query);
+    fetchCollaborations(query);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user, query]);
 
@@ -122,17 +128,27 @@ function ProjectsGridView(props: ProjectsGridViewProps) {
       type: LogType.error,
     });
 
-  if (fetchingProjects) {
+  if (fetchingCollaborations) {
     return <Loading />;
   }
 
-  if (fetchingProjectsError) {
-    return <ErrorBox error={fetchingProjectsError} />;
+  if (fetchingCollaborationsError) {
+    return <ErrorBox error={fetchingCollaborationsError} />;
   }
+
+  const collaborationsToShow = (collaborations || [])
+    .filter((c) => !!c.project)
+    .filter((c) =>
+      shared
+        ? user &&
+          (c.project as Project).personal === true &&
+          (c.project as Project).user?.toString() !== (user["_id"] as any).toString()
+        : true
+    );
 
   return (
     <Grid container spacing={1}>
-      {!projects || projects?.length === 0 ? (
+      {!collaborationsToShow || collaborationsToShow?.length === 0 ? (
         <EmptyBox
           message="No projects found for this space"
           actions={
@@ -147,9 +163,9 @@ function ProjectsGridView(props: ProjectsGridViewProps) {
           }
         />
       ) : (
-        projects.map((proj) => (
-          <Grid key={proj._id} item xs={12} sm={6} md={4} lg={3} xl={2}>
-            <ProjectCard project={proj} />
+        collaborationsToShow.map((c) => (
+          <Grid key={c._id} item xs={12} sm={6} md={4} lg={3} xl={2}>
+            <ProjectCard project={c.project as Project} />
           </Grid>
         ))
       )}

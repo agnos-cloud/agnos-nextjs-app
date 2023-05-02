@@ -101,6 +101,8 @@
     "@providers/base": "build/features/base/provider/base.provider",
     "@services/base": "build/features/base/service/base.service",
     "@services/canvas": "build/features/canvas/service/canvas.service",
+    "@services/collaboration": "build/features/collaboration/service/collaboration.service",
+    "@services/membership": "build/features/membership/service/membership.service",
     "@services/model": "build/features/model/service/model.service",
     "@services/org": "build/features/org/service/org.service",
     "@services/project": "build/features/project/service/project.service",

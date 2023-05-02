@@ -55,7 +55,7 @@ export default class ProjectService extends ApiService<Project, ProjectInput, Pr
 
   update: (_: string | undefined, update: ProjectUpdate) => Promise<Project> = async (
     _: string | undefined,
-    update: ProjectUpdate
+    _update: ProjectUpdate
   ) => {
     throw new Error("Method not implemented.");
   };

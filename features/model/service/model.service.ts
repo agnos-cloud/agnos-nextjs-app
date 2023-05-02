@@ -58,7 +58,7 @@ export default class ModelService extends ApiService<Model, ModelInput, ModelUpd
 
   update: (_: string | undefined, update: ModelUpdate) => Promise<Model> = async (
     _: string | undefined,
-    update: ModelUpdate
+    _update: ModelUpdate
   ) => {
     throw new Error("Method not implemented.");
   };
