@@ -4,6 +4,7 @@ import {
   Architecture as DesignsIcon,
   DataObject as ModelsIcon,
   Groups as CollaboratorsIcon,
+  Lock as PrivateIcon,
   Settings as SettingsIcon,
   Storage as DataIcon,
 } from "@mui/icons-material";
@@ -48,7 +49,7 @@ const ProjectView = (props: ProjectViewProps) => {
   useEffect(() => {
     fetchProject(id as string, query);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id]);
+  }, [user, id, query]);
 
   const handleChange = (_event: React.SyntheticEvent, newValue: number) => {
     setTabValue(newValue);
@@ -80,7 +81,7 @@ const ProjectView = (props: ProjectViewProps) => {
         </Box>
         <Stack>
           <Typography variant="body1" color="text.secondary">
-            {project.name}
+            {project.name} <sup>{project.private && <PrivateIcon fontSize="small" sx={{ fontSize: 8 }} />}</sup>
           </Typography>
           <Typography variant="caption" color="text.secondary">
             {project.description}

@@ -73,7 +73,6 @@ function ProjectModelsView(props: ProjectModelsViewProps) {
   useEffect(() => {
     if (project && project.canvas && typeof project.canvas !== "string") {
       const canvas: CanvasInterface = project.canvas;
-      console.log(canvas.nodes);
       setNodes(canvas.nodes);
       // TODO: setEdges(canvas.edges);
     }

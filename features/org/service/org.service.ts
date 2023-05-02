@@ -32,7 +32,7 @@ export default class OrgService extends ApiService<Org, OrgInput, OrgUpdate> {
 
   update: (_: string | undefined, update: OrgUpdate) => Promise<Org> = async (
     _: string | undefined,
-    update: OrgUpdate
+    _update: OrgUpdate
   ) => {
     throw new Error("Method not implemented.");
   };
