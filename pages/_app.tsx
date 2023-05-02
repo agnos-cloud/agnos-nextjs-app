@@ -3,7 +3,7 @@ import "@styles/globals.css";
 import React, { JSXElementConstructor, ReactElement } from "react";
 import type { AppProps } from "next/app";
 import { UserProvider } from "@auth0/nextjs-auth0";
-import { ThemeProvider, createTheme } from "@mui/material/styles";
+import { Breakpoint, ThemeProvider, createTheme } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 
 import { DefaultLayout } from "@layouts/base";
@@ -22,6 +22,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   const [dialogIsLoading, setDialogIsLoading] = React.useState(false);
   const [dialogIsOpen, setDialogIsOpen] = React.useState(false);
   const [dialogTitle, setDialogTitle] = React.useState("");
+  const [dialogMaxWidth, setDialogMaxWidth] = React.useState<false | Breakpoint | undefined>();
   const [drawerIsOpen, setDrawerIsOpen] = React.useState(false);
   const [toastMessage, setToastMessage] = React.useState<string | string[]>("");
   const [toastPosition, setToastPosition] = React.useState<ToastPosition>(["top", "right"]);
@@ -44,6 +45,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         setDialogTitle(options.title || "Dialog");
         setDialogContent(options.content);
         setDialogActions(options.actions || []);
+        setDialogMaxWidth(options.maxWidth);
         setDialogIsOpen(true);
       },
       closeDialog: () => {
@@ -102,6 +104,7 @@ function MyApp({ Component, pageProps }: AppProps) {
               loading={dialogIsLoading}
               open={dialogIsOpen}
               title={dialogTitle}
+              maxWidth={dialogMaxWidth}
               onClose={() => setDialogIsOpen(false)}
             >
               {dialogContent}

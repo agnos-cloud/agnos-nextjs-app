@@ -1,7 +1,7 @@
 import * as React from "react";
 import { SchemaItem } from "../schema-item";
 import { JSONSchema7, JSONSchema7Definition } from "../JsonSchemaEditor.types";
-import { useState, State } from "@hookstate/core";
+import { useHookstate, State } from "@hookstate/core";
 import { Button, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, ModalOverlay } from "@chakra-ui/react";
 import { AdvancedSettings } from "../schema-advanced";
 export interface SchemaObjectProps {
@@ -13,8 +13,8 @@ export const SchemaObject: React.FunctionComponent<SchemaObjectProps> = (
   props: React.PropsWithChildren<SchemaObjectProps>
 ) => {
   const { schemaState, isReadOnly } = props;
-  const schema = useState(schemaState);
-  const properties = useState(schema.properties);
+  const schema = useHookstate(schemaState);
+  const properties = useHookstate(schema.properties);
 
   const propertiesOrNull:
     | State<{
@@ -22,7 +22,7 @@ export const SchemaObject: React.FunctionComponent<SchemaObjectProps> = (
       }>
     | undefined = properties.ornull;
 
-  const isReadOnlyState = useState(isReadOnly);
+  const isReadOnlyState = useHookstate(isReadOnly);
 
   const onCloseAdvanced = (): void => {
     localState.isAdvancedOpen.set(false);
@@ -35,7 +35,7 @@ export const SchemaObject: React.FunctionComponent<SchemaObjectProps> = (
 
   const focusRef = React.createRef<HTMLElement>();
 
-  const localState = useState({
+  const localState = useHookstate({
     isAdvancedOpen: false,
     item: "",
   });

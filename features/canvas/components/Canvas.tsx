@@ -1,8 +1,22 @@
-import { Box, Grid } from "@mui/material";
+import { Box } from "@mui/material";
+
 import { Obj } from "@types";
-import ReactFlow, { Node, Background, MiniMap, Edge, Connection, NodeTypes, Controls } from "reactflow";
+import ReactFlow, {
+  Background,
+  Connection,
+  Controls,
+  Edge,
+  EdgeChange,
+  MiniMap,
+  Node,
+  NodeChange,
+  NodeDragHandler,
+  NodeTypes,
+} from "reactflow";
 import "reactflow/dist/base.css";
 import "reactflow/dist/style.css";
+
+type OnChange<ChangesType> = (changes: ChangesType[]) => void;
 
 type CanvasProps = {
   edges: Edge[];
@@ -10,21 +24,25 @@ type CanvasProps = {
   nodeColor: (node: Node) => string;
   nodeTypes?: Obj;
   onConnect: (params: Edge | Connection) => void;
+  onNodeDragStop?: NodeDragHandler | undefined;
+  onEdgesChange: OnChange<EdgeChange>;
+  onNodesChange: OnChange<NodeChange>;
 };
 
 const Canvas = (props: CanvasProps) => {
-  const { edges, nodes, nodeColor, nodeTypes, onConnect } = props;
+  const { edges, nodes, nodeColor, nodeTypes, onConnect, onNodeDragStop, onEdgesChange, onNodesChange } = props;
 
   return (
     <Box sx={{ width: "100%", height: "100vh" }}>
       <ReactFlow
         nodes={nodes}
         edges={edges}
-        // onNodesChange={onNodesChange}
-        // onEdgesChange={onEdgesChange}
-        onConnect={onConnect}
-        nodeTypes={nodeTypes as NodeTypes}
         fitView={true}
+        nodeTypes={nodeTypes as NodeTypes}
+        onConnect={onConnect}
+        onEdgesChange={onEdgesChange}
+        onNodeDragStop={onNodeDragStop}
+        onNodesChange={onNodesChange}
       >
         <Background />
         {/* <CustomControls

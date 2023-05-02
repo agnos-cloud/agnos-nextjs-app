@@ -1,4 +1,4 @@
-import { createState, State } from "@hookstate/core";
+import { hookstate, State } from "@hookstate/core";
 import { JSONSchema7 } from "../JsonSchemaEditor.types";
 import Ajv from "ajv";
 import { Schema2 } from "../JsonSchemaEditor.types";
@@ -7,11 +7,16 @@ const ajv = new Ajv();
 export const defaultSchema = (): JSONSchema7 => {
   return {
     $schema: "http://json-schema.org/draft-07/schema#",
-    type: "object",
+    type: "array",
     title: "title",
     description: "",
-    properties: {},
-    required: [],
+    items: {
+      type: "object",
+      title: "title",
+      description: "",
+      properties: {},
+      required: [],
+    },
   };
 };
 
@@ -26,5 +31,5 @@ export const useSchemaState = (initialState: Schema2): State<Schema2> => {
   }
 
   initialState.isValidSchema = isValidSchema(initialState.jsonSchema);
-  return createState<Schema2>(initialState);
+  return hookstate<Schema2>(initialState);
 };

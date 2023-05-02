@@ -30,7 +30,10 @@ export default class SettingsService extends ApiService<Settings, SettingsInput,
     throw new Error("Method not implemented.");
   };
 
-  update: (update: SettingsInput) => Promise<Settings> = async (update: SettingsInput) => {
+  update: (_: string | undefined, update: SettingsInput) => Promise<Settings> = async (
+    _: string | undefined,
+    update: SettingsInput
+  ) => {
     return axios({
       method: "PATCH",
       url: `${this.apiUrl}/settings`,

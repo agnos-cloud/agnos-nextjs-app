@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Flex, Input, Checkbox, FlexProps, Select, IconButton, Tooltip } from "@chakra-ui/react";
-import { useState, State } from "@hookstate/core";
+import { useHookstate, State } from "@hookstate/core";
 import { JSONSchema7, JSONSchema7TypeName } from "../JsonSchemaEditor.types";
 import { IoIosAddCircleOutline } from "react-icons/io";
 import { getDefaultSchema, DataType, random, handleTypeChange } from "../utils";
@@ -12,8 +12,8 @@ export interface SchemaArrayProps extends FlexProps {
 export const SchemaRoot: React.FunctionComponent<SchemaArrayProps> = (
   props: React.PropsWithChildren<SchemaArrayProps>
 ) => {
-  const state = useState(props.schemaState);
-  const isReadOnlyState = useState(props.isReadOnly);
+  const state = useHookstate(props.schemaState);
+  const isReadOnlyState = useHookstate(props.isReadOnly);
 
   return (
     <>
@@ -30,7 +30,7 @@ export const SchemaRoot: React.FunctionComponent<SchemaArrayProps> = (
           value={state.type.value ?? ""}
           size="sm"
           margin={2}
-          placeholder="Choose root data type"
+          placeholder="Root data type"
           onChange={(evt: React.ChangeEvent<HTMLSelectElement>) => {
             const newSchema = handleTypeChange(evt.target.value as JSONSchema7TypeName, false);
             state.set(newSchema as JSONSchema7);
@@ -39,9 +39,9 @@ export const SchemaRoot: React.FunctionComponent<SchemaArrayProps> = (
           <option key="object" value="object">
             object
           </option>
-          <option key="array" value="array">
+          {/* <option key="array" value="array">
             array
-          </option>
+          </option> */}
         </Select>
         <Input
           value={state.value?.title ?? ""}
@@ -49,7 +49,7 @@ export const SchemaRoot: React.FunctionComponent<SchemaArrayProps> = (
           size="sm"
           margin={2}
           variant="outline"
-          placeholder="Add Title"
+          placeholder="Enter model name"
           onChange={(evt: React.ChangeEvent<HTMLInputElement>) => {
             state.title.set(evt.target.value);
           }}
@@ -60,10 +60,11 @@ export const SchemaRoot: React.FunctionComponent<SchemaArrayProps> = (
           size="sm"
           margin={2}
           variant="outline"
-          placeholder="Add Description"
+          placeholder="Enter model description"
           onChange={(evt: React.ChangeEvent<HTMLInputElement>) => {
             state.description.set(evt.target.value);
           }}
+          isRequired
         />
 
         {state.value?.type === "object" && (

@@ -2,14 +2,14 @@ import * as React from "react";
 import { Flex, FormLabel, Stack, Select } from "@chakra-ui/react";
 
 import { AdvancedItemStateProps } from "../JsonSchemaEditor.types";
-import { useState } from "@hookstate/core";
+import { useHookstate } from "@hookstate/core";
 
 export const AdvancedBoolean: React.FunctionComponent<AdvancedItemStateProps> = (
   props: React.PropsWithChildren<AdvancedItemStateProps>
 ) => {
   const { itemStateProp } = props;
 
-  const item = useState(itemStateProp);
+  const item = useHookstate(itemStateProp);
 
   return (
     <Flex direction="column" wrap="nowrap">

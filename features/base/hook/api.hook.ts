@@ -17,6 +17,9 @@ export function useApi<
   const [creatingItemError, setCreatingItemError] = useState<Error | undefined>(undefined);
   const [fetchingItem, setFetchingItem] = useState<boolean>(false);
   const [fetchingItemError, setFetchingItemError] = useState<Error | undefined>(undefined);
+  const [updatedItem, setUpdatedItem] = useState<ReturnType | undefined>(undefined);
+  const [updatingItem, setUpdatingItem] = useState<boolean>(false);
+  const [updatingItemError, setUpdatingItemError] = useState<Error | undefined>(undefined);
 
   const [list, setList] = useState<Array<ReturnType> | undefined>(undefined);
   const [fetchingList, setFetchingList] = useState<boolean>(false);
@@ -81,6 +84,34 @@ export function useApi<
     }
   };
 
+  const update = (id: string | undefined, update: UpdateType) => {
+    if (user) {
+      setUpdatedItem(undefined);
+      setUpdatingItemError(undefined);
+      setUpdatingItem(true);
+      new Service(user)
+        .update(id, update)
+        .then((response) => {
+          setUpdatingItem(false);
+          setList((list: Array<ReturnType> | undefined) =>
+            list?.map((item) => {
+              if (item._id === response._id) {
+                return response;
+              }
+              return item;
+            })
+          );
+          nextTick(() => {
+            setUpdatedItem(response);
+          });
+        })
+        .catch((error) => {
+          setUpdatingItemError(new Error(error));
+          setUpdatingItem(false);
+        });
+    }
+  };
+
   return {
     item,
     fetchItem,
@@ -96,5 +127,10 @@ export function useApi<
     create,
     creatingItem,
     creatingItemError,
+
+    updatedItem,
+    update,
+    updatingItem,
+    updatingItemError,
   } as const;
 }

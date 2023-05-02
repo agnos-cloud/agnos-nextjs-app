@@ -6,7 +6,7 @@ export interface Canvas extends Omit<CanvasInput, "project">, Model {
   project?: string | Project | null;
 }
 
-export interface CanvasUpdate extends Omit<CanvasInput, "project"> {}
+export interface CanvasUpdate extends CanvasInput {}
 
 export interface CanvasInput {
   nodes: Array<Node>;
