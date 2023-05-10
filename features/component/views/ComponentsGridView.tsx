@@ -28,7 +28,7 @@ function ComponentsGridView(props: ComponentsGridViewProps) {
       ...(org && { org }),
       // "component:ne": null,
       "@sort": { updatedAt: "desc" as "desc" | "asc" },
-      "@include": [{ path: "component", select: "_id name description picture private createdAt" }],
+      "@include": [{ path: "component", select: "_id name description picture private version createdAt" }],
     }),
     [org]
   );
