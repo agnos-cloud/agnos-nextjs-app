@@ -4,31 +4,31 @@ import { CreateModelForm, EmptyBox, ErrorBox, Fab, Loading, ModelCard } from "@c
 import { useEffect, useMemo } from "react";
 import { useApi, useApp } from "@hooks/base";
 import { DialogOptions } from "@types";
-import { Project, ProjectInput, ProjectUpdate } from "@models/project";
 import { LogType } from "@constants/log";
 import router from "next/router";
-import ProjectService from "@services/project";
 import CollaborationService from "@services/collaboration";
 import { Collaboration, CollaborationInput, CollaborationUpdate } from "@models/collaboration";
+import ComponentService from "@services/component";
+import { Component, ComponentInput, ComponentUpdate } from "@models/component";
 
-export interface ProjectsGridViewProps {
+export interface ComponentsGridViewProps {
   org?: string;
   shared?: boolean;
   readonly?: boolean;
 }
 
-let projectToCreate: Omit<ProjectInput, "org"> | undefined = undefined;
+let componentToCreate: Omit<ComponentInput, "org" | "version"> | undefined = undefined;
 
-function ProjectsGridView(props: ProjectsGridViewProps) {
+function ComponentsGridView(props: ComponentsGridViewProps) {
   const { readonly, org, shared } = props;
   const { user } = useUser();
   // TODO: change this query to use collaborations
   const query = useMemo(
     () => ({
       ...(org && { org }),
-      // "project:ne": null,
+      // "component:ne": null,
       "@sort": { updatedAt: "desc" as "desc" | "asc" },
-      "@include": [{ path: "project", select: "_id name description picture private createdAt" }],
+      "@include": [{ path: "component", select: "_id name description picture private createdAt" }],
     }),
     [org]
   );
@@ -39,12 +39,12 @@ function ProjectsGridView(props: ProjectsGridViewProps) {
     fetchingListError: fetchingCollaborationsError,
   } = useApi<CollaborationService, Collaboration, CollaborationInput, CollaborationUpdate>(CollaborationService, user);
   const {
-    list: projects,
-    createdItem: createdProject,
-    create: createProject,
-    creatingItem: creatingProject,
-    creatingItemError: creatingProjectError,
-  } = useApi<ProjectService, Project, ProjectInput, ProjectUpdate>(ProjectService, user);
+    list: components,
+    createdItem: createdComponent,
+    create: createComponent,
+    creatingItem: creatingComponent,
+    creatingItemError: creatingComponentError,
+  } = useApi<ComponentService, Component, ComponentInput, ComponentUpdate>(ComponentService, user);
   const { openDialog, closeDialog, setDialogIsLoading, openToast } = useApp();
 
   // this hook fetches collaborations when the user or query changes
@@ -53,50 +53,50 @@ function ProjectsGridView(props: ProjectsGridViewProps) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user, query]);
 
-  // this hook closes the dialog when the list of projects changes (either due to a new project being created or a project being deleted)
+  // this hook closes the dialog when the list of components changes (either due to a new component being created or a component being deleted)
   useEffect(() => {
     handleCloseDialog();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [projects]);
+  }, [components]);
 
-  // this hook opens the toast when there is an error creating a project
+  // this hook opens the toast when there is an error creating a component
   useEffect(() => {
-    if (creatingProjectError) {
-      handleOpenToast(creatingProjectError);
+    if (creatingComponentError) {
+      handleOpenToast(creatingComponentError);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [creatingProjectError]);
+  }, [creatingComponentError]);
 
-  // this hook redirects to the new project when it is created
+  // this hook redirects to the new component when it is created
   useEffect(() => {
-    if (createdProject) {
-      router.push(`/projects/${createdProject._id}`);
+    if (createdComponent) {
+      router.push(`/components/${createdComponent._id}`);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [createdProject]);
+  }, [createdComponent]);
 
   // this hook sets the dialog to loading when the project is being created
   useEffect(() => {
-    setDialogIsLoading(creatingProject);
+    setDialogIsLoading(creatingComponent);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [creatingProject]);
+  }, [creatingComponent]);
 
-  const onChange = (project: Omit<ProjectInput, "org">) => {
-    projectToCreate = project;
+  const onChange = (component: Omit<ComponentInput, "org" | "version">) => {
+    componentToCreate = component;
   };
 
-  const newProjectForm = useMemo(() => <CreateModelForm onChange={onChange} />, []);
+  const newComponentForm = useMemo(() => <CreateModelForm onChange={onChange} />, []);
 
   const handleSubmit = () => {
-    if (projectToCreate) {
-      createProject({ ...projectToCreate, org: org as string });
+    if (componentToCreate) {
+      createComponent({ ...componentToCreate, org: org as string, version: "0.0.1" });
     }
   };
 
-  const newProjectArgs: DialogOptions = useMemo(
+  const newComponentArgs: DialogOptions = useMemo(
     () => ({
-      title: "New Project",
-      content: newProjectForm,
+      title: "New Component",
+      content: newComponentForm,
       actions: [
         {
           text: "Cancel",
@@ -114,10 +114,10 @@ function ProjectsGridView(props: ProjectsGridViewProps) {
     []
   );
 
-  const handleOpenDialog = () => openDialog(newProjectArgs);
+  const handleOpenDialog = () => openDialog(newComponentArgs);
 
   const handleCloseDialog = () => {
-    projectToCreate = undefined;
+    componentToCreate = undefined;
     closeDialog();
   };
 
@@ -136,12 +136,12 @@ function ProjectsGridView(props: ProjectsGridViewProps) {
   }
 
   const collaborationsToShow = (collaborations || [])
-    .filter((c) => !!c.project)
+    .filter((c) => !!c.component)
     .filter((c) =>
       shared
         ? user &&
-          (c.project as Project).personal === true &&
-          (c.project as Project).user?.toString() !== (user["_id"] as any).toString()
+          (c.component as Component).personal === true &&
+          (c.component as Component).user?.toString() !== (user["_id"] as any).toString()
         : true
     );
 
@@ -149,13 +149,13 @@ function ProjectsGridView(props: ProjectsGridViewProps) {
     <Grid container spacing={1}>
       {!collaborationsToShow || collaborationsToShow?.length === 0 ? (
         <EmptyBox
-          message="No projects found for this space"
+          message="No components found for this space"
           actions={
             readonly
               ? []
               : [
                   {
-                    text: "New Project",
+                    text: "New Component",
                     onClick: handleOpenDialog,
                   },
                 ]
@@ -164,7 +164,7 @@ function ProjectsGridView(props: ProjectsGridViewProps) {
       ) : (
         collaborationsToShow.map((c) => (
           <Grid key={c._id} item xs={12} sm={6} md={4} lg={3} xl={2}>
-            <ModelCard model={c.project as Project} />
+            <ModelCard model={c.component as Component} />
           </Grid>
         ))
       )}
@@ -174,4 +174,4 @@ function ProjectsGridView(props: ProjectsGridViewProps) {
   );
 }
 
-export default ProjectsGridView;
+export default ComponentsGridView;

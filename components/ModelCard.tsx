@@ -18,17 +18,22 @@ import {
 import router from "next/router";
 import Image from "next/image";
 import type { Project } from "@models/project";
+import { Component } from "@models/component";
 
-export interface ProjectCardProps {
-  project: Project;
+export interface ModelCardProps {
+  model: Component | Project;
 }
 
-const ProjectCard = (props: ProjectCardProps) => {
-  const { project } = props;
+const ModelCard = (props: ModelCardProps) => {
+  const { model } = props;
   const theme = useTheme();
 
   const handleCardClick = () => {
-    router.push(`/projects/${project._id}`);
+    if ("version" in model) {
+      router.push(`/components/${model._id}`);
+    } else {
+      router.push(`/projects/${model._id}`);
+    }
   };
 
   const handleShareClick = (e: React.SyntheticEvent) => {
@@ -47,17 +52,17 @@ const ProjectCard = (props: ProjectCardProps) => {
       onClick={handleCardClick}
     >
       <Box sx={{ pt: theme.spacing(1.5) }}>
-        <Image src={project.picture || ""} alt={project.name} width={32} height={32} />
+        <Image src={model.picture || ""} alt={model.name} width={32} height={32} />
       </Box>
       <Stack spacing={theme.spacing(-1)}>
         <CardHeader
           title={
             <Stack spacing={theme.spacing(-1)}>
               <Typography gutterBottom variant="subtitle2">
-                {project.name} <sup>{project.private && <PrivateIcon fontSize="small" sx={{ fontSize: 8 }} />}</sup>
+                {model.name} <sup>{model.private && <PrivateIcon fontSize="small" sx={{ fontSize: 8 }} />}</sup>
               </Typography>
               <Typography variant="caption" color="text.secondary" sx={{ fontSize: 8 }}>
-                Created {new Date(project.createdAt).toDateString()}
+                Created {new Date(model.createdAt).toDateString()}
               </Typography>
             </Stack>
           }
@@ -66,7 +71,7 @@ const ProjectCard = (props: ProjectCardProps) => {
         <CardContent sx={{ p: theme.spacing(1), height: 80 }}>
           <div style={{ overflow: "hidden", textOverflow: "ellipsis", height: "80%" }}>
             <Typography variant="caption" color="text.secondary">
-              {project.description}
+              {model.description}
             </Typography>
           </div>
         </CardContent>
@@ -86,4 +91,4 @@ const ProjectCard = (props: ProjectCardProps) => {
   );
 };
 
-export default ProjectCard;
+export default ModelCard;

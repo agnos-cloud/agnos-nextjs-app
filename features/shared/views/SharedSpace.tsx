@@ -1,15 +1,14 @@
 import React, { useState } from "react";
 import { Box, Tab, Tabs, Typography, useTheme } from "@mui/material";
 import {
-  FlashOn as FunctionsIcon,
   GridViewRounded as ComponentsIcon,
   Lan as ProjectsIcon,
   LanOutlined as TemplatesIcon,
-  Power as PluginsIcon,
 } from "@mui/icons-material";
 import { useUser } from "@auth0/nextjs-auth0";
 import { LoginBackdrop, TabPanel } from "@components";
 import { ProjectsGridView } from "@views/project";
+import { ComponentsGridView } from "@views/component";
 
 function a11yProps(index: number) {
   return {
@@ -50,20 +49,6 @@ const SharedSpace = () => {
             {...a11yProps(0)}
           />
           <Tab
-            label="Plugins"
-            icon={<PluginsIcon fontSize="small" />}
-            iconPosition="start"
-            sx={{ fontSize: theme.typography.caption.fontSize }}
-            {...a11yProps(1)}
-          />
-          <Tab
-            label="Functions"
-            icon={<FunctionsIcon fontSize="small" />}
-            iconPosition="start"
-            sx={{ fontSize: theme.typography.caption.fontSize }}
-            {...a11yProps(1)}
-          />
-          <Tab
             label="Components"
             icon={<ComponentsIcon fontSize="small" />}
             iconPosition="start"
@@ -75,7 +60,7 @@ const SharedSpace = () => {
             icon={<TemplatesIcon fontSize="small" />}
             iconPosition="start"
             sx={{ fontSize: theme.typography.caption.fontSize }}
-            {...a11yProps(1)}
+            {...a11yProps(2)}
           />
         </Tabs>
       </Box>
@@ -83,15 +68,9 @@ const SharedSpace = () => {
         <ProjectsGridView readonly shared />
       </TabPanel>
       <TabPanel value={tabValue} index={1}>
-        plugins
+        <ComponentsGridView readonly shared />
       </TabPanel>
       <TabPanel value={tabValue} index={2}>
-        functions
-      </TabPanel>
-      <TabPanel value={tabValue} index={3}>
-        components
-      </TabPanel>
-      <TabPanel value={tabValue} index={4}>
         project templates
       </TabPanel>
     </Box>
