@@ -13,6 +13,7 @@ import {
   AccessTime as RecentIcon,
   ChevronLeft as ChevronLeftIcon,
   ChevronRight as ChevronRightIcon,
+  GridViewRounded as ComponentsIcon,
   Workspaces as SharedProjectsIcon,
   Home as HomeIcon,
   Lan as ProjectsIcon,
@@ -23,7 +24,15 @@ import {
 } from "@mui/icons-material";
 import router from "next/router";
 
-import { SHARED_PATH, STORE_PATH, ORGS_PATH, RECENT_PATH, FAVORITES_PATH } from "@constants/paths";
+import {
+  SHARED_PATH,
+  STORE_PATH,
+  ORGS_PATH,
+  RECENT_PATH,
+  FAVORITES_PATH,
+  COMPONENTS_PATH,
+  PROJECTS_PATH,
+} from "@constants/paths";
 import { DRAWER_WIDTH } from "@constants/dimensions";
 import { useApp } from "@hooks/base";
 
@@ -96,7 +105,12 @@ function Drawer() {
     {
       text: "Projects",
       icon: <ProjectsIcon />,
-      path: "/projects",
+      path: PROJECTS_PATH,
+    },
+    {
+      text: "Components",
+      icon: <ComponentsIcon />,
+      path: COMPONENTS_PATH,
     },
   ];
 

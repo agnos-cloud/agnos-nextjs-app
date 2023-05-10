@@ -1,12 +1,15 @@
+import { ComponentInput } from "@models/component";
 import { ProjectInput } from "@models/project";
 import { FormControlLabel, FormGroup, Switch, TextField } from "@mui/material";
 import { useState } from "react";
 
-export interface CreateProjectFormProps {
-  onChange: (project: Omit<ProjectInput, "org">) => void;
+type ModelInput = Omit<ComponentInput, "org" | "version"> | Omit<ProjectInput, "org">;
+
+export interface CreateModelFormProps {
+  onChange: (model: ModelInput) => void;
 }
 
-function CreateProjectForm(props: CreateProjectFormProps) {
+function CreateModelForm(props: CreateModelFormProps) {
   const { onChange } = props;
 
   const [internalName, setInternalName] = useState("");
@@ -31,7 +34,7 @@ function CreateProjectForm(props: CreateProjectFormProps) {
     });
   };
 
-  const handleIsPrivareChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleIsPrivateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setInternalPrivate(event.target.checked);
     onChange({
       name: internalName,
@@ -68,7 +71,7 @@ function CreateProjectForm(props: CreateProjectFormProps) {
       />
       <FormGroup>
         <FormControlLabel
-          control={<Switch checked={internalPrivate} onChange={handleIsPrivareChange} />}
+          control={<Switch checked={internalPrivate} onChange={handleIsPrivateChange} />}
           label="Private"
         />
       </FormGroup>
@@ -76,4 +79,4 @@ function CreateProjectForm(props: CreateProjectFormProps) {
   );
 }
 
-export default CreateProjectForm;
+export default CreateModelForm;
