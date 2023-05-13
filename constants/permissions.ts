@@ -1,7 +1,7 @@
 export enum PermissionName {
-  "read" = "READ",
-  "write" = "WRITE",
-  "admin" = "ADMIN",
+  "read" = "read",
+  "write" = "write",
+  "admin" = "admin",
 }
 
 export enum PermissionScope {

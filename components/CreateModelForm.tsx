@@ -1,16 +1,18 @@
 import { ComponentInput } from "@models/component";
+import { DesignInput } from "@models/design";
 import { ProjectInput } from "@models/project";
 import { FormControlLabel, FormGroup, Switch, TextField } from "@mui/material";
 import { useState } from "react";
 
-type ModelInput = Omit<ComponentInput, "org" | "version"> | Omit<ProjectInput, "org">;
+type ModelInput = Omit<ComponentInput, "org" | "version"> | Omit<DesignInput, "project"> | Omit<ProjectInput, "org">;
 
 export interface CreateModelFormProps {
+  hidePrivateField?: boolean;
   onChange: (model: ModelInput) => void;
 }
 
 function CreateModelForm(props: CreateModelFormProps) {
-  const { onChange } = props;
+  const { hidePrivateField, onChange } = props;
 
   const [internalName, setInternalName] = useState("");
   const [internalDescription, setInternalDescription] = useState("");
@@ -69,12 +71,14 @@ function CreateModelForm(props: CreateModelFormProps) {
         value={internalDescription}
         onChange={handleDescriptionChange}
       />
-      <FormGroup>
-        <FormControlLabel
-          control={<Switch checked={internalPrivate} onChange={handleIsPrivateChange} />}
-          label="Private"
-        />
-      </FormGroup>
+      {!hidePrivateField && (
+        <FormGroup>
+          <FormControlLabel
+            control={<Switch checked={internalPrivate} onChange={handleIsPrivateChange} />}
+            label="Private"
+          />
+        </FormGroup>
+      )}
     </>
   );
 }

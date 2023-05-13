@@ -15,6 +15,7 @@ import { useApi } from "@hooks/base";
 import ProjectService from "@services/project";
 import { Project, ProjectInput, ProjectUpdate } from "@models/project";
 import ProjectModelsView from "./ProjectModelsView";
+import ProjectDesignsGridView from "./ProjectDesignsGridView";
 
 export interface ProjectViewProps {
   id: string;
@@ -134,7 +135,7 @@ const ProjectView = (props: ProjectViewProps) => {
         data
       </TabPanel>
       <TabPanel value={tabValue} index={2}>
-        designs
+        <ProjectDesignsGridView project={project._id} />
       </TabPanel>
       <TabPanel value={tabValue} index={3}>
         collaborators

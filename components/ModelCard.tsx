@@ -10,27 +10,37 @@ import {
   useTheme,
 } from "@mui/material";
 import {
+  AdminPanelSettings as AdminIcon,
+  Edit as WriteIcon,
   HPlusMobiledata as HPlusIcon,
   Javascript as JsIcon,
   Lock as PrivateIcon,
   TextIncrease as APlusIcon,
+  Visibility as ReadIcon,
 } from "@mui/icons-material";
 import router from "next/router";
 import Image from "next/image";
+import { PermissionName } from "@constants/permissions";
 import type { Project } from "@models/project";
 import { Component } from "@models/component";
+import { Design } from "@models/design";
 
 export interface ModelCardProps {
-  model: Component | Project;
+  model: Component | Design | Project;
+  permission?: PermissionName;
 }
 
 const ModelCard = (props: ModelCardProps) => {
-  const { model } = props;
+  const { model, permission } = props;
   const theme = useTheme();
 
   const handleCardClick = () => {
     if ("version" in model) {
       router.push(`/components/${model._id}`);
+    } else if ("project" in model) {
+      router.push(
+        `/projects/${typeof model.project === "string" ? model.project : model.project?._id}/designs/${model._id}`
+      );
     } else {
       router.push(`/projects/${model._id}`);
     }
@@ -40,6 +50,7 @@ const ModelCard = (props: ModelCardProps) => {
     e.stopPropagation();
     alert("hooray");
   };
+  console.log(permission);
 
   return (
     <Card
@@ -59,7 +70,13 @@ const ModelCard = (props: ModelCardProps) => {
           title={
             <Stack spacing={theme.spacing(-1)}>
               <Typography gutterBottom variant="subtitle2">
-                {model.name} <sup>{model.private && <PrivateIcon fontSize="small" sx={{ fontSize: 8 }} />}</sup>
+                {model.name}{" "}
+                <sup>
+                  {"private" in model && model.private && <PrivateIcon fontSize="small" sx={{ fontSize: 8 }} />}
+                  {permission === PermissionName.admin && <AdminIcon fontSize="small" sx={{ fontSize: 8 }} />}
+                  {permission === PermissionName.read && <ReadIcon fontSize="small" sx={{ fontSize: 8 }} />}
+                  {permission === PermissionName.write && <WriteIcon fontSize="small" sx={{ fontSize: 8 }} />}
+                </sup>
               </Typography>
               <Typography variant="caption" color="text.secondary" sx={{ fontSize: 8 }}>
                 Created {new Date(model.createdAt).toDateString()}

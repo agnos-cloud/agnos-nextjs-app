@@ -22,7 +22,6 @@ let projectToCreate: Omit<ProjectInput, "org"> | undefined = undefined;
 function ProjectsGridView(props: ProjectsGridViewProps) {
   const { readonly, org, shared } = props;
   const { user } = useUser();
-  // TODO: change this query to use collaborations
   const query = useMemo(
     () => ({
       ...(org && { org }),
@@ -164,7 +163,7 @@ function ProjectsGridView(props: ProjectsGridViewProps) {
       ) : (
         collaborationsToShow.map((c) => (
           <Grid key={c._id} item xs={12} sm={6} md={4} lg={3} xl={2}>
-            <ModelCard model={c.project as Project} />
+            <ModelCard model={c.project as Project} permission={c.permission} />
           </Grid>
         ))
       )}
